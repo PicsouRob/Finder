@@ -35,7 +35,7 @@ var store = new MongoDBStore({
 app.use(cors({
     origin: ["http://finderht.herokuapp.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+    credentials: false
 }));
 app.use(cookieParser());
 app.use(morgan('combined'));
@@ -52,19 +52,19 @@ app.use(session({
     },
 }));
 
-// app.use((req, res, next) => {
-//     req.session.name = `${req.session.name}`;
-//     next();
-// });
+app.use((req, res, next) => {
+    res.json({ session: req.session });
+    next();
+});
 
 app.get('/', async (req, res) => {
     const { user, token } = req.session;
     if(user) {
         await User.findOne({ name: user.name }).then(user => {
-            res.json({ user, token });
+            res.json({ user, token, session: req.session });
         }).catch(err => res.json({ error: err }));
     } else {
-        return res.json({ isLogged: false });
+        return res.json({ isLogged: false, session: req.session });
     }
 });
 
