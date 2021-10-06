@@ -52,16 +52,16 @@ app.use(session({
     },
 }));
 
-app.use((req, res, next) => {
-    res.json({ session: req.session });
-    next();
-});
+// app.use((req, res, next) => {
+//     res.json({ session: req.session });
+//     next();
+// });
 
 app.get('/', async (req, res) => {
     const { user, token } = req.session;
     if(user) {
         await User.findOne({ name: user.name }).then(user => {
-            res.json({ user, token, session: req.session });
+            res.json({ user, isLogged: true, token, session: req.session });
         }).catch(err => res.json({ error: err }));
     } else {
         return res.json({ isLogged: false, session: req.session });
