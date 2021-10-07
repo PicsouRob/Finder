@@ -63,6 +63,7 @@ const loginValidation = async (req, res, next) => {
     // res.header('auth-token', token);
     const token = req.header('auth-token');
     // Generate the session.........
+    res.cookie('idk', 'idksj');
     req.session.token = token;
     req.session.isLogged = true;
     req.session.user = user;

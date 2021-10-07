@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+// const cors = require("cors");
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
@@ -37,7 +37,13 @@ var store = new MongoDBStore({
 //     methods: ["GET", "POST", "PUT", "DELETE"],
 //     credentials: false
 // }));
-app.use(cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+// app.use(cors());
 app.use(cookieParser());
 app.use(morgan('combined'));
 app.use(express.json());
