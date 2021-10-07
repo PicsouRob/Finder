@@ -32,11 +32,12 @@ var store = new MongoDBStore({
 });
 
 // Middleware
-app.use(cors({
-    origin: ["http://finderht.herokuapp.com"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: false
-}));
+// app.use(cors({
+//     origin: ["http://finderht.herokuapp.com"],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: false
+// }));
+app.use(cors());
 app.use(cookieParser());
 app.use(morgan('combined'));
 app.use(express.json());
