@@ -57,17 +57,19 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', authVerification, async (req, res) => {
+app.get('/', async (req, res) => {
+    // let hea = new Headers()
     const token = req.header('auth-token');
     res.setHeader('auth-token', token);
-    const { user } = req.session;
-    if(user) {
-        await User.findOne({ name: user.name }).then(user => {
-            res.json({ user, isLogged: true, token, session: req.session });
-        }).catch(err => res.json({ error: err }));
-    } else {
-        return res.json({ isLogged: false, session: req.session, token });
-    }
+    res.send(token);
+    // const { user } = req.session;
+    // if(user) {
+    //     await User.findOne({ name: user.name }).then(user => {
+    //         res.json({ user, isLogged: true, token, session: req.session });
+    //     }).catch(err => res.json({ error: err }));
+    // } else {
+    //     return res.json({ isLogged: false, session: req.session, token });
+    // }
 });
 
 app.post('/api/user/logout', authVerification, (req, res, next) => {
