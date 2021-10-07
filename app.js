@@ -33,9 +33,8 @@ var store = new MongoDBStore({
 
 // Middleware
 // app.use(cors({
-//     origin: ["http://finderht.herokuapp.com"],
+//     origin: [],
 //     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: false
 // }));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
