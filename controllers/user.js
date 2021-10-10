@@ -59,9 +59,8 @@ const loginValidation = async (req, res, next) => {
     const validatedPass = await bcrypt.compare(req.body.password, user.password);
     if(!validatedPass) return res.json({ error: "Mot de passe incorrect" });
     // Generate the Token ......
-    // const token = jwt.sign({  name: user.name, email: user.email }, config.TOKEN_SECRET);
-    // res.header('auth-token', token);
-    const token = req.header('auth-token');
+    const token = jwt.sign({  name: user.name, email: user.email }, config.TOKEN_SECRET);
+    res.header('auth-token', token);
     // Generate the session.........
     res.cookie('idk', 'idksj');
     req.session.token = token;
