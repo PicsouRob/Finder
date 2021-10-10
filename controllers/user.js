@@ -64,7 +64,7 @@ const loginValidation = async (req, res, next) => {
 const deleteAccount = async (req, res, next) => {
     User.findByIdAndDelete({ _id: req.params.id }).then(user => {
         res.status(200).json({ message: "Votre compte a été supprimé avec succès" });
-        res.redirect('/api/user/logout');
+        next();
     }).catch(error => { return res.json({ error })})
 }
 
