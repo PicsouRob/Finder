@@ -27,12 +27,7 @@ const registerValidation = async (req, res, next) => {
     // Generate the session.........
     
     try {
-        await user.save(success => {
-            req.session.token = token;
-            req.session.user = user;
-            req.session.isLogged = true;
-            res.cookie('idk', 'idksj');
-        });
+        await user.save();
         res.json({ message: "Votre compte à été créé avec succès", user, token });
         next();
     } catch (err) {
@@ -41,7 +36,7 @@ const registerValidation = async (req, res, next) => {
 };
 
 const getProfil = async (req, res) => {
-    await User.findOne({ name: req.params.name }).then(user => {
+    await User.findOne({ _id: req.params.id }).then(user => {
         if(!user) return res.json({ error: "Oups, cette utilisateur n'existe pas" });
         res.status(200).json( user );
     }).catch(error => { return res.json({ error })})
@@ -61,11 +56,6 @@ const loginValidation = async (req, res, next) => {
     // Generate the Token ......
     const token = jwt.sign({  name: user.name, email: user.email }, config.TOKEN_SECRET);
     res.header('auth-token', token);
-    // Generate the session.........
-    res.cookie('idk', 'idksj');
-    req.session.token = token;
-    req.session.isLogged = true;
-    req.session.user = user;
 
     res.status(200).json({ user, token, message: "Connecter avec succès" });
     next();
@@ -73,9 +63,6 @@ const loginValidation = async (req, res, next) => {
 
 const deleteAccount = async (req, res, next) => {
     User.findByIdAndDelete({ _id: req.params.id }).then(user => {
-        req.session.token = '';
-        req.session.isLogged = false;
-        req.session.name = '';
         res.status(200).json({ message: "Votre compte a été supprimé avec succès" });
         res.redirect('/api/user/logout');
     }).catch(error => { return res.json({ error })})

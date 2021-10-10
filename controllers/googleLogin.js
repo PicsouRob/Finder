@@ -13,25 +13,22 @@ const googleLogin = async (req, res, next) => {
         const token = jwt.sign({ email, name }, config.TOKEN_SECRET);
         const user = await User.findOne({ email });
         if(user) {
-            req.session.token = token;
-            req.session.name = name;
-            req.session.isLogged = true;
-            return res.json({ user });
+            return res.json({ user, token });
         }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(email+config.TOKEN_SECRET, salt);
+
         const newUser = new User({
             name, email,
-            password: email+config.TOKEN_SECRET,
+            password: hashedPassword,
             image: picture,
         });
 
         res.header('auth-token', token);
 
-        newUser.save(result => {
-            req.session.token = token;
-            req.session.name = name;
-            req.session.isLogged = true;
-        });
-        res.json({ newUser });
+        newUser.save();
+        res.json({ user: newUser, token });
     } else {
         return res.json({ error: "Quelque chose s'est mal passé" });
     }

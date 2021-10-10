@@ -7,7 +7,7 @@ const authVerification = require('../routes/verifyToken');
 
 router.post("/register", (req, res, next) => registerValidation(req, res, next));
 
-router.get('/:name', (req, res) => getProfil(req, res));
+router.get('/:id', (req, res) => getProfil(req, res));
 
 router.post("/login", (req, res, next) => loginValidation(req, res, next));
 
