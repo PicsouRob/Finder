@@ -26,7 +26,7 @@ const postJobs = async (req, res) => {
             
             try {
                 jobs.save();
-                res.send(jobs);
+                res.json(jobs);
             } catch(err) {
                 res.json({ error: err });
             }
