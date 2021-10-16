@@ -5,11 +5,11 @@ const { validatedCreate } = require('../validations/createValidation');
 const postJobs = async (req, res) => {
     const { error } = await validatedCreate.validate(req.body);
     if(error) {
-        return res.send(error.details[0].message);
+        return res.json({ error: error.details[0].message });
     }
 
-    const job =await  Job.findOne({ nameCreator: req.body.nameCreator, job: req.body.job })
-    if(job) return res.send("Vous avez déjà ajouté ce métier");
+    const job =await  Job.findOne({ nameCreator: req.body.nameCreator, job: req.body.job });
+    if(job) return res.json({ message: "Vous avez déjà ajouté ce métier" });
 
     const jobs = new Job({
         nameCreator: req.body.name,
