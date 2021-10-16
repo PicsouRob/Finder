@@ -20,7 +20,7 @@ const createSchema = mongoose.Schema({
         type: String, required: true, max: 25,
     },
     images: {
-        type: String, required: false, default: ''
+        type: String, default: []
     },
     facebookProfil: {
         type: String, default: ''

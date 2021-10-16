@@ -15,6 +15,8 @@ const userSchema = mongoose.Schema({
     image: { type: String },
     facebook: { type: String, default: "" },
     instagram: { type: String, default: "" },
+    phone: { type: Number, min: 8, defaault: '' },
+    description: { type: String, default: "" }
 });
 
 module.exports = mongoose.model("User", userSchema);
