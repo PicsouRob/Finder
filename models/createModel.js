@@ -23,10 +23,10 @@ const createSchema = mongoose.Schema({
         type: String, required: false, default: ''
     },
     facebookProfil: {
-        type: String, required: false, default: ''
+        type: String, default: ''
     },
     instagramProfil: {
-        type: String, required: false, default: ''
+        type: String, default: ''
     },
     date: { type: Date, default: Date.now }
 });
