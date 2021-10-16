@@ -3,38 +3,31 @@ const User = require('../models/userModel');
 const { validatedCreate } = require('../validations/createValidation');
 
 const postJobs = async (req, res) => {
-    res.json({ id: 223 });
-    // const { error } = await validatedCreate.validate(req.body);
-    // if(error) {
-    //     return res.send(error.details[0].message);
-    // }
+    const { error } = await validatedCreate.validate(req.body);
+    if(error) {
+        return res.send(error.details[0].message);
+    }
 
-    // // Check existing job
-    // await User.findOne({ name: req.user.name }).then(user => {
-    //     Job.findOne({ nameCreator: user.name, job: req.body.job }).then(job => {
-    //         if(job) return res.send("Vous avez déjà ajouté ce métier");
+    const job =await  Job.findOne({ nameCreator: req.body.nameCreator, job: req.body.job })
+    if(job) return res.send("Vous avez déjà ajouté ce métier");
 
-    //         const jobs = new Job({
-    //             nameCreator: user.name,
-    //             email: user.email,
-    //             phone: req.body.phone,
-    //             job: req.body.job,
-    //             description: req.body.description,
-    //             location: req.body.location,
-    //             facebookProfil: user.facebookProfil,
-    //             instagramProfil: user.instagramProfil,
-    //         });
-            
-    //         try {
-    //             jobs.save();
-    //             res.json(jobs);
-    //         } catch(err) {
-    //             res.json({ error: err });
-    //         }
-    //     }).catch(error => { 
-    //         return res.json({ error: "Quelque chose s'est mal passé" })
-    //     });
-    // })
+    const jobs = new Job({
+        nameCreator: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        job: req.body.job,
+        description: req.body.description,
+        location: req.body.location,
+        facebookProfil: req.body.facebookProfil,
+        instagramProfil: req.body.instagramProfil,
+    });
+    
+    try {
+        await jobs.save();
+        res.json(jobs);
+    } catch(err) {
+        res.json({ error: err });
+    }
 };
 
 const getThings = async (req, res) => {
