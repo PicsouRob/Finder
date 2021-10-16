@@ -6,7 +6,7 @@ const { postJobs, getOneThings, getThings, updateThings,
     deleteThings, getThingsByName, getThingsByUserName, findByZone
 } = require('../controllers/createController');
 
-router.post('/add-job', authVerification, (req, res) => postJobs(req, res));
+router.post('/add-job', (req, res) => postJobs(req, res));
 
 router.get('/', (req, res) => getThings(req, res));
 
