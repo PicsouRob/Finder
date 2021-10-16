@@ -3,37 +3,38 @@ const User = require('../models/userModel');
 const { validatedCreate } = require('../validations/createValidation');
 
 const postJobs = async (req, res) => {
-    const { error } = await validatedCreate.validate(req.body);
-    if(error) {
-        return res.send(error.details[0].message);
-    }
+    res.json({ id: 223 });
+    // const { error } = await validatedCreate.validate(req.body);
+    // if(error) {
+    //     return res.send(error.details[0].message);
+    // }
 
-    // Check existing job
-    await User.findOne({ name: req.user.name }).then(user => {
-        Job.findOne({ nameCreator: user.name, job: req.body.job }).then(job => {
-            if(job) return res.send("Vous avez déjà ajouté ce métier");
+    // // Check existing job
+    // await User.findOne({ name: req.user.name }).then(user => {
+    //     Job.findOne({ nameCreator: user.name, job: req.body.job }).then(job => {
+    //         if(job) return res.send("Vous avez déjà ajouté ce métier");
 
-            const jobs = new Job({
-                nameCreator: user.name,
-                email: user.email,
-                phone: req.body.phone,
-                job: req.body.job,
-                description: req.body.description,
-                location: req.body.location,
-                facebookProfil: user.facebookProfil,
-                instagramProfil: user.instagramProfil,
-            });
+    //         const jobs = new Job({
+    //             nameCreator: user.name,
+    //             email: user.email,
+    //             phone: req.body.phone,
+    //             job: req.body.job,
+    //             description: req.body.description,
+    //             location: req.body.location,
+    //             facebookProfil: user.facebookProfil,
+    //             instagramProfil: user.instagramProfil,
+    //         });
             
-            try {
-                jobs.save();
-                res.json(jobs);
-            } catch(err) {
-                res.json({ error: err });
-            }
-        }).catch(error => { 
-            return res.json({ error: "Quelque chose s'est mal passé" })
-        });
-    })
+    //         try {
+    //             jobs.save();
+    //             res.json(jobs);
+    //         } catch(err) {
+    //             res.json({ error: err });
+    //         }
+    //     }).catch(error => { 
+    //         return res.json({ error: "Quelque chose s'est mal passé" })
+    //     });
+    // })
 };
 
 const getThings = async (req, res) => {
