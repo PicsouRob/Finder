@@ -10,6 +10,8 @@ validatedRegister = Joi.object({
     instagram: Joi.string(),
     phone: Joi.number(),
     description: Joi.string(),
+    location: Joi.string(),
+    website: Joi.string(),
 });
 
 validateNewPass = Joi.object({ newPassword: Joi.string().min(6).required() });
