@@ -9,7 +9,7 @@ router.post("/register", (req, res, next) => registerValidation(req, res, next))
 
 router.get('/:id', (req, res) => getProfil(req, res));
 
-router.put('/update-user/:id', (req, res) => updateUser(req, res));
+router.get('/update-user/:id', (req, res) => updateUser(req, res));
 
 router.post("/login", (req, res, next) => loginValidation(req, res, next));
 
