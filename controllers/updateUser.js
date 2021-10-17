@@ -7,11 +7,11 @@ const forgetPassword = async (req, res, next) => {
     const token = req.header('auth-token');
     const user = await User.findOne({ email });
     if(!user) {
-        return res.status(400).json({ error: "L'utilisateur avec cet e-mail n'existe pas" });
+        return res.json({ error: "L'utilisateur avec cet e-mail n'existe pas" });
     }
     
     user.updateOne({ resetLink: token }, (err, success) => {
-        if(err) return res.status(400).json({ error: "Quelque chose s'est mal passé" });
+        if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
         res.status(200).json({ message: "Link reset" });
         next();
@@ -21,28 +21,34 @@ const forgetPassword = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
     const { newPassword, email } = req.body;
     const { error } = await validateNewPass.validate({ newPassword });
-    if(error) return res.status(400).json({ error: error.details[0].message });
+    if(error) return res.json({ error: error.details[0].message });
 
     await User.findOne({ email }).then(async (user) => {
         if(!user.resetLink) {
-            return res.status(400).json({ error: "Erreur de réinitialiser votre mot de passe" });
+            return res.json({ error: "Erreur de réinitialiser votre mot de passe" });
         }
         // Hash password......
         const salt = (await bcrypt.genSalt(10)).toString();
         const hashedPassword = await bcrypt.hash(newPassword, salt);
         // Update the password
         user.updateOne({ newPassword: hashedPassword, resetLink: '' }, (err, success) => {
-            if(err) return res.status(400).json({ error: "Quelque chose s'est mal passé" });
+            if(err) return res.json({ error: "Quelque chose s'est mal passé" });
         
-            res.status(200).json({ message: "Votre mot de passe a été modifié avec succès" });
+            res.json({ message: "Votre mot de passe a été modifié avec succès" });
             next();
         });
     });
 }
 
 const updateUser = async (req, res) => {
-    User.findByIdAndUpdate({ _id: req.params.id, ...req.body }, { new: true })
-    .then(user => res.json({ message: "Objet modified !" }))
+    await User.findOne({ _id: req.params.id })
+    .then(user => {
+        user.updateOne({ ...req.body }, (err, success) => {
+            if(err) return res.json({ error: "Quelque chose s'est mal passé" });
+
+            res.json({ message: "Objet modified !" });
+        });
+    })
     .catch(error => res.json({ error: "Une erreur s'est produite" }));
 }
 
