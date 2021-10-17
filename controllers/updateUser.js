@@ -41,12 +41,13 @@ const resetPassword = async (req, res, next) => {
 }
 
 const updateUser = async (req, res) => {
+    const token = req.header('auth-token');
     await User.findOne({ _id: req.params.id })
     .then(user => {
         user.updateOne({ ...req.body }, (err, success) => {
             if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
-            res.json({ message: "Objet modified !" });
+            res.json({ user: res, token, message: "Objet modified !" });
         });
     })
     .catch(error => res.json({ error: "Une erreur s'est produite" }));
