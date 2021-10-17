@@ -41,7 +41,7 @@ const resetPassword = async (req, res, next) => {
 }
 
 const updateUser = async (req, res) => {
-    User.updateOne({ _id: req.params.id, ...req.body })
+    User.findByIdAndUpdate({ _id: req.params.id, ...req.body }, { new: true })
     .then(user => res.json({ message: "Objet modified !" }))
     .catch(error => res.json({ error: "Une erreur s'est produite" }));
 }
