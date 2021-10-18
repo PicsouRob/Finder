@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const createSchema = mongoose.Schema({
+    creatorId: {
+        type: String, required: false,
+    },
     nameCreator: {
         type: String, required: false, min: 6,
     },
