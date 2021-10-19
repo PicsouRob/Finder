@@ -18,8 +18,8 @@ router.get('/search/:name/:location', (req, res) => findByZone(req, res));
 
 router.get('/user/:name', (req, res) => getThingsByUserName(req, res));
 
-router.put('/:id', authVerification, (req, res) =>  updateThings(req, res));
+router.put('/:id', (req, res) =>  updateThings(req, res));
 
-router.delete('/:id', authVerification, (req, res) => deleteThings(req, res));
+router.delete('/:id', (req, res) => deleteThings(req, res));
 
 module.exports = router;

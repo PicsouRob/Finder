@@ -62,9 +62,14 @@ const findByZone = async (req, res) => {
 }
 
 const updateThings = async (req, res) => {
-    Job.updateOne({ _id: req.params.id, ...req.body })
-    .then(job => res.status(200).json({ message: "Objet modified !" }))
-    .catch(error => res.json({ error: "Une erreur s'est produite" }));
+    Job.findOne({ _id: req.params.id })
+    .then(job => {
+        job.updateOne({ ...req.body }, (err, success) => {
+            if(err) return res.json({ error: "Quelque chose s'est mal passé" });
+
+            res.status(200).json({ message: "Objet modified !" });
+        })
+    }).catch(error => res.json({ error: "Une erreur s'est produite" }));
 }
 
 const deleteThings = async (req, res) => {
