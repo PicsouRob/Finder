@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const Grid = require('gridfs-stream');
 const cors = require('cors');
 
 const Job = require('./models/createModel');
@@ -16,13 +17,14 @@ mongoose.connect(config.MONGOdb_ACCESS, { useNewUrlParser: true,
     .catch(() => console.log("connection failed")
 );
 
+let gfs;
+const conn = mongoose.connection;
+conn.once('open', () => {
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection("photos");
+});
+
 // Middleware.........
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//     res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
