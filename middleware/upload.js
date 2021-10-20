@@ -1,7 +1,7 @@
 const multer = require('multer');
-const GridfsStorage = require('multer-gridfs-storage');
+const GridFsStorage = require('multer-gridfs-storage');
 
-const storage = new GridfsStorage({
+const storage = new GridFsStorage({
     url: process.env.PORT,
     options: { 
         useNewUrlParser: true, useUnifiedTopology: true
