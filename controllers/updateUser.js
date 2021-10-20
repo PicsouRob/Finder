@@ -41,16 +41,17 @@ const resetPassword = async (req, res, next) => {
 }
 
 const updateUser = async (req, res) => {
-    const token = req.header('auth-token');
     await User.findOne({ _id: req.params.id })
     .then(user => {
-        user.updateOne({ ...req.body, 
-            image: req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`,
-        }, (err, success) => {
-            if(err) return res.json({ error: "Quelque chose s'est mal passé" });
+        const image = req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`;
+        res.send(image, req);
+        // user.updateOne({ ...req.body, 
+        //     image: req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`,
+        // }, (err, success) => {
+        //     if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
-            res.json({ user, token, message: "Objet modified !" });
-        });
+        //     res.json({ user, message: "Objet modified !" });
+        // });
     })
     .catch(error => res.json({ error: "Une erreur s'est produite" }));
 }
