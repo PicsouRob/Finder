@@ -1,8 +1,13 @@
 const multer = require('multer');
+const mongoose = require("mongoose");
 const { GridFsStorage } = require('multer-gridfs-storage');
 
+const config = require('../config');
+
+const db = mongoose.connect(config.MONGOdb_ACCESS);
+
 const storage = new GridFsStorage({
-    url: process.env.PORT,
+    db,
     options: { 
         useNewUrlParser: true, useUnifiedTopology: true
     },
