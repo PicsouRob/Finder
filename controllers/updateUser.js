@@ -43,8 +43,8 @@ const resetPassword = async (req, res, next) => {
 const updateUser = async (req, res) => {
     await User.findOne({ _id: req.params.id })
     .then(user => {
-        const image = req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`;
-        res.send(image, req);
+        const image = req.file === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.file.filename}`;
+        res.send(image);
         // user.updateOne({ ...req.body, 
         //     image: req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`,
         // }, (err, success) => {
