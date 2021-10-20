@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
+
 const { registerValidation, loginValidation, getProfil, deleteAccount }  = require("../controllers/user")
 const { googleLogin } = require('../controllers/googleLogin');
 const { resetPassword, forgetPassword, updateUser } = require('../controllers/updateUser');
 const authVerification = require('../routes/verifyToken');
+const upload = require('../middleware/upload');
 
-router.post("/register", (req, res, next) => registerValidation(req, res, next));
+router.post("/register", upload.single('image'), (req, res, next) => registerValidation(req, res, next));
 
 router.get('/:id', (req, res) => getProfil(req, res));
 
-router.put('/update-user/:id', (req, res) => updateUser(req, res));
+router.put('/update-user/:id', upload.single('image'), (req, res) => updateUser(req, res));
 
 router.post("/login", (req, res, next) => loginValidation(req, res, next));
 

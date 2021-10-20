@@ -20,7 +20,9 @@ const registerValidation = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // New User
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ name, email, password: hashedPassword,
+        image: req.image === undefined ? "" : `${process.env.PORT}/userProfil/${req.image.filename}`
+    });
 
     const token = jwt.sign({ email, name }, config.TOKEN_SECRET);
     res.header('auth-token', token);
