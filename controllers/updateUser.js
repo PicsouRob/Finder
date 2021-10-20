@@ -43,15 +43,13 @@ const resetPassword = async (req, res, next) => {
 const updateUser = async (req, res) => {
     await User.findOne({ _id: req.params.id })
     .then(user => {
-        const image = req.file === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.file.filename}`;
-        res.send(image);
-        // user.updateOne({ ...req.body, 
-        //     image: req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`,
-        // }, (err, success) => {
-        //     if(err) return res.json({ error: "Quelque chose s'est mal passé" });
+        user.updateOne({ ...req.body, 
+            image: req.file === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.file.filename}`,
+        }, (err, success) => {
+            if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
-        //     res.json({ user, message: "Objet modified !" });
-        // });
+            res.json({ user, message: "Objet modified !" });
+        });
     })
     .catch(error => res.json({ error: "Une erreur s'est produite" }));
 }
