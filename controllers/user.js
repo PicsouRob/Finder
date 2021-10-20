@@ -21,7 +21,7 @@ const registerValidation = async (req, res, next) => {
 
     // New User
     const user = new User({ name, email, password: hashedPassword,
-        image: req.image === undefined ? "" : `${process.env.PORT}/userProfil/${req.image.filename}`
+        image: req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`
     });
 
     const token = jwt.sign({ email, name }, config.TOKEN_SECRET);

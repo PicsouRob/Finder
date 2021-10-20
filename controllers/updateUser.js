@@ -45,7 +45,7 @@ const updateUser = async (req, res) => {
     await User.findOne({ _id: req.params.id })
     .then(user => {
         user.updateOne({ ...req.body, 
-            image: req.image === undefined ? "" : `${process.env.PORT}/userProfil/${req.image.filename}`,
+            image: req.image === undefined ? "" : `http://finderht.herokuapp.com/userProfil/${req.image.filename}`,
         }, (err, success) => {
             if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
