@@ -74,7 +74,7 @@ const updateThings = async (req, res) => {
     Job.findOne({ _id: req.params.id })
     .then(job => {
         req.files.forEach((ele) => {
-            ele === undefined ? imagesArray.push(...job.images) :
+            ele === undefined ? imagesArray = job.images :
             imagesArray.push(...job.images, `https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         });
 
@@ -83,6 +83,7 @@ const updateThings = async (req, res) => {
             if(err) return res.json({ error: `Quelque chose s'est mal passé ${err}` });
 
             res.status(200).json({ message: "Objet modified !" });
+            console.log(imagesArray);
         })
     }).catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
 }
