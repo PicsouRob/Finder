@@ -1,10 +1,7 @@
 const multer = require('multer');
-const mongoose = require("mongoose");
 const { GridFsStorage } = require('multer-gridfs-storage');
 
 const config = require('../config');
-
-// const db = mongoose.connect(config.MONGOdb_ACCESS);
 
 const storage = new GridFsStorage({
     url: 'mongodb+srv://picsou:picsou13@cluster0.4td5k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',

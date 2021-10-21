@@ -11,14 +11,9 @@ const config = require('./config');
 const app = express();
 
 // mongoose connection....
-const conn = mongoose.createConnection(config.MONGOdb_ACCESS, { useNewUrlParser: true,
-    useUnifiedTopology: true });
-    //     .then((conn) => {
-        //         console.log("connected to mongoDb");
-        //     }).catch(() => console.log("connection failed")
-        // );
-        
-        // const conn = mongoose.createConnection(config);
+const conn = mongoose.createConnection(config.MONGOdb_ACCESS, 
+    { useNewUrlParser: true,useUnifiedTopology: true });
+    
 Grid.mongo = mongoose.mongo;
 let gfs;
 conn.once('open', () => {
@@ -37,8 +32,6 @@ app.get('/userProfil/:filename', async (req, res) => {
         const file = await gfs.files.findOne({ filename: req.params.filename });
         const readStream = gfs.createReadStream(file.filename);
         readStream.pipe(res);
-        // console.log(file);
-        // res.send(file);
     } catch (error) {
         console.log("Not found");
         console.log(error);
