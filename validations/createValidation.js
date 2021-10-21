@@ -8,8 +8,8 @@ validatedCreate = Joi.object({
     job: Joi.string().min(6).required(),
     description: Joi.string().min(6).required(),
     location: Joi.string().max(25).required(),
-    facebookProfil: Joi.string().default(''),
-    instagramProfil: Joi.string().default(''),
+    // facebookProfil: Joi.string().default(''),
+    // instagramProfil: Joi.string().default(''),
     images: Joi.array().items(Joi.string()).default([]),
 });
 
