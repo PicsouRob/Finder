@@ -5,11 +5,11 @@ const { validatedCreate } = require('../validations/createValidation');
 const postJobs = async (req, res) => {
     let imagesArray = [];
 
-    const images = req.images ? [] : req.images.filename.forEach((ele) => {
-        return imagesArray.push(ele.filename);
-    });
+    // const images = req.images ? [] : req.images.filename.forEach((ele) => {
+    //     return imagesArray.push(ele.filename);
+    // });
 
-    res.send(images);
+    res.send(req.images);
 
     // const { error } = await validatedCreate.validate(req.body);
     // if(error) return res.json({ error: error.details[0].message });
