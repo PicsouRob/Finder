@@ -47,11 +47,11 @@ const updateUser = async (req, res) => {
     .then(user => {
         user.updateOne({ name, email, phone, description, instagram, 
             facebook, location, website,
-            image: req.file === undefined ? "" : `https://finderht.com/userProfil/${req.file.filename}`,
+            image: req.file === undefined ? "" : `https://finderht.herokuapp.com/userProfil/${req.file.filename}`,
         }, (err, success) => {
             if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
-            res.json({ user, message: "Objet modified !" });
+            res.json({ user, message: "Objet modified !", success });
         });
     })
     .catch(error => res.json({ error: "Une erreur s'est produite" }));

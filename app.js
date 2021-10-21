@@ -29,6 +29,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/userProfil/:filename', async (req, res) => {
+    try {
+        const file = await gfs.file.findOne({ filename: req.params.filename });
+        const readStream = gfs.createReadStream(file.filename);
+        readStream.pipe(res);
+    } catch (error) {
+        console.log("Not found");
+        console.log(error);
+    }
+});
+
 app.get('/', async (req, res) => {
     await Job.find().then(user => {
         res.json(user);
