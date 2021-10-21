@@ -68,23 +68,23 @@ const findByZone = async (req, res) => {
 }
 
 const updateThings = async (req, res) => {
-    const { nameCreator, email, phone, job, description, location, 
+    const { nameCreator, email, phone, description, location, 
         facebookProfil, instagramProfil } = req.body;
     let imagesArray = [];
     Job.findOne({ _id: req.params.id })
-    .then(async (job) => {
+    .then(job => {
         await req.files.forEach((ele) => {
             ele === undefined ? imagesArray = [...job.images] :
             imagesArray.push(...job.images, `https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         });
 
-        job.updateOne({ nameCreator, email, phone, job, description, location, 
+        job.updateOne({ nameCreator, email, phone, description, location, 
             facebookProfil, instagramProfil, images: imagesArray }, (err, success) => {
-            if(err) return res.json({ error: "Quelque chose s'est mal passé" });
+            if(err) return res.json({ error: `Quelque chose s'est mal passé ${err}` });
 
             res.status(200).json({ message: "Objet modified !" });
         })
-    }).catch(error => res.json({ error: "Une erreur s'est produite" }));
+    }).catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
 }
 
 const deleteThings = async (req, res) => {
