@@ -3,10 +3,13 @@ const User = require('../models/userModel');
 const { validatedCreate } = require('../validations/createValidation');
 
 const postJobs = async (req, res) => {
+    const { nameCreator, email, creatorId, phone, job, description, 
+        location, facebookProfil, instagramProfil } = req.body;
+
     let imagesArray = [];
-    const { error } = await validatedCreate.validate(req.body);
+    const { error } = await validatedCreate.validate(nameCreator, email, creatorId, phone, job, description, 
+        location,);
     if(error) return res.json({ error: error.details[0].message });
-    const { nameCreator, email, phone, job, description, location, facebookProfil, instagramProfil } = req.body;
     
     const existedJob = await  Job.findOne({ nameCreator, job });
     if(existedJob) return res.json({ error: "Vous avez déjà ajouté ce métier" });
