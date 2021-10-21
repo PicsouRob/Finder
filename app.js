@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('userProfil/:filename', async (req, res) => {
+app.get('/userProfil/:filename', async (req, res) => {
     res.send("jdjsdsjdjsd");
     // try {
     //     const file = await gfs.files.findOne({ filename: req.params.filename });
