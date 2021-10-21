@@ -74,7 +74,7 @@ const updateThings = async (req, res) => {
     Job.findOne({ _id: req.params.id })
     .then(job => {
         req.files.forEach((ele) => {
-            ele === undefined ? imagesArray = job.images :
+            ele === undefined ? imagesArray.push(...[job.images]) :
             imagesArray.push(...job.images, `https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         });
 
