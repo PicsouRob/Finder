@@ -68,9 +68,14 @@ const findByZone = async (req, res) => {
 }
 
 const updateThings = async (req, res) => {
+    let imagesArray = [];
+    await req.files.forEach((ele) => {
+        ele === undefined ? imagesArray = [] :
+        imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
+    });
     Job.findOne({ _id: req.params.id })
     .then(job => {
-        job.updateOne({ ...req.body }, (err, success) => {
+        job.updateOne({ ...req.body, images: [...job.images, imagesArray] }, (err, success) => {
             if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
             res.status(200).json({ message: "Objet modified !" });
