@@ -38,8 +38,8 @@ app.get('/userProfil/:filename', async (req, res) => {
             // res.send(result);
             // const readStream = gfs.createReadStream(result._id);
             // readStream.pipe(res);
-            console.log(result);
         });
+        console.log(file);
         res.send(file);
     } catch (error) {
         console.log("Not found");
