@@ -8,9 +8,9 @@ validatedCreate = Joi.object({
     job: Joi.string().min(6).required(),
     description: Joi.string().min(6).required(),
     location: Joi.string().max(25).required(),
-    facebookProfil: Joi.string().allow(''),
-    instagramProfil: Joi.string().allow(''),
-    images: Joi.array().default([]),
+    facebookProfil: Joi.string().min(0),
+    instagramProfil: Joi.string().min(0),
+    images: Joi.array(),
 });
 
 module.exports.validatedCreate = validatedCreate;
