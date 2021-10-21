@@ -79,10 +79,10 @@ const updateThings = async (req, res) => {
 
         job.updateOne({ nameCreator, email, phone, description, location, 
             facebookProfil, instagramProfil, 
-            images: req.files === undefined ? job.images : imagesArray }, (err, success) => {
+            images: !req.files ? job.images : imagesArray }, (err, success) => {
             if(err) return res.json({ error: `Quelque chose s'est mal passé ${err}` });
 
-            res.status(200).json({ message: "Objet modified !", imagesArray: req.files });
+            res.status(200).json({ message: "Objet modified !", imagesArray });
         })
     }).catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
 }
