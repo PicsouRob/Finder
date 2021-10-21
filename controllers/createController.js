@@ -9,7 +9,7 @@ const postJobs = async (req, res) => {
     //     return imagesArray.push(ele.filename);
     // });
 
-    res.send(req.images);
+    console.log(req.images);
 
     // const { error } = await validatedCreate.validate(req.body);
     // if(error) return res.json({ error: error.details[0].message });
