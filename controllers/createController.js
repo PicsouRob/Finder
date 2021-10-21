@@ -4,33 +4,29 @@ const { validatedCreate } = require('../validations/createValidation');
 
 const postJobs = async (req, res) => {
     let imagesArray = [];
-
-    const images = !req.files ? [] : req.files.forEach((ele) => {
-        imagesArray.push(ele.filename);
+    const { error } = await validatedCreate.validate(req.body);
+    if(error) return res.json({ error: error.details[0].message });
+    const { nameCreator, email, phone, job, description, location, facebookProfil, instagramProfil } = req.body;
+    
+    const existedJob = await  Job.findOne({ nameCreator, job });
+    if(existedJob) return res.json({ error: "Vous avez déjà ajouté ce métier" });
+    
+    const images = await !req.files ? [] : req.files.forEach((ele) => {
+        imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         return imagesArray; 
     });
 
-    console.log(images);
-    res.send(images);
-
-    // const { error } = await validatedCreate.validate(req.body);
-    // if(error) return res.json({ error: error.details[0].message });
-    // const { nameCreator, email, phone, job, description, location, facebookProfil, instagramProfil } = req.body;
-
-    // const existedJob = await  Job.findOne({ nameCreator, job });
-    // if(existedJob) return res.json({ error: "Vous avez déjà ajouté ce métier" });
-
-    // const jobs = new Job({
-    //     nameCreator, email, phone, job, description, 
-    //     location, facebookProfil, instagramProfil
-    // });
+    const jobs = new Job({
+        nameCreator, email, phone, job, description, 
+        location, facebookProfil, instagramProfil, images
+    });
     
-    // try {
-    //     await jobs.save();
-    //     res.json(jobs);
-    // } catch(err) {
-    //     res.json({ error: err });
-    // }
+    try {
+        await jobs.save();
+        res.json(jobs);
+    } catch(err) {
+        res.json({ error: err });
+    }
 };
 
 const getThings = async (req, res) => {
