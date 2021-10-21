@@ -5,7 +5,7 @@ const { validatedCreate } = require('../validations/createValidation');
 const postJobs = async (req, res) => {
     let imagesArray = [];
 
-    const images = req.images ? [] : req.images.forEach((ele) => {
+    const images = req.images ? [] : req.images.filename.forEach((ele) => {
         return imagesArray.push(ele.filename);
     });
 
