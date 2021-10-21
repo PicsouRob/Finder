@@ -11,16 +11,19 @@ const config = require('./config');
 const app = express();
 
 // mongoose connection....
-mongoose.connect(config.MONGOdb_ACCESS, { useNewUrlParser: true,
-    useUnifiedTopology: true })
-    .then(() => console.log("connected to mongoDb"))
-    .catch(() => console.log("connection failed")
-);
-
 let gfs;
+const dbConnect = mongoose.connect(config.MONGOdb_ACCESS, { useNewUrlParser: true,
+    useUnifiedTopology: true });
+//     .then((conn) => {
+//         conn.
+//         console.log("connected to mongoDb");
+
+//     }).catch(() => console.log("connection failed")
+// );
+
 const conn = mongoose.connection;
-conn.once('open', () => {
-    gfs = Grid(conn.db, mongoose.mongo);
+dbConnect.once('open', () => {
+    gfs = Grid(dbConnect.db, mongoose.mongo);
     gfs.collection("photos");
 });
 
@@ -30,15 +33,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/userProfil/:filename', async (req, res) => {
-    res.send("jdjsdsjdjsd");
-    // try {
-    //     const file = await gfs.files.findOne({ filename: req.params.filename });
-    //     const readStream = gfs.createReadStream(file.filename);
-    //     readStream.pipe(res);
-    // } catch (error) {
-    //     console.log("Not found");
-    //     console.log(error);
-    // }
+    try {
+        const file = await gfs.files.findOne({ filename: req.params.filename });
+        const readStream = gfs.createReadStream(file.filename);
+        readStream.pipe(res);
+    } catch (error) {
+        console.log("Not found");
+        console.log(error);
+    }
 });
 
 app.get('/', async (req, res) => {
