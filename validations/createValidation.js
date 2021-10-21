@@ -10,7 +10,7 @@ validatedCreate = Joi.object({
     location: Joi.string().max(25).required(),
     facebookProfil: Joi.string(),
     instagramProfil: Joi.string(),
-    images: Joi.array().items(Joi.string()),
+    images: Joi.array().items(Joi.string()).default([]),
 });
 
 module.exports.validatedCreate = validatedCreate;
