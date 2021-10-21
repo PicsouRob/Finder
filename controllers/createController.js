@@ -7,8 +7,8 @@ const postJobs = async (req, res) => {
         location, facebookProfil, instagramProfil } = req.body;
 
     let imagesArray = [];
-    const { error } = await validatedCreate.validate(nameCreator, email, creatorId, phone, job, description, 
-        location,);
+    const { error } = await validatedCreate.validate({ nameCreator, email, creatorId, phone, job, description, 
+        location });
     if(error) return res.json({ error: error.details[0].message });
     
     const existedJob = await  Job.findOne({ nameCreator, job });
