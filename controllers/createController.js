@@ -71,11 +71,12 @@ const updateThings = async (req, res) => {
     const { nameCreator, email, phone, description, location, 
         facebookProfil, instagramProfil } = req.body;
     Job.findOne({ _id: req.params.id }).then(job => {
-        let element;
+        // let element;
         let imagesArray = [];
+        req.files === undefined ? imagesArray.push(...job.images) : 
         req.files.forEach((ele) => {
-            element = ele;
-            !ele.filename ? imagesArray.push(...job.images) :
+            // element = ele;
+            // !ele.filename ? imagesArray.push(...job.images) :
             imagesArray.push(...job.images, `https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         });
 
@@ -84,7 +85,7 @@ const updateThings = async (req, res) => {
             images: imagesArray }, (err, success) => {
             if(err) return res.json({ error: `Quelque chose s'est mal passé ${err}` });
 
-            res.status(200).json({ message: "Objet modified !", imagesArray, element });
+            res.status(200).json({ message: "Objet modified !", imagesArray });
         })
     }).catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
 }
