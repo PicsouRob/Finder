@@ -11,7 +11,7 @@ const postJobs = async (req, res) => {
     const existedJob = await  Job.findOne({ nameCreator, job });
     if(existedJob) return res.json({ error: "Vous avez déjà ajouté ce métier" });
     
-    const images = await !req.files ? [] : req.files.forEach((ele) => {
+    const images = await req.files === undefined ? [] : req.files.forEach((ele) => {
         imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         return imagesArray; 
     });
