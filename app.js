@@ -34,11 +34,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/userProfil/:filename', async (req, res) => {
     try {
-        const file = await gfs.findOne({ filename: req.params.filename }, (result) => {
+        await gfs.findOne({ filename: req.params.filename }, (result) => {
+            const readStream = gfs.createReadStream(result.filename);
+            readStream.pipe(res);
             console.log(result);
         });
-        const readStream = gfs.createReadStream(file.filename);
-        readStream.pipe(res);
     } catch (error) {
         console.log("Not found");
         console.log(error);
