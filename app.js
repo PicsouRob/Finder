@@ -12,18 +12,17 @@ const app = express();
 
 // mongoose connection....
 let gfs;
-const dbConnect = mongoose.connect(config.MONGOdb_ACCESS, { useNewUrlParser: true,
+const conn = mongoose.createConnection(config.MONGOdb_ACCESS, { useNewUrlParser: true,
     useUnifiedTopology: true });
 //     .then((conn) => {
-//         conn.
 //         console.log("connected to mongoDb");
-
 //     }).catch(() => console.log("connection failed")
 // );
 
-const conn = mongoose.connection;
-dbConnect.once('open', () => {
-    gfs = Grid(dbConnect.db, mongoose.mongo);
+// const conn = mongoose.createConnection(config);
+conn.once('open', () => {
+    console.log("connected to mongoDb");
+    gfs = Grid(conn.db, mongoose.mongo.ObjectId);
     gfs.collection("photos");
 });
 
