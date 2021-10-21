@@ -82,7 +82,7 @@ const updateThings = async (req, res) => {
             images: req.files === undefined ? job.images : imagesArray }, (err, success) => {
             if(err) return res.json({ error: `Quelque chose s'est mal passé ${err}` });
 
-            res.status(200).json({ message: "Objet modified !", imagesArray });
+            res.status(200).json({ message: "Objet modified !", imagesArray: req.files });
         })
     }).catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
 }
