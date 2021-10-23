@@ -5,22 +5,22 @@ const { validatedCreate } = require('../validations/createValidation');
 const postJobs = async (req, res) => {
     const { nameCreator, email, creatorId, phone, job, description, 
         location, facebookProfil, instagramProfil } = req.body;
-
+    // res.send(req.body)
     let imagesArray = [];
     const { error } = await validatedCreate.validate({ nameCreator, email, creatorId, phone, job, description, 
         location });
-    if(error) return res.json({ error: error.details[0].message });
+    if(error) return res.json({ message: error.details[0].message });
     
     const existedJob = await  Job.findOne({ nameCreator, job });
     if(existedJob) return res.json({ error: "Vous avez déjà ajouté ce métier" });
     
+    req.files === undefined ? imagesArray = [] :
     req.files.forEach((ele) => {
-        ele === undefined ? imagesArray = [] :
         imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
     });
 
     const jobs = new Job({
-        nameCreator, email, phone, job, description, 
+        nameCreator, email, phone, job, description, creatorId,
         location, facebookProfil, instagramProfil, images: imagesArray
     });
     
@@ -56,7 +56,7 @@ const getThingsByName = async (req, res) => {
 }
 
 const getThingsByUserName = async (req, res) => {
-    Job.findOne({ nameCreator: req.params.name }).then(response => {
+    Job.find({ creatorId: req.params.creatorId }).then(response => {
         if(!response) return res.json({ error: "Oups ! désolé, aucun résultat trouvé" });
         res.status(200).json(response)
     }).catch(error => res.json({ error }));

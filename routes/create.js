@@ -17,7 +17,7 @@ router.get('/search/:name', (req, res) => getThingsByName(req, res));
 
 router.get('/search/:name/:location', (req, res) => findByZone(req, res));
 
-router.get('/user/:name', (req, res) => getThingsByUserName(req, res));
+router.get('/user/:creatorId', (req, res) => getThingsByUserName(req, res));
 
 router.put('/:id', upload.array('images'), (req, res) =>  updateThings(req, res));
 
