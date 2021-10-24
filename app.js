@@ -47,4 +47,4 @@ app.get('/', async (req, res) => {
 app.use('/api/job', createRoute);
 app.use("/api/user", authRoute);
 
-app.listen(config.PORT || 8000, () => console.log("Server runing up"));
+app.listen(config.PORT || 8080, () => console.log("Server runing up"));
