@@ -46,5 +46,5 @@ app.get('/', async (req, res) => {
 
 app.use('/api/job', createRoute);
 app.use("/api/user", authRoute);
-
+// process.env.PORT || 
 app.listen(process.env.PORT || 8000, () => console.log("Server runing up"));
