@@ -49,7 +49,7 @@ const getOneThings = async (req, res) => {
 
 const getThingsByName = async (req, res) => {
     const job = `${req.params.name}`;
-    Job.findOne({ job }).then(response => {
+    Job.find({ job }).then(response => {
         if(!response) return res.json({ error: `Oups ! désolé, aucun résultat trouvé pour ${job}, Il semble que nous ne puissions trouver aucun résultat basé sur votre recherche. ` });
         res.status(200).json(response)
     }).catch(error => res.json({ error }));
@@ -64,7 +64,7 @@ const getThingsByUserName = async (req, res) => {
 
 const findByZone = async (req, res) => {
     const { name, location } = req.params;
-    Job.findOne({ job: name, location }).then(response => {
+    Job.find({ job: name, location }).then(response => {
         if(!response) return res.json({ error: "Oups ! désolé, aucun résultat trouvé" });
         res.status(200).json(response)
     }).catch(error => res.json({ error }));
