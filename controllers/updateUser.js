@@ -43,14 +43,11 @@ const resetPassword = async (req, res, next) => {
 const updateUser = async (req, res) => {
     const { name, email, phone, description, instagram, 
         facebook, location, website } = req.body;
-        
+    
     await User.findOne({ _id: req.params.id })
         .then(user => {
-            const image = req.file === undefined & !user.image ? "" : 
-            req.file === undefined & user.image ? user.image : 
+            const image = req.file === undefined ? user.image : 
             `https://finderht.herokuapp.com/userProfil/${req.file.filename}`;
-
-            console.log(image);
 
         user.updateOne({ name, email, phone, description, instagram, 
             facebook, location, website, 
@@ -61,7 +58,7 @@ const updateUser = async (req, res) => {
             res.json({ user, message: "Objet modified !", image });
         });
     })
-    .catch(error => res.json({ error: "Une erreur s'est produite" }));
+    .catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
 }
 
 module.exports.forgetPassword = forgetPassword;
