@@ -48,7 +48,7 @@ const getOneThings = async (req, res) => {
 }
 
 const getThingsByName = async (req, res) => {
-    const job = `${req.params.name}`;
+    const job = req.params.name;
     Job.find({ job }).then(response => {
         if(!response) return res.json({ error: `Oups ! désolé, aucun résultat trouvé pour ${job}, Il semble que nous ne puissions trouver aucun résultat basé sur votre recherche. ` });
         res.status(200).json(response)
