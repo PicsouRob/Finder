@@ -21,6 +21,6 @@ router.put('/reset-password', authVerification, (req, res, next) => resetPasswor
 
 router.post("/google-login", (req, res, next) => googleLogin(req, res, next));
 
-router.delete('/delete-account/:id', authVerification, (req, res) => deleteAccount(req, res));
+router.delete('/delete-account/:id', (req, res) => deleteAccount(req, res));
 
 module.exports = router;

@@ -98,7 +98,7 @@ const deleteThings = async (req, res) => {
         .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
         .catch(error => res.json({ error }));
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.json({ error }));
 }
 
 module.exports.postJobs = postJobs;
