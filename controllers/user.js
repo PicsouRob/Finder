@@ -67,7 +67,7 @@ const deleteAccount = async (req, res) => {
     User.findOne({ _id: req.params.id }).then(user => {
         user.deleteOne({ _id: req.params.id })
         .then((err, success) => {
-            if(err) return res.json({ error: `Erreur lors de la suppression de votre compte ${err}` });
+            if(!err) return res.json({ error: `Erreur lors de la suppression de votre compte ${err}` });
 
             res.status(200).json({ message: 'Votre compte a été supprimé avec succès !'});
         }).catch(error => res.json({ error }));
