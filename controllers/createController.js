@@ -76,13 +76,13 @@ const updateThings = async (req, res) => {
     await Job.findOne({ _id: req.params.id }).then(job => {
         let imagesArray = [];
         imagesArray.push(...job.images);
-        if(req.files !== undefined) {
-            req.files.forEach((ele) => {
-                imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
-            });
-        }
-
-        job.updateOne({ location, 
+        req.files === undefined ? null :
+        req.files.forEach((ele) => {
+            imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
+        });
+        
+        job.updateOne({ location, nameCreator, email, phone, description,
+            facebookProfil, instagramProfil,
             images: imagesArray }, (err, success) => {
             if(err) return res.json({ error: `Quelque chose s'est mal passé ${err}` });
 
