@@ -55,7 +55,7 @@ const updateUser = async (req, res) => {
         }, (err, success) => {
             if(err) return res.json({ error: "Quelque chose s'est mal passé" });
 
-            res.json({ user, message: "Objet modified !", image });
+            res.json({ user, message: "Objet modified !" });
         });
     })
     .catch(error => res.json({ error: `Une erreur s'est produite ${error}` }));
