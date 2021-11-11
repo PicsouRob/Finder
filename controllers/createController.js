@@ -26,7 +26,7 @@ const postJobs = async (req, res) => {
     
     try {
         await jobs.save();
-        res.json(jobs, { img: req.files });
+        res.json({jobs, img: req.files });
     } catch(err) {
         res.json({ error: err });
     }
