@@ -94,7 +94,7 @@ function Modal(props) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </div>
-                        <div class="bg-white rounded-lg px-6 py-8 my-8 space-y-4">
+                        <div class="bg-white rounded-lg px-3 md:px-6 py-8 my-8 space-y-4">
                             <h2 class="font-bold text-xl">{job}</h2>
                             <div class="my-2 w-full">{description}</div>
                             <p>DEPUIS LE : {getDate(date)}</p>
