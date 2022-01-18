@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const authVerification = require('../routes/verifyToken');
+// const authVerification = require('../routes/verifyToken');
 const { postJobs, getOneThings, getThings, updateThings, 
     deleteThings, getThingsByName, getThingsByUserName, findByZone
 } = require('../controllers/createController');

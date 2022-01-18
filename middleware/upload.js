@@ -2,9 +2,9 @@ const multer = require('multer');
 const mongoose = require("mongoose");
 const { GridFsStorage } = require('multer-gridfs-storage');
 
-const config = require('../config');
+const keys = require('../config/keys');
 
-const db = mongoose.connect(config.MONGOdb_ACCESS);
+const db = mongoose.connect(keys.MONGOdb_ACCESS);
 
 const storage = new GridFsStorage({
     db,

@@ -1,5 +1,5 @@
-const dotEnv = require("dotenv");
-dotEnv.config();
+// const dotEnv = require("dotenv");
+// dotEnv.config();
 
 const config = {
     MONGOdb_ACCESS: process.env.mongoDb,

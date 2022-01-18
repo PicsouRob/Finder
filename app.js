@@ -2,18 +2,42 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Grid = require('gridfs-stream');
 const cors = require('cors');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+const flash    = require('connect-flash');
 
-const Job = require('./models/createModel');
-const authRoute = require('./routes/auth');
-const createRoute = require('./routes/create');
-const config = require('./config');
+const keys = require('./config/keys');
+require('./models/userModel');
+require('./services/passport-setup');
+
 // initialize the app.........
 const app = express();
 
 // mongoose connection....
-const conn = mongoose.createConnection(config.MONGOdb_ACCESS, 
-    { useNewUrlParser: true, useUnifiedTopology: true });
-    
+const conn = mongoose.createConnection(keys.MONGOdb_ACCESS, 
+    { useNewUrlParser: true, useUnifiedTopology: true 
+});
+  
+// Middleware.........
+app.use(cors());
+app.use(cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.SESSION_SECRET]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use(
+    express.urlencoded({ extended: true })
+);
+app.use(express.json());
+app.use((err, req, res, next) => {
+    res.locals.error = err;
+    const status = err.status || 500;
+    res.status(status);
+    res.render('error');
+});
+
 Grid.mongo = mongoose.mongo;
 let gfs;
 conn.once('open', () => {
@@ -22,10 +46,8 @@ conn.once('open', () => {
     gfs.collection("photos");
 });
 
-// Middleware.........
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Routes...
+require('./routes/auth')(app);
 
 app.get('/userProfil/:filename', async (req, res) => {
     try {
@@ -38,13 +60,27 @@ app.get('/userProfil/:filename', async (req, res) => {
     }
 });
 
-app.get('/', async (req, res) => {
-    await Job.find().then(user => {
-        res.json(user);
-    }).catch(err => res.json({ error: err }));
+const Job = require('./models/createModel');
+
+if(process.env.NODE_ENV === 'production') {
+    // Express will serve up production assets
+    // Like our main.js file, or main.css file!
+
+    app.use(express.static('client/build'));
+
+    // Express will serve the index.html file
+    // if it doesn't recognize the route
+    const path = require('path');
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
+app.get('/job', async (req, res) => {
+    Job.find().then((result) => {
+        res.send(result);
+    })
 });
 
-app.use('/api/job', createRoute);
-app.use("/api/user", authRoute);
-// process.env.PORT || 
-app.listen(process.env.PORT || 8000, () => console.log("Server runing up"));
+const PORT = process.env.PORT || 8000; 
+app.listen(PORT, () => console.log("Server runing up"));
