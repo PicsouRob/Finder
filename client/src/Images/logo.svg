@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="107" height="32" viewBox="0 0 107 32">
+  <g id="Group_1" data-name="Group 1" transform="translate(-193.271 -193)">
+    <g id="Group_2" data-name="Group 2" transform="translate(193.271 195)">
+      <g id="temp_formal-558E585E58_temp">
+        <path id="Path_1" data-name="Path 1" d="M4.845,39.87l4.354-28H5.148l-2.1,13.471c0,.01,0,.021,0,.031h0L.792,39.869Z" transform="translate(-0.792 -11.874)" fill="#31c6ae"/>
+        <path id="Path_2" data-name="Path 2" d="M32.047,11.874l-4.354,28h4.051l4.354-28Z" transform="translate(-21.128 -11.874)" fill="#31c6ae"/>
+        <path id="Path_3" data-name="Path 3" d="M69.364,28.327h0c0,.013,0-.014,0,0h11.95L79.942,19.89H70.3Z" transform="translate(-53.226 -19.89)" fill="#31c6ae"/>
+        <path id="Path_4" data-name="Path 4" d="M69.364,28.327h0c0,.013,0-.014,0,0h11.95L79.942,19.89H70.3Z" transform="translate(-54.989 -10.112)" fill="#31c6ae"/>
+      </g>
+    </g>
+    <text id="Finder" transform="translate(227.271 217)" fill="#040043" font-size="23" font-family="Poppins-SemiBold, Poppins" font-weight="600"><tspan x="0" y="0">Finder</tspan></text>
+  </g>
+</svg>
