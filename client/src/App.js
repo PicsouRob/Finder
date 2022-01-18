@@ -23,7 +23,7 @@ import './Styles/Global.css';
 function App(props) {
     const [isLoad, setIsLoad] = useState(true);
     dotenv.config();
-    axios.defaults.baseURL = 'https://finderht.herokuapp.com'
+    // axios.defaults.baseURL = 'https://finderht.herokuapp.com'
     
     useEffect(() => {
         props.getUser();
