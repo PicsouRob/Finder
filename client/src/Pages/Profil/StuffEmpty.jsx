@@ -17,7 +17,7 @@ function StuffEmpty({ user, id }) {
                     </svg>
                     Nouveau Project
                     <p class="text-[15px] font-medium">Commencez par créer un nouveau projet</p>
-                    <CreateNew />
+                    <CreateNew user={user} />
                 </div>
             </div>}
         </div>

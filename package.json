@@ -6,6 +6,11 @@
   "engines": {
     "node": "16.13.0"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "start": "nodemon app.js",
     "server": "nodemon app.js",

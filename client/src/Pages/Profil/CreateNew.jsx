@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function CreateNew() {
+function CreateNew({ user }) {
     return (
-        <div
+        <Link to="/api/job/add" state={user}
             class="w-28 flex items-center gap-x-2 px-2 py-1.5 bg-red-500 hover:bg-green-500 text-white rounded-md cursor-pointer"
         >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
@@ -13,7 +14,7 @@ function CreateNew() {
                 />
             </svg>
             Ajouter
-        </div>
+        </Link>
     )
 }
 

@@ -34,7 +34,7 @@ function SearchResult(props) {
                                 </div>
                                 <p class="font-medium">{item.nameCreator}</p>
                             </div>
-                            <h4 class="font-medium group-hover:text-white">{item.job}</h4>
+                            <h4 class="font-medium group-hover:text-white text-[19px]">{item.job}</h4>
                             <p class="">{substringDesc(item.description)}</p>
                         </div>
                         <hr class="my-3" />

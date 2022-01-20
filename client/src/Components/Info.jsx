@@ -14,14 +14,14 @@ function Info() {
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 sm:gap-x-5 md:gap-x-12 lg:gap-x-16">
                 {data.map((item, index) => (
-                    <div key={index} class="flex flex-col items-center justify-center shadow-lg rounded-lg py-8 px-4 text-center gap-y-4 group hover:bg-black">
+                    <div key={index} class="flex flex-col items-center justify-center shadow-md rounded-lg py-8 px-4 text-center gap-y-4 group hover:bg-black">
                         <div 
                             class="w-12 h-12 rounded-md flex items-center justify-center"     style={{ backgroundColor: item.color }}
                         >
                             {item.icon}
                         </div>
-                        <h3 class="font-bold text-xl lg:text-[25px] group-hover:text-white">{item.title}</h3>
-                        <span class="text-[20px]">{item.text}</span>
+                        <h3 class="font-bold text-base md:text-[20px] group-hover:text-white">{item.title}</h3>
+                        <span class="text-base">{item.text}</span>
                     </div>
                 ))}
             </div>

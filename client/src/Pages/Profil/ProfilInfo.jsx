@@ -10,7 +10,7 @@ function ProfilInfo(props) {
         description, phone, website, location
     } = data;
     const inputFile = useRef(null);
-    console.log(_id, userId);
+    // console.log(_id, userId);
 
     // const onButtonClick = () => {
     //     inputFile.current.click();
@@ -91,7 +91,7 @@ function ProfilInfo(props) {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                     </svg>
                     Nouveau Project
-                    <CreateNew />
+                    <CreateNew user={data} />
                 </div>}
                 {_id === userId && <button
                     class="bg-green-500 rounded-lg shadow-lg text-white cursor-pointer font-medium py-2 my-2 w-full hover:bg-red-500"

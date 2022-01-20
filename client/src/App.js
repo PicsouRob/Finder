@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import dotenv from 'dotenv';
 import { connect } from 'react-redux';
 import Page from 'react-page-loading';
 
@@ -22,7 +21,6 @@ import './Styles/Global.css';
 
 function App(props) {
     const [isLoad, setIsLoad] = useState(true);
-    dotenv.config();
     // axios.defaults.baseURL = 'https://finderht.herokuapp.com'
     
     useEffect(() => {

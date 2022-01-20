@@ -1,11 +1,14 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
     // mode : 'jit',
-    purge: ['./src/**/*.{js,ts,jsx,tsx}', './public/index.html'],
+    content: ['./src/**/*.{js,ts,jsx,tsx}', './public/index.html'],
+    // purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
     darkMode: false, // or 'media' or 'class'
     theme: {
       extend: {
         fontFamily : {
-          sans : ['Poppins', 'sans-serif']
+          sans : ['Poppins', ...defaultTheme.fontFamily.sans]
         },
         colors : {
           gray : {
@@ -38,7 +41,7 @@ module.exports = {
       },
     },
     variants: {
-      extend: {},
+        extend: {},
     },
     // plugins: [
     //   require('@tailwindcss/forms')

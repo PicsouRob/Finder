@@ -49,16 +49,14 @@ function Profil({ user }) {
     return (
         <div style={{ background: "#e7ebee" }}>
             <Header />
-            <div class="w-full h-52"
-                style={{ backgroundColor: '#0e1e25' }}
-            ></div>
+            <div class="w-full h-52 bg-[#0e1e25]"></div>
             <div class="min-w-7xl mx-auto px-6 md:px-8 bg-green-50 pb-16 pt-10">
                 <div class="flex flex-col md:flex-row gap-y-8 gap-x-16 -mt-40 z-10">
                     <ProfilInfo data={data} userId={user._id} stuff={stuff} />
                     <div class="bg-white p-3 md:p-4 rounded-lg shadow-lg w-full md:w-3/5 self-start">
                         <div class="flex items-center justify-between">
                             <div>{stuff.length > 1 ? "Compétences" : "Compétence"}</div>
-                            {userData === user._id ? <CreateNew /> : <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            {userData === user._id ? <CreateNew user={data} /> : <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                             </svg>}
                         </div>
