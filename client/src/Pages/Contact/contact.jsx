@@ -65,7 +65,7 @@ function Contact() {
     return (
         <div>
             <Header />
-            <div class="flex flex-col md:flex-row md:justify-between gap-x-8 gap-y-16 bg-green-50 md:bg-green-100 px-6 md:px-8 min-h-screen my-auto min-w-7xl py-16 md:py-0">
+            <div class="flex flex-col md:flex-row md:justify-between gap-x-8 gap-y-16 bg-green-50 md:bg-green-100 px-6 md:px-8 min-h-screen my-auto min-w-7xl py-24 md:py-0">
                 <div class="w-full md:w-1/2">
                     <div class="">
                         <h1 class="text-3xl md:text-3xl font-bold text-black pb-3">Contacter Nous</h1>

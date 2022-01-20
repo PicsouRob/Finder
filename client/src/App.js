@@ -16,6 +16,8 @@ import About from './Pages/About/About';
 import Help from './Pages/Help/Help';
 import HelpInfo from './Pages/Help/HelpInfo';
 import AddJob from './Pages/AddJob/AddJob';
+import Update from './Pages/Update/Update';
+import UpdateJob from './Pages/Update/UpdateJob';
 import * as actions from './actions';
 import './Styles/Global.css';
 
@@ -50,6 +52,8 @@ function App(props) {
                 <Route path="/help_search" element={<Help />} />
                 <Route path="/help_post" element={<HelpInfo />} />
                 <Route path="/api/job/add" element={<AddJob  />} />
+                <Route path="/api/user/:id/update-profil" element={<Update  />} />
+                <Route path="/api/user/:id/update-job" element={<UpdateJob  />} />
                 <Route element={<NotFound />} />
               </Routes>
             </Router>

@@ -77,14 +77,6 @@ function Profil({ user }) {
                 modalData={modalData} setShowUpdate={setShowUpdate}
                 userProfil={image}
             />
-            {stuff.map((item, index) => (
-                <div key={index}>
-                    <UpdateJob setShowUpdate={setShowUpdate} showUpdate={showUpdate}
-                        data={item}
-                    />
-                </div>
-            ))}
-            <Update modalShow={modalShow} setModalShow={setModalShow} />
             <Footer />
         </div>
     )

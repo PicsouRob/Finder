@@ -1,138 +1,139 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { animated, useSpring } from 'react-spring';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useLocation } from 'react-router';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
-import { ModalBackground, Icon } from '../Job/ModalStyle.jsx';
-import { Button, Select } from '../AddJob/AddStyle.jsx';
-import { useWidth } from '../../Utils/width';
+import Footer from '../../Components/Footer';
+import Header from '../../Components/Header';
 import { city } from '../../Utils/helpers';
 
-function UpdateJob(props) {
-    const { showUpdate, setShowUpdate, data } = props;
-    const { width } = useWidth();
-    const modalRef = useRef();
+const validationSchema = Yup.object().shape({
+    phone: Yup.string().required("Le numero de telephone est obligatoire"),
+    email: Yup.string().email('Addresse email incorrect')
+        .required("L'email est obligatoire"),
+    nameCreator: Yup.string().required("Le Nom et Prenom est obligatoire"),
+    job: Yup.string().required("Le nom de votre competence est obligatoire"),
+    description: Yup.string().required("Veillez decrire votre carrière"),
+    location: Yup.string().required("L'addresse est obligatoire"),
+});
+
+function UpdateJob() {
+    const locationData = useLocation();
+    const user = locationData.state;
+    console.log(user);
+    const { phone, nameCreator, creatorId, email, location,
+        facebookProfil, instagramProfil, job, description
+    } = user;
     const [isLoading, setIsLoading] = useState(false);
-    const [selectCity, setSelectCity] = useState(data.location);
-    const [name, setName] = useState(data.nameCreator);
-    const [email, setEmail] = useState(data.email);
-    const [phone, setPhone] = useState(data.phone);
-    const [desc, setDesc] = useState(data.description);
-    const [jobName, setJobName] = useState(data.job);
-    const [facebookName, setFacebookName] = useState(data.facebookProfil);
-    const [instagramName, setInstagramName] = useState(data.instagramProfil);
-    const [images, setImages] = useState([]);
 
-    const handleCloseModal = (e) => {
-        if (modalRef.current === e.target) {
-            setShowUpdate(false);
-        }
-    }
-
-    const keyPress = useCallback(
-        (e) => {
-            if (e.key === "Escape" && showUpdate) {
-                setShowUpdate(false);
-            }
-        },
-        [setShowUpdate, showUpdate],
-    );
-
-    useEffect(() => {
-        document.addEventListener('keydown', keyPress);
-        return () => document.removeEventListener('keydown', keyPress);
-    }, [keyPress]);
-
-    const animation = useSpring({
-        config: {
-            duration: 250
-        },
-        opacity: showUpdate ? 1 : 0,
-        transform: showUpdate ? 'translateY(0%)' : 'translateY(-100%)',
-    });
-
-    const handleSubmit = async () => {
+    const handleSubmit = (values) => {
         setIsLoading(true);
-        var formData = await new FormData();
-        formData.append('nameCreator', name);
-        formData.append('creatorId', data._id);
-        formData.append('phone', phone);
-        formData.append('description', desc);
-        formData.append('job', jobName);
-        formData.append('location', selectCity);
-        formData.append('email', email);
-        formData.append('facebookProfil', facebookName);
-        formData.append('instagramProfil', instagramName);
-        for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i]);
-            console.log(images[i], formData);
-        }
-        
-        // axios.put(`/api/job/${data._id}`, formData)
-        // .then(res => {
-        //     setIsLoading(false);
-        //     setShowUpdate(false);
-        //     setImages([]);
-        // }).catch(err => {
-        //     console.log(err);
-        //     setIsLoading(false);
-        // })
+        console.log('add', values);
     }
 
     return (
-        <div>
-            {showUpdate ? (
-                <ModalBackground ref={modalRef} onClick={(e) => handleCloseModal(e)}>
-                    <animated.div style={animation}>
-                        <Icon size={25} onClick={() => setShowUpdate(!showUpdate)} />
-                    </animated.div>
-                    <div className="center_2">
-                        <ModalWrapper width={width}>
-                            <h2 className="margin_0">Remplissez le formulaire</h2>
-                            <p style={{ margin: "10px 0 20px 0" }}>Veillez modifier vos données personnelles nécessaire pour modifier votre profil.</p>
-                            <form>
+        <div style={{ background: "rgba(0, 0, 0, 0.2)" }}>
+            <Header />
+            <div class="w-full h-52 bg-[#0e1e25]"></div>
+            <div class="grid place-items-center px-3 md:px-8 pb-12">
+                <div class="shadow-lg bg-white px-3 md:px-6 py-4 rounded-lg z-10 -mt-40">
+                    <h2 class="font-bold text-xl pb-2">Modification de carrière</h2>
+                    <span class="">Veillez changer les champs necessaires pour modifier vos informations personnelles concernant cette carrière.</span>
+                    <Formik
+                        initialValues={{ phone, nameCreator, creatorId, images: '', email, job, description, location, facebookProfil, instagramProfil }}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => handleSubmit(values)}
+                    >
+                        {({ values, errors, handleSubmit, handleChange, touched }) => (
+                            <form class="py-8" onSubmit={handleSubmit}>
                                 <label>Nom et Prenom</label>
-                                <input value={name} placeholder="Nom & Prenom" type="text" onChange={(e) => setName(e.target.value)} />
+                                <input
+                                    type="text" name="nameCreator"
+                                    value={values.nameCreator}
+                                    onChange={handleChange}
+                                    placeholder="Nome et Prenom"
+                                    class="border shadow-sm"
+                                />
+                                {errors.nameCreator && touched.nameCreator && (
+                                    <p class="text-red-700 -mt-3 mb-2">{errors.nameCreator}</p>
+                                )}
                                 <label>Courrier électronique</label>
-                                <input type="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                                <label>Nom de carrière</label>
-                                <input type="text" value={jobName} placeholder="Nom de carrière" onChange={(e) => setJobName(e.target.value)} />
-                                <label>Adresse | Ville</label>
-                                <Select onChange={(e) => setSelectCity(e.target.value)}>
-                                    <option value="Ville" selected>Ville</option>
+                                <input class="border shadow-sm"
+                                    type="text" value={values.email} placeholder="Email"
+                                    onChange={handleChange} name="email"
+                                />
+                                {errors.email && touched.email && (
+                                    <p class="text-red-700 -mt-3 mb-2">{errors.email}</p>
+                                )}
+                                <label class="">Nom de votre carrière</label>
+                                <input class="border shadow-sm" type="text"
+                                    placeholder="Nom de votre métier"
+                                    onChange={handleChange} name="job"
+                                    value={values.job}
+                                />{errors.job && touched.job && (
+                                    <p class="text-red-700 -mt-3 mb-2">{errors.job}</p>
+                                )}
+                                <label class="">Adresse</label>
+                                <select name="location"
+                                    value={values.location}
+                                    onChange={handleChange}
+                                    class="shadow-sm bg-white rounded-lg p-2 border w-full my-2 mb-3"
+                                >
+                                    <option value="Ville">Ville</option>
                                     {city.map((item, index) => (
-                                        <option key={index} value={item} selected={selectCity === item ? true : false}>{item}</option>
+                                        <option key={index} value={item} selected={values.location === item ? true : false}>{item}</option>
                                     ))}
-                                </Select>
-                                <label>No telephone</label>
-                                <input type="number" value={phone} placeholder="Numero de téléphone" onChange={(e) => setPhone(e.target.value)} />
-                                <label>Description</label>
-                                <input type="text" value={desc} placeholder="Description" onChange={(e) => setDesc(e.target.value)} />
-                                <label>Choisir des images</label>
-                                <input type="file" name="images" multiple title="Ajouter des images(plusieurs)" onChange={(e) => setImages(e.target.files)} />
-                                <label>Nom d'instagram profil</label>
-                                <input type="text" value={instagramName} placeholder="Nom d'instagram profil" onChange={(e) => setInstagramName(e.target.value)} />
-                                <label>Nom facebook profil</label>
-                                <input type="text" value={facebookName} placeholder="Nom facebook profil" onChange={(e) => setFacebookName(e.target.value)} />
+                                </select>
+                                {errors.location && touched.location && (
+                                    <p class="text-red-700 -mt-3 mb-2">{errors.location}</p>
+                                )}
+                                <label class="">Numero de téléphone</label>
+                                <input class="border shadow-sm" type="text"
+                                    value={values.phone}
+                                    placeholder="Numero de téléphone"
+                                    onChange={handleChange} name="phone"
+                                />
+                                {errors.phone && touched.phone && (
+                                    <p class="text-red-700 -mt-3 mb-2">{errors.phone}</p>
+                                )}
+                                <label class="">Description</label>
+                                <input class="border shadow-sm" type="text"
+                                    value={values.description}
+                                    placeholder="Description de votre travail" onChange={handleChange} name="description"
+                                />
+                                {errors.description && touched.description && (
+                                    <p class="text-red-700 -mt-3 mb-2">{errors.description}</p>
+                                )}
+                                <label class="">Choisir des images</label>
+                                <input class="border shadow-sm" type="file" name="images"
+                                    multiple title="Ajouter des images(plusieurs)"
+                                    onChange={handleChange}
+                                />
+                                <label class="">Nom d'instagram profil</label>
+                                <input class="border shadow-sm" type="text"
+                                    value={values.instagramProfil}
+                                    placeholder="Nom d'instagram profil"
+                                    onChange={handleChange} name="instagramProfil"
+                                />
+                                <label class="">Nom facebook profil</label>
+                                <input class="border shadow-sm" type="text"
+                                    value={values.facebookProfil}
+                                    placeholder="Nom facebook profil"
+                                    onChange={handleChange} name="facebookProfil"
+                                />
+                                <button type="submit" class="py-2.5 rounded-lg text-white font-bold uppercase bg-red-500 hover:bg-black text-[13px] w-full mt-3">
+                                    {isLoading && <i class="fa fa-spinner fa-spin"></i>}
+                                    Modifier
+                                </button>
                             </form>
-                            <Button onClick={() => handleSubmit()}>
-                                {isLoading && <i className="fa fa-spinner fa-spin"></i>}
-                                Modifier mon profil
-                            </Button>
-                        </ModalWrapper>
-                    </div>
-                </ModalBackground>
-            ) : null}
+                        )}
+                    </Formik>
+                </div>
+            </div>
+            <Footer />
         </div>
     )
 }
-
-const ModalWrapper = styled.div`
-    width: 100%;
-    margin: 70px ${(props) => props.width > 576 ? 200 : 20}px;
-    background: #f7f9fb;
-    border-radius: 5px;
-    padding: 30px 20px;
-    margin-bottom: 80px;
-`;
 
 export default UpdateJob;

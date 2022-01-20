@@ -164,9 +164,13 @@ function Modal(props) {
                             </div>)}
                             {user._id === creatorId && (
                                 <div class="py-6 flex items-center gap-x-6">
-                                    <button class="bg-green-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-500" onClick={() => updateJob()}>
-                                        Modifier
-                                    </button>
+                                    <Link to={`/api/user/${creatorId}/update-job`}
+                                        state={modalData}
+                                    >
+                                        <button class="bg-green-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-500" onClick={() => updateJob()}>
+                                            Modifier
+                                        </button>
+                                    </Link>
                                     <button class="bg-red-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-green-500"
                                         onClick={() => deleteJob()}
                                     >

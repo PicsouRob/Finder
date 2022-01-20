@@ -37,7 +37,7 @@ function About() {
                 </div>
                 <img src={img} class="w-full md:w-1/2" alt="logo" />
             </div>
-            <div class="relative min-w-7xl px-6 lg:px-8 py-16"
+            <div class="relative min-w-7xl px-6 lg:px-8 py-16 h-auto"
                 style={{ backgroundColor: '#0e1e25' }}
             >
                 <h2 class="text-3xl md:text-3xl font-bold text-white pb-12 text-center">Comment ça marche?</h2>

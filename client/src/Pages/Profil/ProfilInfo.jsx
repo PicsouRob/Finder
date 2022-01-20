@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 import profil from '../../Images/profil.svg';
 import CreateNew from './CreateNew';
@@ -93,11 +94,14 @@ function ProfilInfo(props) {
                     Nouveau Project
                     <CreateNew user={data} />
                 </div>}
-                {_id === userId && <button
-                    class="bg-green-500 rounded-lg shadow-lg text-white cursor-pointer font-medium py-2 my-2 w-full hover:bg-red-500"
-                >Modifier votre profil
-                </button>}
-                {_id === userId && <div class="flex items-center justify-between gap-x-4">
+                {_id === userId && <Link to={`/api/user/${userId}/update-profil`}
+                    state={data} class="w-full"
+                >
+                    <button class="bg-red-500 rounded-lg shadow-lg text-white cursor-pointer font-medium py-2 my-2 w-full hover:bg-black">
+                        Modifier mon profil
+                    </button>
+                </Link>}
+                {_id === userId && <div class="flex items-center justify-between gap-x-1 md:gap-x-4">
                     <button onClick={() => userDeconnected()}
                         class="p-2 hover:bg-black group rounded-lg"
                     ><p class="font-medium group-hover:text-white">Se déconnecter</p></button>
