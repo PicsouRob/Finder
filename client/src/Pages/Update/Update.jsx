@@ -43,7 +43,7 @@ function Update() {
                         onSubmit={(values) => handleSubmit(values)}
                     >
                         {({ values, errors, handleSubmit, handleChange, touched }) => (
-                            <form class="py-8" onSubmit={handleSubmit}>
+                            <form class="py-8 flex flex-col" onSubmit={handleSubmit}>
                                 <label>Nom et Prenom</label>
                                 <input
                                     type="text" name="name"
