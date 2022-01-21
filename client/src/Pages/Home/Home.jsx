@@ -20,7 +20,7 @@ function Home(props) {
     return (
         <div>
             <Header />
-            <div class="relative min-h-screen overflow-hidden bg-[#0e1e25] grid place-items-center gap-y-10 py-16 sm:py-12 md:py-16 lg:py-20 xl:py-28 px-6 sm:px-6 lg:px-8 gap-6">
+            <div class="relative overflow-hidden bg-[#0e1e25] grid place-items-center gap-y-10 py-16 sm:py-12 md:py-16 px-6 sm:px-6 lg:px-8 gap-6">
                 <div class="w-full md:w-3/4  mx-auto self-start ">
                     <div class="grid place-items-center text-center">
                         <div class="flex text-[12px] text-white">
