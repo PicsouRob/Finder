@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { FaSearch, FaClipboardList, FaFileAlt } from 'react-icons/fa';
 
 export const responseSuccess = (res, body) => {
     return new Promise((resolve, reject) => {
@@ -34,27 +33,6 @@ export const getDate = (res) => {
 
     return `${day} ${getMonths} ${year}`;
 }
-
-export const data = [
-    {
-        title: 'Rechercher votre Embaucheur',
-        text: "Recherchez votre meilleur comptable, soyez sélectif dans le choix d'un comptable, ne choisissez pas le mauvais pour votre travail.",
-        icon: <FaSearch color="#31C6AE" />,
-        color: "rgba(49, 198, 174, 0.3)"
-    },
-    {
-        title: 'Prendre Contact avec lui',
-        text: "Créez un contrat d'embauche avec l'embaucheur de votre choix, avec différentes formules de contrat pour votre travail.",
-        icon: <FaFileAlt color="#ff7a59" />,
-        color: 'rgba(255, 122, 89, 0.3)'
-    },
-    {
-        title: 'Commençons à travailler',
-        text: "Commencez à travailler avec l'embaucheur de votre choix, embauchez selon le contrat qui a été fait.",
-        icon: <FaClipboardList color="#170f45" />,
-        color: 'rgba(23, 15, 69, 0.3)'
-    },
-];
 
 export const aboutData = [
     {

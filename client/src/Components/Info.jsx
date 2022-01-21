@@ -1,5 +1,5 @@
 import React from 'react';
-import { data } from '../Utils/helpers';
+import { data } from '../Utils/infoData';
 
 function Info() {
     return (
