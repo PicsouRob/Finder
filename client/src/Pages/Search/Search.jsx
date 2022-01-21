@@ -45,9 +45,7 @@ function Search() {
     return (
         <div>
             <Header />
-            <div class="py-20 px-6 md:px-28"
-                style={{ backgroundColor: '#0e1e25' }}
-            >
+            <div class="py-20 px-6 md:px-28 bg-[#0e1e25]">
                 <h2 class="text-3xl md:text-5xl font-bold text-white pb-2 md:pb-0 text-center">Trouver un professionnel</h2>
                 <p class="text-center font-medium text-lg">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
                 <SearchInput selectCity={selectCity} value={value}

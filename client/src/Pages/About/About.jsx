@@ -84,12 +84,12 @@ function About() {
                 </div>
                 <div class="flex flex-col md:flex-row md:justify-between pt-6 space-y-8 items-center">
                     <Link to={{ pathname: "/help_search" }}
-                        class="text-white text-2xl underline  hover:opacity-80 cursor-pointer"
+                        class="text-white text-xl underline  hover:opacity-80 cursor-pointer"
                     >
                         Comment embaucher avec finderht.com
                     </Link>
                     <Link to="/help_post"
-                        class="text-white text-2xl underline  hover:opacity-80 cursor-pointer"
+                        class="text-white text-xl underline  hover:opacity-80 cursor-pointer"
                     >
                         Conseils pour publier des projets
                     </Link>

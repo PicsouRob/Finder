@@ -8,7 +8,7 @@ import Home from './Pages/Home/Home';
 import Search from './Pages/Search/Search';
 import SignIn from './Pages/Sign/SignIn';
 import SignUp from './Pages/Sign/SignUp';
-import Contact from './Pages/Contact/contact';
+import Contact from './Pages/contact';
 import Profil from './Pages/Profil/Profil';
 import ScrollToTop from './Components/ScrollToTop';
 import NotFound from './Components/NotFound';
@@ -33,10 +33,9 @@ function App(props) {
   return (
     <div>
         {isLoad ? (
-            <div>
-                <Page loader={"bubble"} color={"#001344"} 
-                  size={4} duration={1}></Page>
-            </div>
+          <div class="grid place-items-center">
+            <i class="fa fa-spinner fa-spin bg-red-500"></i>
+          </div>
         ) : (
           <div class="font-sans">
             <Router>
