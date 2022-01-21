@@ -105,7 +105,7 @@ function Modal(props) {
                                 </svg>
                                 <span class="">{location}</span>
                             </div>
-                            <div class="flex items-center gap-x-3 w-full md:w-1/3 cursor-pointer"
+                            <div class="flex-gap items-center gap-x-3 w-full md:w-1/3 cursor-pointer"
                                 onClick={() => window.open('mailto:www.phanordpicsouroberto11@gmail.com?subject=Services&body=Salut Roberto')}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="rgba(49, 198, 174)">

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { connect } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { useLocalStorage } from '../Utils/helpers';
 import { menu } from '../Utils/data';
 import LogoLink from './Logo';
 import MenuBurger from './Menu';
+import { useScrollToTop } from '../Utils/checkScrollToTop';
 
 function Header({ user }) {
     console.log(user);
@@ -15,24 +16,7 @@ function Header({ user }) {
     const history = useNavigate();
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [dropdown, setDropdown] = useState(false);
-
-    const [showScroll, setShowScroll] = useState(false);
-
-    const checkScrollTop = useCallback(() => {
-        if (!showScroll && window.pageYOffset > 400) {
-            setShowScroll(true);
-        } else if (showScroll && window.pageYOffset <= 400) {
-            setShowScroll(false);
-        }
-    }, [showScroll]);
-
-    useEffect(() => {
-        window.addEventListener('scroll', checkScrollTop);
-
-        return () => {
-            window.removeEventListener('scroll', checkScrollTop);
-        }
-    }, [checkScrollTop]);
+    const { showScroll } = useScrollToTop();
 
     return (
         <div class={`${showScroll ? "fixed shadow-lg" : "relative"} w-full py-3 bg-white z-20`} id="outer-container">

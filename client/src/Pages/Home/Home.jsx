@@ -20,19 +20,19 @@ function Home(props) {
     return (
         <div>
             <Header />
-            <div class="relative bg-green-100 overflow-hidden">
+            <div class="relative overflow-hidden bg-[#1f2932]">
                 <div class="max-w-7xl mx-auto">
-                    <div class="relative z-10 pb-5 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 bg-green-100">
+                    <div class="relative z-10 pb-5 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 bg-[#1f2932]">
                         <main class="mt-16 pb-4 mx-auto max-w-7xl px-6 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                            <div class="sm:text-center lg:text-left">
+                            <div class="sm:text-center lg:text-left text-white">
                                 <div class="flex text-[12px]">
-                                    <hr class="border-4 w-16 text-red-500" />
+                                    <hr class="border-4 w-16 text-white" />
                                     Trouver un freelance
                                 </div>
                                 <h1 class="text-4xl tracking-tight font-extrabold text-indigo-900 sm:text-5xl md:text-6xl">
-                                    <span class="block xl:inline text-gray-900">Trouver des Embaucheurs en ligne pour votre travail</span>
+                                    <span class="block xl:inline text-white">Trouver des Embaucheurs en ligne pour votre travail</span>
                                 </h1>
-                                <p class="my-3 text-base text-gray-700 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">Or publier vos compétences afin de recevoir les offres des employeurs autour de vous</p>
+                                <p class="my-3 text-base text-white sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">Or publier vos compétences afin de recevoir les offres des employeurs autour de vous</p>
                                 <InputField value={jobValue} setValue={setJobValue}
                                     setSelectCity={cityValue} selectCity={setCityValue}
                                 />
@@ -49,7 +49,7 @@ function Home(props) {
                                     </div>
                                 </div> */}
                                 <hr class="my-2 border-0 bg-transparent" />
-                                <SocialMedia color="#33475b" />
+                                <SocialMedia color="#fff" />
                             </div>
                         </main>
                     </div>

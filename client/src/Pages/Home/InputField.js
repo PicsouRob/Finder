@@ -47,7 +47,7 @@ function InputField(props) {
                 </button>
             </div>
             <button onClick={() => handleSearch()}
-                class="block border-2 md:hidden w-full my-3 py-2.5 border-gray-900 rounded-lg text-black font-medium hover:bg-black hover:text-white hover:border-black"
+                class="block md:hidden w-full my-3 py-2.5 rounded-lg text-white font-medium hover:bg-green-400 bg-red-400"
             >
                 Rechercher
             </button>
