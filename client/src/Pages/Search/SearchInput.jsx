@@ -21,7 +21,7 @@ function SearchInput(props) {
                 </svg>
                 <input placeholder="Le titre ici" value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    class="mt-3 w-2/3 placeholder-show placeholder:font-medium text-sm font-medium focus-within:outline-none placeholder-gray-800 h-10 md:h-12"
+                    class="w-2/3 placeholder-show placeholder:font-medium text-sm font-medium focus-within:outline-none placeholder-gray-800 h-10 md:h-12"
                 />
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#ef4444">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
