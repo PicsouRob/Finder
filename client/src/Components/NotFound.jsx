@@ -1,70 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import img from '../Images/found.svg';
-import { useWidth } from '../Utils/width';
 import Footer from './Footer';
 import Header from './Header';
 
 function NotFound() {
-    const { width } = useWidth();
-
     return (
-        <div>
+        <div class="relative w-full">
             <Header />
-            <FoundWrapper width={width}>
-                <Images alt="img" src={img} />
-                <Text>Peut-être que la page que vous recherchez n'est pas trouvée ou n'a jamais existé.</Text>
-                <Button>
-                    <LinkText to="/">Retour a la page d'accueil</LinkText>
-                </Button>
-            </FoundWrapper>
+            <div class="grid place-items-center">
+                <div class="flex flex-col items-center justify-center gap-y-10 min-h-screen px-6 md:pz-8 w-full md:w-2/4 text-center">
+                    <img alt="img" src={img} class="h-40" />
+                    <span class="">
+                        Une erreur s'est produite, peut-être que la page que vous recherchez n'a pas été trouvée ou n'a jamais existé.
+                    </span>
+                    <Link to="/"
+                        class="bg-red-500 rounded-lg text-white px-5 py-2.5 md:py-3 font-medium hover:bg-green-500 cursor-pointer"
+                    >
+                        Retour a la page d'accueil
+                    </Link>
+                </div>
+            </div>
             <Footer />
         </div>
     )
 }
-
-const FoundWrapper = styled.div`
-    height: ${(props) => props.width < 576 ? window.innerHeight - 60 : window.innerHeight - 80}px;
-    padding: 0 ${(props) => props.width < 1200 ? "20" : "120"}px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`;
-
-const Images = styled.img`
-    width: 300px;
-    height: 200px;
-    margin-bottom: 15px;
-    margin-top: -20px;
-`;
-
-const Text = styled.p`
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
-`;
-
-const Button = styled.button`
-    margin-top: 30px;
-    padding: 15px 15px;
-    border: none;
-    background: #31C6AE;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 14px;
-    &:hover {
-        opacity: 0.9;
-        cursor: pointer;
-        background: #ff7a59;
-    }
-`;
-
-const LinkText = styled(Link)`
-    text-decoration: none;
-    color: #fff;
-`;
 
 export default NotFound;

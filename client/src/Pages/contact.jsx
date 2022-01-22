@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from 'emailjs-com';
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
-import Modal from '../Job/Modal';
+import Modal from '../../Components/Modal';
 import SearchResult from './SearchResult';
 import SearchInput from './SearchInput';
 import filter from '../../Images/filter.png';

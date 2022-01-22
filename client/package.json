@@ -15,13 +15,10 @@
     "react-burger-menu": "^3.0.6",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
-    "react-icons": "^4.2.0",
-    "react-page-loading": "^1.0.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "react-social-icons": "^5.6.1",
     "react-spring": "^9.3.0",
-    "styled-components": "^5.3.1",
     "web-vitals": "^1.0.1",
     "yup": "^0.32.11"
   },

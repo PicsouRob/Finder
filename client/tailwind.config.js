@@ -10,6 +10,9 @@ module.exports = {
         fontFamily : {
           sans : ['Poppins', ...defaultTheme.fontFamily.sans]
         },
+        backgroundImage: {
+          // 'sign': "url('/img/sign.jpg')"
+        },
         colors : {
           gray : {
             50: '#F9FAFB',
@@ -36,7 +39,7 @@ module.exports = {
           '4.5' : '1.125rem',
         },
         boxShadow : {
-          lg : '0px 5px 14px rgba(244, 105, 76, 0.25)'
+          lg : '0px 5px 14px rgba(244, 105, 76, 0.20)'
         }
       },
     },

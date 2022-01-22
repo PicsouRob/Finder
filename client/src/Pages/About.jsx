@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-import Footer from '../../Components/Footer';
-import Header from '../../Components/Header';
-import img from '../../Images/about.svg';
-import image from '../../Images/list.svg';
-import { aboutData, useLocalStorage } from '../../Utils/helpers';
-import fond from '../../Images/fondd.jpg';
+import Footer from '../Components/Footer';
+import Header from '../Components/Header';
+import img from '../Images/about.svg';
+import image from '../Images/list.svg';
+import { aboutData, useLocalStorage } from '../Utils/helpers';
+import fond from '../Images/fondd.jpg';
 
 function About() {
     const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Formik } from 'formik';
@@ -12,6 +12,9 @@ import Email from '../../icons/email.svg';
 import User from '../../icons/user.svg';
 import Lock from '../../icons/lock.svg';
 import LogoLink from '../../Components/Logo';
+import eye from '../../icons/eye.svg';
+import eyeOff from '../../icons/eye-off.svg';
+import signImages from '../../Images/sign.jpg';
 
 const validation = Yup.object().shape({
     name: Yup.string().required("Le nom est obligatoire"),
@@ -23,6 +26,7 @@ const validation = Yup.object().shape({
 
 function SignUp() {
     const navigate = useNavigate();
+    const [isShow, setIsShow] = useState(false);
 
     useEffect(() => {
         document.title = 'Finder ht | Register'
@@ -30,17 +34,19 @@ function SignUp() {
 
     const register = (values) => {
         axios.post('/auth/register', values)
-        .then(() => {
-            console.log('register');
-            navigate('/');
-            window.location.reload();
-        });
+            .then(() => {
+                console.log('register');
+                navigate('/');
+                window.location.reload();
+            });
     }
 
     return (
-        <div class="relative flex justify-between">
-            <div class="hidden lg:block relative w-1/2 lg:self-start bg-cover bg-center h-screen bg-red-500">
-                <div class="flex absolute bottom-20 justify-center w-full">
+        <div class="relative grid grid-cols-1 lg:grid-cols-2">
+            <div class="hidden lg:block relative w-full lg:self-start bg-cover bg-center min-h-full lg:flex-1"
+                style={{ backgroundImage: `url(${signImages})` }}
+            >
+                <div class="absolute top-40 flex items-center justify-center w-full">
                     <div class="max-w-md text-center">
                         <span class="text-3xl font-bold leading-loose text-white">
                             Control Bussiness
@@ -60,7 +66,7 @@ function SignUp() {
                     </div>
                 </div>
             </div>
-            <div class="flex mx-auto w-full lg:w-1/2">
+            <div class="flex-1 mx-auto w-full lg:w-1/2">
                 <div class="flex flex-col px-8 pt-10 lg:px-14 xl:px-24">
                     <LogoLink />
                     <div class="pt-6 pb-4">
@@ -134,12 +140,22 @@ function SignUp() {
                                             <div class="flex justify-center items-center">
                                                 <img alt="email" src={Lock} class="w-6 h-6 pointer-events-none" />
                                             </div>
-                                            <input type="text" placeholder="Mot de passe"
+                                            <input type={`${isShow ? "text" : "password"}`} placeholder="Mot de passe"
                                                 class="px-4 py-4.5 w-full focus:outline-none font-light border-0 focus:ring-0 my-2"
                                                 value={values.password}
                                                 onChange={handleChange}
                                                 name="password"
                                             />
+                                            <div class="flex justify-center items-center cursor-pointer"
+                                                onClick={() => setIsShow(!isShow)}
+                                            >
+                                                {isShow && values.password.length > 0 && (
+                                                    <img alt="email" src={eyeOff} class="w-6 h-6" />
+                                                )}
+                                                {!isShow && values.password.length > 0 && (
+                                                    <img alt="email" src={eye} class="w-6 h-6" />
+                                                )}
+                                            </div>
                                         </div>
                                         {errors.password && touched.password && (
                                             <p class="text-red-700 pt-1">{errors.password}</p>

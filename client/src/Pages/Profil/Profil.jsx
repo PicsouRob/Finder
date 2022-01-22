@@ -4,12 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Header from '../../Components/Header';
-import { useLocalStorage } from '../../Utils/helpers';
+// import { useLocalStorage } from '../../Utils/helpers';
 
 import Footer from '../../Components/Footer';
-import Update from '../Update/Update';
-import Modal from '../Job/Modal';
-import UpdateJob from '../Update/UpdateJob';
+import Modal from '../../Components/Modal';
 import ProfilInfo from './ProfilInfo';
 import CreateNew from './CreateNew';
 import StuffEmpty from './StuffEmpty';
@@ -18,18 +16,14 @@ import Stuff from './Stuff';
 function Profil({ user }) {
     const locationData = useLocation();
     const userData = locationData.state;
-    const [store, setValue] = useLocalStorage('user', userData);
+    // const [store, setValue] = useLocalStorage('user', userData);
     const [data, setData] = useState({});
     // console.log('eee:', userData);
-    const { image, _id } = data;
+    const { image } = data;
     const [stuff, setStuff] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [showUpdate, setShowUpdate] = useState(false);
-    const [onLoad, setOnLoad] = useState(false);
-    const [modalShow, setModalShow] = useState(false);
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
-    const [changePhoto, setChangePhoto] = useState('');
+    // const [changePhoto, setChangePhoto] = useState('');
 
     useEffect(() => {
         document.title = 'Finder | Porfile';
@@ -44,7 +38,7 @@ function Profil({ user }) {
             .then(async (res) => {
                 await setData(res.data);
             }).catch(err => console.log(err));
-    }, [modalShow, onLoad, userData]);
+    }, [userData]);
 
     return (
         <div style={{ background: "#e7ebee" }}>
@@ -74,7 +68,7 @@ function Profil({ user }) {
                 </div>
             </div>
             <Modal showModal={showModal} setShowModal={setShowModal}
-                modalData={modalData} setShowUpdate={setShowUpdate}
+                modalData={modalData}
                 userProfil={image}
             />
             <Footer />

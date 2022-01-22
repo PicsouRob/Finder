@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +10,10 @@ import Google from '../../icons/google.svg';
 import Facebook from '../../icons/facebook.svg';
 import Email from '../../icons/email.svg';
 import Lock from '../../icons/lock.svg';
+import eye from '../../icons/eye.svg';
+import eyeOff from '../../icons/eye-off.svg';
 import LogoLink from '../../Components/Logo';
+import signImages from '../../Images/sign.jpg';
 
 const validation = Yup.object().shape({
     email: Yup.string().email('Addresse email incorrect')
@@ -21,6 +24,7 @@ const validation = Yup.object().shape({
 
 function SignIn() {
     const navigate = useNavigate();
+    const [isShow, setIsShow] = useState(false);
 
     useEffect(() => {
         document.title = 'Finder | Login'
@@ -36,15 +40,17 @@ function SignIn() {
     }
 
     return (
-        <div class="relative flex justify-between">
-            <div class="hidden lg:block relative w-1/2 lg:self-start bg-cover bg-center h-screen bg-red-500">
-                <div class="flex absolute bottom-20 justify-center w-full">
+        <div class="relative grid grid-cols-1 lg:grid-cols-2">
+            <div class="hidden lg:block relative w-full lg:self-start bg-cover bg-center min-h-full lg:flex-1"
+                style={{ backgroundImage: `url(${signImages})` }}
+            >
+                <div class="absolute top-40 flex items-center justify-center w-full">
                     <div class="max-w-md text-center">
-                        <span class="text-3xl font-bold leading-loose text-white">
+                        <span class="text-3xl font-bold leading-loose text-black">
                             Control Bussiness
                         </span>
                         <br />
-                        <span class="font-light leading-7 text-white text-[20px]">
+                        <span class="font-light leading-7 text-[20px] text-black">
                             Dotra is the most comprehensive field service  assets management platform with combining flexibility
                         </span>
                         <div class="flex justify-center items-center pt-8 space-x-6">
@@ -58,7 +64,7 @@ function SignIn() {
                     </div>
                 </div>
             </div>
-            <div class="flex mx-auto w-full lg:w-1/2">
+            <div class="flex-1 mx-auto w-full lg:w-1/2">
                 <div class="flex flex-col px-8 pt-10 lg:px-14 xl:px-24">
                     <LogoLink />
                     <div class="pt-6 pb-4">
@@ -115,12 +121,22 @@ function SignIn() {
                                             <div class="flex justify-center items-center">
                                                 <img alt="email" src={Lock} class="w-6 h-6 pointer-events-none" />
                                             </div>
-                                            <input type="text" placeholder="Mot de passe"
+                                            <input type={`${isShow ? "text" : "password"}`} placeholder="Mot de passe"
                                                 class="px-4 py-4.5 w-full focus:outline-none font-light border-0 focus:ring-0 my-2"
                                                 value={values.password}
                                                 onChange={handleChange}
                                                 name="password"
                                             />
+                                            <div class="flex justify-center items-center cursor-pointer"
+                                                onClick={() => setIsShow(!isShow)}
+                                            >
+                                                {isShow && values.password.length > 0 && (
+                                                    <img alt="email" src={eyeOff} class="w-6 h-6" />
+                                                )}
+                                                {!isShow && values.password.length > 0 && (
+                                                    <img alt="email" src={eye} class="w-6 h-6" />
+                                                )}
+                                            </div>
                                         </div>
                                         {errors.password && touched.password && (
                                             <p class="text-red-700 pt-1">{errors.password}</p>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function CreateNew({ user }) {
     return (
         <Link to="/api/job/add" state={user}
-            class="w-28 flex items-center gap-x-2 px-2 py-1.5 bg-black hover:bg-red-500 text-white rounded-md cursor-pointer"
+            class="w-28 flex items-center gap-x-2 px-2 py-1.5 bg-blue-500 hover:bg-red-500 text-white rounded-md cursor-pointer"
         >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor"

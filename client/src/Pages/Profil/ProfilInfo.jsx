@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import profil from '../../Images/profil.svg';
 import CreateNew from './CreateNew';
@@ -7,6 +8,7 @@ import { getDate } from '../../Utils/helpers';
 
 function ProfilInfo(props) {
     const { data, stuff, isLoading, userId } = props;
+    const navigate = useNavigate();
     const { image, name, email, date, _id, facebook, instagram,
         description, phone, website, location
     } = data;
@@ -17,7 +19,14 @@ function ProfilInfo(props) {
     //     inputFile.current.click();
     // };
 
-    const userDeconnected = () => { }
+    const userDeconnected = async () => {
+        await axios.get('http://localhost:3000/api/logout')
+            .then(async () => {
+                await window.location.reload();
+                navigate('/')
+            })
+            .catch((err) => console.log(err));
+    }
 
     return (
         <div class="relative bg-white shadow-sm rounded-lg py-6 px-4 space-y-4 self-start w-full md:w-2/5  break-words">

@@ -4,9 +4,9 @@ import { animated, useSpring } from 'react-spring';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import img from '../../Images/profil.svg';
-import empty from '../../Images/stuffimage.svg';
-import { getDate, useLocalStorage } from '../../Utils/helpers';
+import img from '../Images/profil.svg';
+import empty from '../Images/stuffimage.svg';
+import { getDate, useLocalStorage } from '../Utils/helpers';
 
 function Modal(props) {
     const { showModal, setShowModal, modalData,

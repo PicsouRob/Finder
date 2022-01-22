@@ -10,8 +10,6 @@ import { city } from '../../Utils/helpers';
 
 const validationSchema = Yup.object().shape({
     phone: Yup.string().required("Le numero de telephone est obligatoire"),
-    email: Yup.string().email('Addresse email incorrect')
-        .required("L'email est obligatoire"),
     nameCreator: Yup.string().required("Le Nom et Prenom est obligatoire"),
     job: Yup.string().required("Le nom de votre competence est obligatoire"),
     description: Yup.string().required("Veillez decrire votre carrière"),
@@ -33,12 +31,12 @@ function UpdateJob() {
     }
 
     return (
-        <div style={{ background: "rgba(0, 0, 0, 0.2)" }}>
+        <div class="bg-white">
             <Header />
             <div class="w-full h-52 bg-[#0e1e25]"></div>
             <div class="grid place-items-center px-3 md:px-8 pb-12">
-                <div class="shadow-lg bg-white px-3 md:px-6 py-4 rounded-lg z-10 -mt-40">
-                    <h2 class="font-bold text-xl pb-2">Modification de carrière</h2>
+                <div class="shadow-lg bg-white px-3 md:px-6 py-4 rounded-lg z-10 -mt-40 w-full lg:w-2/4">
+                    <h2 class="font-bold text-xl pb-2">Modification de competence</h2>
                     <span class="">Veillez changer les champs necessaires pour modifier vos informations personnelles concernant cette carrière.</span>
                     <Formik
                         initialValues={{ phone, nameCreator, creatorId, images: '', email, job, description, location, facebookProfil, instagramProfil }}
@@ -46,39 +44,31 @@ function UpdateJob() {
                         onSubmit={(values) => handleSubmit(values)}
                     >
                         {({ values, errors, handleSubmit, handleChange, touched }) => (
-                            <form class="py-8 flex flex-col" onSubmit={handleSubmit}>
+                            <form class="py-8" onSubmit={handleSubmit}>
                                 <label>Nom et Prenom</label>
                                 <input
                                     type="text" name="nameCreator"
                                     value={values.nameCreator}
                                     onChange={handleChange}
                                     placeholder="Nome et Prenom"
-                                    class="border shadow-sm"
+                                    class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4"
                                 />
                                 {errors.nameCreator && touched.nameCreator && (
-                                    <p class="text-red-700 -mt-3 mb-2">{errors.nameCreator}</p>
-                                )}
-                                <label>Courrier électronique</label>
-                                <input class="border shadow-sm"
-                                    type="text" value={values.email} placeholder="Email"
-                                    onChange={handleChange} name="email"
-                                />
-                                {errors.email && touched.email && (
-                                    <p class="text-red-700 -mt-3 mb-2">{errors.email}</p>
+                                    <p class="text-red-700 -mt-4 mb-2">{errors.nameCreator}</p>
                                 )}
                                 <label class="">Nom de votre carrière</label>
-                                <input class="border shadow-sm" type="text"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     placeholder="Nom de votre métier"
                                     onChange={handleChange} name="job"
                                     value={values.job}
                                 />{errors.job && touched.job && (
-                                    <p class="text-red-700 -mt-3 mb-2">{errors.job}</p>
+                                    <p class="text-red-700 -mt-4 mb-2">{errors.job}</p>
                                 )}
                                 <label class="">Adresse</label>
                                 <select name="location"
                                     value={values.location}
                                     onChange={handleChange}
-                                    class="shadow-sm bg-white rounded-lg p-2 border w-full my-2 mb-3"
+                                    class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4"
                                 >
                                     <option value="Ville">Ville</option>
                                     {city.map((item, index) => (
@@ -86,44 +76,44 @@ function UpdateJob() {
                                     ))}
                                 </select>
                                 {errors.location && touched.location && (
-                                    <p class="text-red-700 -mt-3 mb-2">{errors.location}</p>
+                                    <p class="text-red-700 -mt-4 mb-2">{errors.location}</p>
                                 )}
                                 <label class="">Numero de téléphone</label>
-                                <input class="border shadow-sm" type="text"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     value={values.phone}
                                     placeholder="Numero de téléphone"
                                     onChange={handleChange} name="phone"
                                 />
                                 {errors.phone && touched.phone && (
-                                    <p class="text-red-700 -mt-3 mb-2">{errors.phone}</p>
+                                    <p class="text-red-700 -mt-4 mb-2">{errors.phone}</p>
                                 )}
                                 <label class="">Description</label>
-                                <input class="border shadow-sm" type="text"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     value={values.description}
                                     placeholder="Description de votre travail" onChange={handleChange} name="description"
                                 />
                                 {errors.description && touched.description && (
-                                    <p class="text-red-700 -mt-3 mb-2">{errors.description}</p>
+                                    <p class="text-red-700 -mt-4 mb-2">{errors.description}</p>
                                 )}
                                 <label class="">Choisir des images</label>
-                                <input class="border shadow-sm" type="file" name="images"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="file" name="images"
                                     multiple title="Ajouter des images(plusieurs)"
                                     onChange={handleChange}
                                 />
                                 <label class="">Nom d'instagram profil</label>
-                                <input class="border shadow-sm" type="text"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     value={values.instagramProfil}
                                     placeholder="Nom d'instagram profil"
                                     onChange={handleChange} name="instagramProfil"
                                 />
                                 <label class="">Nom facebook profil</label>
-                                <input class="border shadow-sm" type="text"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     value={values.facebookProfil}
                                     placeholder="Nom facebook profil"
                                     onChange={handleChange} name="facebookProfil"
                                 />
                                 <button type="submit" class="py-2.5 rounded-lg text-white font-bold uppercase bg-red-500 hover:bg-black text-[13px] w-full mt-3">
-                                    {isLoading && <i class="fa fa-spinner fa-spin"></i>}
+                                    {isLoading && <i class="fa fa-spinner fa-spin mr-3"></i>}
                                     Modifier
                                 </button>
                             </form>
