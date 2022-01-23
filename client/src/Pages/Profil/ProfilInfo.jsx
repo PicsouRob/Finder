@@ -20,10 +20,11 @@ function ProfilInfo(props) {
     // };
 
     const userDeconnected = async () => {
-        await axios.get('http://localhost:3000/api/logout')
+        await axios.get('/api/logout')
             .then(async () => {
+                await navigate('/');
                 await window.location.reload();
-                navigate('/')
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             })
             .catch((err) => console.log(err));
     }

@@ -26,6 +26,7 @@ function SignUp() {
     const navigate = useNavigate();
     const [isShow, setIsShow] = useState(false);
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const formRef = useRef();
 
     useEffect(() => {
@@ -44,13 +45,17 @@ function SignUp() {
     }, [keyPress]);
 
     const register = (values) => {
+        setIsLoading(true);
         axios.post('/auth/register', values)
-            .then((res) => {
+            .then(async (res) => {
+                console.log(res.data.error);
                 if (res.data.error) {
                     setError(res.data.error);
+                    setIsLoading(false);
                 } else {
+                    setIsLoading(false);
                     console.log('register');
-                    navigate('/');
+                    await navigate('/');
                     window.location.reload();
                 }
             });
@@ -149,9 +154,10 @@ function SignUp() {
                                         <span class="text-blue-500 hover:text-teal-600 text-sm pb-2"></span>
                                     </div>
                                     <div class="pt-6">
-                                        <button class="py-4 w-full text-white bg-orange-500 rounded-lg shadow-lg hover:bg-orange-600 focus:ring-4 focus:ring-red-100 focus:outline-none h-12 flex items-center justify-center"
+                                        <button class="py-4 w-full text-white bg-orange-500 rounded-lg shadow-lg hover:bg-orange-600 focus:ring-4 focus:ring-red-100 focus:outline-none h-12 flex items-center justify-center uppercase font-medium"
                                             type="submit"
                                         >
+                                            {isLoading && <i class="fa fa-spinner fa-spin mr-3"></i>}
                                             S'inscrire
                                         </button>
                                     </div>
@@ -162,7 +168,7 @@ function SignUp() {
                             <div class="font-light text-center text-gray-500 space-x-1 flex items-center justify-center">
                                 <div>Avez-vous déjà un compte?</div>
                                 <Link to="/auth/login">
-                                    <span class="font-normal text-teal-500 cursor-pointer hover:text-teal-600">
+                                    <span class="text-teal-500 cursor-pointer hover:text-teal-600 font-normal">
                                         Connectez-vous
                                     </span>
                                 </Link>

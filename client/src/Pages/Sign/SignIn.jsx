@@ -24,6 +24,7 @@ function SignIn() {
     const navigate = useNavigate();
     const [isShow, setIsShow] = useState(false);
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const formRef = useRef();
 
     useEffect(() => {
@@ -42,14 +43,18 @@ function SignIn() {
     }, [keyPress]);
 
     const userLogin = (values) => {
+        setIsLoading(true);
         axios.post('/auth/login', values)
             .then(async (res) => {
                 if (res.data.error) {
                     setError(res.data.error);
+                    setIsLoading(false);
                 } else {
+                    setIsLoading(false);
                     console.log('success');
+                    await navigate('/');
                     await window.location.reload();
-                    navigate('/');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }).catch((err) => console.log(err));
     }
@@ -134,9 +139,10 @@ function SignIn() {
                                         <span class="text-blue-500 hover:text-teal-600 text-sm pb-2">Mot de passe oublié</span>
                                     </div>
                                     <div class="pt-6">
-                                        <button class="py-4 w-full text-white bg-orange-500 rounded-lg shadow-lg hover:bg-orange-600 focus:ring-4 focus:ring-red-100 focus:outline-none h-12 flex items-center justify-center"
+                                        <button class="py-4 w-full text-white bg-orange-500 rounded-lg shadow-lg hover:bg-orange-600 focus:ring-4 focus:ring-red-100 focus:outline-none h-12 flex items-center justify-center uppercase font-medium"
                                             type="submit"
                                         >
+                                            {isLoading && <i class="fa fa-spinner fa-spin mr-3"></i>}
                                             S'identifier
                                         </button>
                                     </div>
