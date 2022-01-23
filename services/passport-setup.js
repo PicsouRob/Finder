@@ -45,12 +45,14 @@ passport.use('local', new Localstrategy({
     User.findOne({ email }).then(async (user, err) => {
         try {
             if(!user) { 
-                return done(null, false);
+                return done(null, false, req.flash("message", 
+                    "Cette utilisateur n'existe pas."
+                ));
             }
 
             const passwordCompare = await bcrypt.compare(password, user.password);
             if(!passwordCompare) { 
-                return done(null, false, req.flash("message-incorrect", "Mot de passe incorrect.")); 
+                return done(null, false, req.flash("message", "Mot de passe incorrect.")); 
             }
     
             return done(err, user);
@@ -68,7 +70,7 @@ passport.use('local-signup', new Localstrategy({
     User.findOne({ email }).then(async (user, err) => {
         try {
             if(user) { 
-                done(null, false, req.flash('message-exist', 'Cet utilisateur existe déjà.' ));
+                done(null, false, req.flash('message', 'Cet utilisateur existe déjà.' ));
             }
 
             const salt = await bcrypt.genSalt(10);
@@ -76,7 +78,7 @@ passport.use('local-signup', new Localstrategy({
             new User({ name: req.body.name, 
                 email: email, password: hashedPassword }).save()
             .then(async (newUser, err) => {
-                return done(err, newUser, req.flash('message-success', 'success.'));
+                return done(err, newUser);
             });
         } catch(error) {
             done(error);

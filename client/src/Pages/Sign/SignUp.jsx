@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import CircleLeftBtn from '../../icons/circle-left.svg';
-import CircleRightBtn from '../../icons/circle-right.svg';
-import Google from '../../icons/google.svg';
-import Facebook from '../../icons/facebook.svg';
 import Email from '../../icons/email.svg';
 import User from '../../icons/user.svg';
 import Lock from '../../icons/lock.svg';
 import LogoLink from '../../Components/Logo';
 import eye from '../../icons/eye.svg';
 import eyeOff from '../../icons/eye-off.svg';
-import signImages from '../../Images/sign.jpg';
+import SignFooter from './SignFooter';
+import SignLeft from './SignLeft';
+import SignTop from './SignTop';
 
 const validation = Yup.object().shape({
     name: Yup.string().required("Le nom est obligatoire"),
@@ -27,72 +25,47 @@ const validation = Yup.object().shape({
 function SignUp() {
     const navigate = useNavigate();
     const [isShow, setIsShow] = useState(false);
+    const [error, setError] = useState('');
+    const formRef = useRef();
 
     useEffect(() => {
         document.title = 'Finder ht | Register'
     }, []);
 
+    const keyPress = useCallback((e) => {
+        if (e.key === "Enter") {
+            formRef.current.handleSubmit();
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('keydown', keyPress);
+        return () => document.removeEventListener('keydown', keyPress);
+    }, [keyPress]);
+
     const register = (values) => {
         axios.post('/auth/register', values)
-            .then(() => {
-                console.log('register');
-                navigate('/');
-                window.location.reload();
+            .then((res) => {
+                if (res.data.error) {
+                    setError(res.data.error);
+                } else {
+                    console.log('register');
+                    navigate('/');
+                    window.location.reload();
+                }
             });
     }
 
     return (
         <div class="relative grid grid-cols-1 lg:grid-cols-2">
-            <div class="hidden lg:block relative w-full lg:self-start bg-cover bg-center min-h-full lg:flex-1"
-                style={{ backgroundImage: `url(${signImages})` }}
-            >
-                <div class="absolute top-40 flex items-center justify-center w-full">
-                    <div class="max-w-md text-center">
-                        <span class="text-3xl font-bold leading-loose text-white">
-                            Control Bussiness
-                        </span>
-                        <br />
-                        <span class="font-light leading-7 text-white text-[20px]">
-                            Dotra is the most comprehensive field service  assets management platform with combining flexibility
-                        </span>
-                        <div class="flex justify-center items-center pt-8 space-x-6">
-                            <button class="rounded-full focus:ring-orange-500 focus">
-                                <img src={CircleLeftBtn} alt='left' />
-                            </button>
-                            <button class="rounded-full focus:ring-orange-500 focus">
-                                <img src={CircleRightBtn} alt="right" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SignLeft />
             <div class="flex-1 mx-auto w-full lg:w-1/2">
                 <div class="flex flex-col px-8 pt-10 lg:px-14 xl:px-24">
                     <LogoLink />
                     <div class="pt-6 pb-4">
-                        <h1 class="text-3xl font-bold tracking-wide leading-loose writespace-nowrap">
-                            Hi, Bienvenue!
-                        </h1>
-                        <span class="font-light text-gray-500">
-                            Connectez-vous maintenant pour gérer vos compétences en toute simplicité
-                        </span>
-                        <div class="flex items-center justify-center">
-                            <div class="flex items-center justify-center gap-y-4 gap-x-6 pt-10 mx-auto">
-                                <a href="/auth/google" class="flex items-center justify-center py-2.5 w-full px-6 rounded-lg bg-white border border-gray-400 whitespace-nowrap hover:bg-gray-50 focus:outline-none focus:ring-gray-100 focus:ring-4">
-                                    <img alt="google" src={Google} class="w-6 h-6" />
-                                    <span class="pl-3 md:font-medium text-gray-900 text-base">Google</span>
-                                </a>
-                                <button class="flex items-center justify-center py-2.5 px-6 rounded-lg bg-blue-500 border w-full border-gray-400 whitespace-nowrap hover:bg-blue-600 focus:outline-none focus:ring-gray-100 focus:ring-4">
-                                    <img alt="google" src={Facebook} class="w-6 h-6" />
-                                    <span class="pl-3 md:font-medium text-white">Facebook</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center pt-4">
-                            <hr class="w-full border-gray-400" />
-                            <span class="px-4 font-light tracking-wide text-gray-500">Or</span>
-                            <hr class="w-full border-gray-400" />
-                        </div>
+                        <SignTop title="Hi, Bienvenue!"
+                            text="Connectez-vous maintenant pour gérer vos compétences en toute simplicité"
+                        />
                         <Formik
                             initialValues={{ email: '', password: '', name: '' }}
                             validationSchema={validation}
@@ -132,6 +105,9 @@ function SignUp() {
                                         </div>
                                         {errors.email && touched.email && (
                                             <p class="text-red-700 pt-1">{errors.email}</p>
+                                        )}
+                                        {error && (
+                                            <p class="text-red-700 pt-1">{error}</p>
                                         )}
                                     </div>
                                     <div class="pt-4 w-full">
@@ -191,14 +167,7 @@ function SignUp() {
                                     </span>
                                 </Link>
                             </div>
-                            <div class="flex flex-wrap gap-y-2 justify-between items-center pt-10 text-center whitespace-nowrap">
-                                <span class="flex-1 text-gray-500">© 2021 Finder. Tous droits réservés</span>
-                                <span class="flex flex-col md:flex-row justify-center items-center space-x-1 space-y-2 md:space-y-0 mx-auto">
-                                    <span class="text-gray-500 hover:text-teal-600">Conditions d'utilisation</span>
-                                    <span class="hidden md:flex text-gray-500">&#183;</span>
-                                    <span class="text-gray-500 hover:text-teal-600">Politique de confidentialité </span>
-                                </span>
-                            </div>
+                            <SignFooter />
                         </div>
                     </div>
                 </div>

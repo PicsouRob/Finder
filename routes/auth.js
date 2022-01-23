@@ -16,21 +16,23 @@ module.exports = (app) => {
     );
 
     app.post('/auth/register', passport.authenticate('local-signup', {
-        // failureRedirect: '/auth/signup',
-        // failureFlash: true,
+        successRedirect: '/',
+        failureRedirect: '/auth/error-message',
+        failureFlash: true,
     }), (req, res) => {
         res.redirect('/');
     });
 
-    app.post('/auth/login', function (req, res, next) {
-        passport.authenticate('local', function(err, user, info) {
-            if (err) { return next(err); }
-            if (!user) { return res.redirect('/login'); }
-            req.logIn(user, function(err) {
-              if (err) { return next(err); }
-              return res.redirect('/');
-            });
-        })(req, res, next);
+    app.post('/auth/login', passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/auth/error-message',
+        failureFlash: true
+    }), (req, res) => {
+        res.redirect('/');
+    });
+
+    app.get('/auth/error-message', (req, res) => {
+        res.send({ error: req.flash('message')[0] });
     });
 
     app.get('/api/current_user', requestLogin, (req, res) => {
