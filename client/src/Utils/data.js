@@ -1,15 +1,19 @@
+const data = { value: 'Tout', location: 'Ville' };
 export const menu = [
     {
         title: "Parcourir",
-        to: "/api/job/find"
+        to: "/api/job/find",
+        state: data
     },
     {
         title: "À propos",
-        to: "/about"
+        to: "/about",
+        state: {}
     },
     {
         title: "Contact",
-        to: "/Contact"
+        to: "/Contact",
+        state: {}
     },
 ];
 

@@ -13,7 +13,6 @@ function ProfilInfo(props) {
         description, phone, website, location
     } = data;
     const inputFile = useRef(null);
-    // console.log(_id, userId);
 
     // const onButtonClick = () => {
     //     inputFile.current.click();

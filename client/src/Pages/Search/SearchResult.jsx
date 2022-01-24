@@ -6,7 +6,7 @@ import search from '../../Images/search.svg';
 import { substringDesc } from '../../Utils/data';
 
 function SearchResult(props) {
-    const { data, selectCity, value, showModal,
+    const { data, location, value, showModal,
         setShowModal, setModalData
     } = props;
 
@@ -64,7 +64,7 @@ function SearchResult(props) {
                         />
                         <span class="font-medium text-center pt-5">
                             Désolé, aucun résultat trouvé pour votre recherche:<br />
-                            {value} {selectCity !== "Ville" ? `a ${selectCity}` : ""}
+                            {value} {location !== "Ville" && location ? `a ${location}` : ""}
                         </span>
                     </div>
                 </div>

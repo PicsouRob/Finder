@@ -24,15 +24,14 @@ function Header({ user }) {
                 <LogoLink />
                 <div class="flex gap-x-8 md:gap-x-16 items-center">
                     <div class="hidden md:flex md:gap-x-8">
-                        {menu.map(({ title, to }, index) => (
-                            <NavLink key={index} activeStyle={{ color: "#ff7a59" }}
-                                class="cursor-pointer"
-                                to={{
-                                    pathname: to,
-                                    state: { jobValue: '', cityValue: '' }
-                                }}>
+                        {menu.map(({ title, to, state }, index) => (
+                            <Link to={to} state={'hhghgh'}
+                            // class="cursor-pointer"
+                            // activeStyle={{ color: "#ff7a59" }}
+                            // key={index}
+                            >
                                 <span class="transition text-black font-sans hover:text-red-900">{title}</span>
-                            </NavLink>
+                            </Link>
                         ))}
                     </div>
                     {user ? (

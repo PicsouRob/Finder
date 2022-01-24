@@ -1,4 +1,6 @@
 const passport = require('passport');
+const mongoose = require("mongoose");
+const User = mongoose.model('User');
 
 const upload = require('../middleware/upload');
 const requestLogin = require('../middlewares/requestLogin');
@@ -43,6 +45,17 @@ module.exports = (app) => {
         req.logout();
 
         res.redirect('/');
+    });
+
+    app.get('/api/user/:id', (req, res) => {
+        User.findById(req.params.id)
+        .then((response) => {
+            if(!response) return res.send({ 
+                    error: "Oups ! désolé, aucun résultat trouvé"
+                });
+
+            return res.status(200).send(response);
+        })
     });
 };
 

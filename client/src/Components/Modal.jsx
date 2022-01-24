@@ -40,7 +40,7 @@ function Modal(props) {
     }, [keyPress]);
 
     useEffect(() => {
-        axios.get(`/api/user/${creatorId}`)
+        axios.get(`/api/get-user/${creatorId}`)
             .then(res => {
                 setUserData(res.data);
             }).catch(err => console.log(err));
@@ -60,7 +60,7 @@ function Modal(props) {
     }
 
     const deleteJob = async () => {
-        await axios.delete(`/api/job/${_id}`)
+        await axios.delete(`/api/user/${_id}`)
             .then(res => {
                 setShowModal(false);
             }).catch(err => console.log(err));

@@ -1,27 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-export const responseSuccess = (res, body) => {
-    return new Promise((resolve, reject) => {
-        resolve(
-            axios.post("/api/user/google-login", {
-                tokenId: res.tokenId , description: '', phone: '', location: '',
-                resetLink: '', website: '', facebook: '',
-                instagram: ''
-            }).then((response) => {
-                return response;
-            }).catch(err => {
-                console.log(err);
-            })
-        );
-        reject(Error("Error Login with Googgle"));
-    })
-}
-
-export const responseFailure = (res) => {
-    console.log(res);
-}
-
 export const city = ["Port-au-Prince", "Carrefour", "Delma", "Pétion-Ville", "Cap-Haïtien", "Saint-Marc", "Gonaïves ", "Croix-des-bouquets", "Petit-Goâve", "Leogane", "Port-de-Paix", "Taba", "Verrettes", "Pétion-Ville", "Les Cayes", "Jacmel", "Jeremy", "Bombardopolis", "Fort-Liberté", "Miragoane"];
 
 export const getDate = (res) => {
@@ -95,22 +74,15 @@ export const updateUser = (_id, setValue, formData) => {
     });
 }
 
-export const getAllJob = (jobValue, cityValue, setData) => {
-    if(!jobValue && cityValue === 'Ville' | cityValue === '') {
-        axios.get('/')
-        .then(res => {
-            setData(res.data);
-        })
-        .catch(err => console.log(err))
-    } else if(jobValue && cityValue !== "Ville") {
-        axios.get(`/api/job/search/${jobValue}/${cityValue}`)
-        .then(res => {
-            setData(res.data);
-        }).catch(err => console.log(err));
-    } else {
-        axios.get(`/api/job/search/${jobValue}`)
-        .then(res => {
-            setData(res.data);
-        }).catch(err => console.log(err));
-    }
-}
+export const getStuff = (formData, setData) => {
+    // console.log('value: ' + value)
+    // console.log('location: ' + location)
+    axios({
+        method:"GET",
+        data: formData
+    }).then(res => {
+        // setData(res.data);
+        console.log(res.data);
+    })
+    .catch(err => console.log(err));
+};

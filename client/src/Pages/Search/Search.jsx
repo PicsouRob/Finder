@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import Footer from '../../Components/Footer';
@@ -11,17 +11,17 @@ import filter from '../../Images/filter.png';
 
 function Search() {
     const [data, setData] = useState([]);
-    console.log(data);
-    // const location = useLocation();
-    // const { jobValue, cityValue } = location.state;
-    const [selectCity, setSelectCity] = useState('');
+    // console.log(data);
+    const locationData = useLocation();
+    // const { jobValue, cityValue } = locationData.state;
+    console.log(locationData)
     const [value, setValue] = useState('');
+    const [location, setLocation] = useState('Ville');
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        axios.get('https://finderht.herokuapp.com/').then((res) => {
-
+        axios.get(`/api/stuff`).then((res) => {
             setData(res.data);
         });
 
@@ -38,7 +38,7 @@ function Search() {
         document.addEventListener('keydown', keyPressSubmit);
 
         return () => document.removeEventListener('keydown', keyPressSubmit);
-    }, [selectCity, value]);
+    }, [location, value]);
 
     const selectFilter = () => { }
 
@@ -48,8 +48,9 @@ function Search() {
             <div class="py-20 px-6 md:px-28 bg-[#0e1e25]">
                 <h2 class="text-3xl md:text-5xl font-bold text-white pb-2 md:pb-0 text-center">Trouver un professionnel</h2>
                 <p class="text-center font-medium text-lg">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
-                <SearchInput selectCity={selectCity} value={value}
-                    setValue={setValue} setSelectCity={setSelectCity}
+                <SearchInput location={location} value={value}
+                    setValue={setValue} setLocation={setLocation}
+                    setData={setData}
                 />
             </div>
             <div class="py-8 px-6 md:px-28 bg-green-50">
@@ -66,7 +67,7 @@ function Search() {
                         </select>
                     </div>
                 </div>
-                <SearchResult selectCity={selectCity} value={value}
+                <SearchResult location={location} value={value}
                     setShowModal={setShowModal} showModal={showModal}
                     setModalData={setModalData} data={data}
                 />

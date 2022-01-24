@@ -48,6 +48,7 @@ conn.once('open', () => {
 
 // Routes...
 require('./routes/auth')(app);
+require('./routes/stuff')(app);
 
 app.get('/userProfil/:filename', async (req, res) => {
     try {

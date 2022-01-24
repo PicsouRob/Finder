@@ -42,8 +42,8 @@ function SignIn() {
         return () => document.removeEventListener('keydown', keyPress);
     }, [keyPress]);
 
-    const userLogin = (values) => {
-        setIsLoading(true);
+    const userLogin = async (values) => {
+        await setIsLoading(true);
         axios.post('/auth/login', values)
             .then(async (res) => {
                 if (res.data.error) {

@@ -1,15 +1,24 @@
 import React from 'react';
+import axios from 'axios';
 
-import { city } from '../../Utils/helpers';
+import { city, getStuff } from '../../Utils/helpers';
 
 function SearchInput(props) {
-    const { value, setValue, setSelectCity, selectCity } = props;
+    const { value, setValue, location, setLocation,
+        setData
+    } = props;
 
     const handleSearch = () => {
         if (!value) {
             window.alert('Le titre est obligatoire');
         } else {
-
+            // getStuff(formData, setData);
+            axios.get(`/api/search-stuff/${value}/${location}`)
+                .then(res => {
+                    setData(res.data);
+                    console.log(res.data);
+                })
+                .catch(err => console.log(err));
         }
     }
 
@@ -28,13 +37,13 @@ function SearchInput(props) {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <select $white id="select-ville"
-                    onChange={(e) => setSelectCity(e.target.value)}
+                    onChange={(e) => setLocation(e.target.value)}
                     class="bg-transparent w-28 md:w-1/3"
                 >
                     <option value="Ville" selected>Ville</option>
                     {city.map((items, index) => (
                         <option key={index} value={items}
-                            selected={selectCity === items ? true : false}
+                            selected={location === items ? true : false}
                         >
                             {items}
                         </option>
