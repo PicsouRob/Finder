@@ -44,7 +44,7 @@ conn.once('open', () => {
 // Routes...
 require('./routes/auth')(app);
 require('./routes/stuff')(app);
-require('./routes/imageGfsStream')(app, gfs);
+// require('./routes/imageGfsStream')(app, gfs);
 
 if(process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
@@ -59,6 +59,17 @@ if(process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
+
+app.get('/userProfil/:filename', async (req, res) => {
+    try {
+        const file = await gfs.files.findOne({ filename: req.params.filename });
+        const readStream = gfs.createReadStream(file.filename);
+        readStream.pipe(res);
+    } catch (error) {
+        console.log("Not found");
+        console.log(error);
+    }
+});
 
 const PORT = process.env.PORT || 8000; 
 app.listen(PORT, () => console.log("Server runing up"));
