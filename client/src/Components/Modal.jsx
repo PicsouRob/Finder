@@ -16,7 +16,7 @@ function Modal(props) {
     const history = useNavigate();
     const [userData, setUserData] = useState({});
     const [store] = useLocalStorage('user', 'user');
-    const { nameCreator, _id, creatorId, images, email, job, description,
+    const { nameCreator, _id, userId, images, email, job, description,
         location, facebookProfil, instagramProfil, date, phone } = modalData;
 
     const handleCloseModal = (e) => {
@@ -40,11 +40,11 @@ function Modal(props) {
     }, [keyPress]);
 
     useEffect(() => {
-        axios.get(`/api/get-user/${creatorId}`)
+        axios.get(`/api/get-user/${userId}`)
             .then(res => {
                 setUserData(res.data);
             }).catch(err => console.log(err));
-    }, [creatorId]);
+    }, [userId]);
 
     const animation = useSpring({
         config: {
@@ -75,8 +75,8 @@ function Modal(props) {
                 >
                     <animated.div style={animation}>
                         <div class="flex items-center justify-between">
-                            <Link to={`/api/user/${creatorId}`}
-                                state={creatorId}
+                            <Link to={`/api/user/${userId}`}
+                                state={userId}
                                 class="flex items-center gap-x-3 cursor-pointer"
                                 onClick={() => setShowModal(false)}
                             >
@@ -105,15 +105,13 @@ function Modal(props) {
                                 </svg>
                                 <span class="">{location}</span>
                             </div>
-                            <div class="flex flex-wrap items-center gap-x-3 w-full md:w-1/3 cursor-pointer"
+                            <div class="flex items-center gap-x-3 w-full md:w-1/3 cursor-pointer"
                                 onClick={() => window.open('mailto:www.phanordpicsouroberto11@gmail.com?subject=Services&body=Salut Roberto')}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="rgba(49, 198, 174)">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
                                 </svg>
-                                <span class="whitespace-pre-line"
-                                    style={{ overflowWrap: "break-word" }}
-                                >
+                                <span class="whitespace-pre-line" >
                                     {email}
                                 </span>
                             </div>
@@ -158,13 +156,13 @@ function Modal(props) {
                             </div>)}
                             {images.length === 0 && (<div class="">
                                 <img src={empty} alt='' width={280} height={300} />
-                                {user._id === creatorId ?
+                                {user._id === userId ?
                                     <span class="">Vous avez aucune image ,veillez cliquer sur modifier pour ajouter quelque une</span>
                                     : <span class="">Cet utilisateur n'a pas encore d'images</span>}
                             </div>)}
-                            {user._id === creatorId && (
+                            {user._id === userId && (
                                 <div class="py-6 flex items-center gap-x-6">
-                                    <Link to={`/api/user/${creatorId}/update-job`}
+                                    <Link to={`/api/user/${userId}/update-job`}
                                         state={modalData}
                                     >
                                         <button class="bg-green-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-500" onClick={() => updateJob()}>

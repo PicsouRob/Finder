@@ -17,34 +17,31 @@ function Profil({ user }) {
     const locationData = useLocation();
     const userData = locationData.state;
     const [data, setData] = useState({});
-    console.log('eee:', userData);
-    const { image } = data;
     const [stuff, setStuff] = useState([]);
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
-    // const [changePhoto, setChangePhoto] = useState('');
 
     useEffect(() => {
         document.title = 'Finder | Porfile';
-        axios.get(`/api/user/stuff/${userData}`)
-            .then(res => {
-                setStuff(res.data);
-                console.log('stuff:' + res.data)
-            }).catch(err => console.log(err));
-    }, [userData]);
+    }, []);
 
     useEffect(() => {
-        axios.get(`/api/user/${userData}`)
+        axios.get(`/api/stuff/${userData}`)
+            .then(res => {
+                setStuff(res.data);
+            }).catch(err => console.log(err));
+
+        axios.get(`/api/user-data/${userData}`)
             .then((res) => {
                 setData(res.data);
             }).catch(err => console.log(err));
-    }, [userData]);
+    }, [userData, data, stuff]);
 
     return (
-        <div style={{ background: "#e7ebee" }}>
+        <div class="bg-[#e7ebee]">
             <Header />
             <div class="w-full h-52 bg-cover bg-no-repeat bg-center"
-                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 50%), rgba(0, 0, 0, 0.8)),url(${data.image ? data.image : signImages})` }}
+                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 50%), rgba(0, 0, 0, 0.8)),url(${data ? data.image : signImages})` }}
             />
             <div class="min-w-7xl mx-auto px-6 md:px-8 bg-green-50 pb-16 pt-10">
                 <div class="flex flex-col md:flex-row gap-y-8 gap-x-16 -mt-40 z-10">
@@ -71,7 +68,7 @@ function Profil({ user }) {
             </div>
             <Modal showModal={showModal} setShowModal={setShowModal}
                 modalData={modalData}
-                userProfil={image}
+                userProfil={data.image}
             />
             <Footer />
         </div>

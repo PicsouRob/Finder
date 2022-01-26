@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,16 +7,17 @@ import CreateNew from './CreateNew';
 import { getDate } from '../../Utils/helpers';
 
 function ProfilInfo(props) {
-    const { data, stuff, isLoading, userId } = props;
+    const { data, stuff, userId } = props;
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const { image, name, email, date, _id, facebook, instagram,
         description, phone, website, location
     } = data;
     const inputFile = useRef(null);
 
-    // const onButtonClick = () => {
-    //     inputFile.current.click();
-    // };
+    const onButtonClick = () => {
+        inputFile.current.click();
+    };
 
     const userDeconnected = async () => {
         await axios.get('/api/logout')
@@ -28,6 +29,28 @@ function ProfilInfo(props) {
             .catch((err) => console.log(err));
     }
 
+    const updateProfilPhoto = async (e) => {
+        let formData = new FormData();
+        formData.append('image', e.target.files[0]);
+        console.log(Object.fromEntries(formData));
+        axios.put(`/api/user/update-profil/${_id}`, formData)
+            .then(async (res) => {
+                console.log(res.data);
+            }).catch((err) => console.log(err));
+    }
+
+    const deleteAccount = async () => {
+        setIsLoading(true);
+        axios.delete(`/api/user/delete-account/${_id}`)
+            .then(async (res) => {
+                setIsLoading(false);
+                console.log(res.data);
+                // await navigate('/');
+                // await window.location.reload();
+                // window.scrollTo({ top: 0, behavior: 'smooth' });
+            }).catch(err => console.log(err));
+    }
+
     return (
         <div class="relative bg-white shadow-sm rounded-lg py-6 px-4 space-y-4 self-start w-full md:w-2/5  break-words">
             <div class="grid place-items-center gap-y-1 pb-2">
@@ -35,16 +58,18 @@ function ProfilInfo(props) {
                     class="w-20 h-20 rounded-full"
                 />
                 {_id === userId && <div class="">
-                    <div class="p-1 rounded-full -mt-8 ml-10 bg-green-500 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff">
+                    <div class="p-1 rounded-full -mt-7 ml-10 bg-green-500 cursor-pointer hover:bg-green-400"
+                        onClick={() => onButtonClick()}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#fff">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </div>
                     <form>
                         <input ref={inputFile} type="file" name="image"
+                            onChange={(e) => updateProfilPhoto(e)}
                             class="hidden"
-                        // onChange={(e) => updateProfilPhoto(e)}
                         />
                     </form>
                 </div>}
@@ -115,9 +140,13 @@ function ProfilInfo(props) {
                         class="p-2 hover:bg-black group rounded-lg"
                     ><p class="font-medium group-hover:text-white">Se déconnecter</p></button>
                     <p>|</p>
-                    <button class="p-2 hover:bg-red-700 group rounded-lg" >
+                    <button class="p-2 hover:bg-red-700 group rounded-lg flex gap-x-3 items-center"
+                        onClick={() => deleteAccount()}
+                    >
                         {isLoading && <i class="fa fa-spinner fa-spin"></i>}
-                        <p class="font-medium group-hover:text-white">Supprimer mon compte</p>
+                        <p class="font-medium group-hover:text-white">
+                            Supprimer mon compte
+                        </p>
                     </button>
                 </div>}
             </div>

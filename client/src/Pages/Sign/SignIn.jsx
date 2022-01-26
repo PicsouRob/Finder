@@ -56,7 +56,10 @@ function SignIn() {
                     await window.location.reload();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
-            }).catch((err) => console.log(err));
+            }).catch((err) => {
+                setIsLoading(false);
+                console.log(err);
+            });
     }
 
     return (

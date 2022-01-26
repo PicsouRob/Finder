@@ -1,9 +1,9 @@
 const Joi = require("@hapi/joi");
 
 validatedCreate = Joi.object({
-    creatorId: Joi.string(),
+    // userId: Joi.string(),
     nameCreator: Joi.string().min(6),
-    phone: Joi.string().alphanum().min(8).max(11).required(),
+    phone: Joi.number().required(),
     email: Joi.string().min(6),
     job: Joi.string().min(6).required(),
     description: Joi.string().min(6).required(),

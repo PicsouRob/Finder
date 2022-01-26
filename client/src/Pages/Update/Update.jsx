@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -9,7 +9,8 @@ import Header from '../../Components/Header';
 import { city } from '../../Utils/helpers';
 
 const validationSchema = Yup.object().shape({
-    phone: Yup.string().required("Le numero de telephone est obligatoire"),
+    phone: Yup.string().required("Le numero de telephone est obligatoire")
+        .min(8, 'Le numéro de téléphone doit comporter au moins 8 caractères'),
     name: Yup.string().required("Le Nom et Prenom est obligatoire"),
     description: Yup.string().required("Veillez decrire votre carrière"),
     location: Yup.string().required("L'addresse est obligatoire"),
@@ -17,18 +18,29 @@ const validationSchema = Yup.object().shape({
 
 function Update() {
     const locationData = useLocation();
+    const navigate = useNavigate();
     const user = locationData.state;
     console.log(user);
-    const { phone, name, description, location, 
-        facebook, instagram, website
+    const { phone, name, description, location,
+        facebook, instagram, website, _id
     } = user;
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
         setIsLoading(true);
-        console.log('add', values);
-    }
 
+        axios.put(`/api/update-data/${_id}`, values)
+            .then(async (res) => {
+                setIsLoading(false);
+                await navigate(`/api/user/${_id}`, { state: _id });
+                await window.location.reload();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                console.log(res.data);
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    }
     return (
         <div class="bg-white">
             <Header />
@@ -70,7 +82,7 @@ function Update() {
                                     <p class="text-red-700 -mt-3 mb-2">{errors.location}</p>
                                 )}
                                 <label class="">Numero de téléphone</label>
-                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4"     type="text"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     value={values.phone}
                                     placeholder="Numero de téléphone"
                                     onChange={handleChange} name="phone"
@@ -102,7 +114,7 @@ function Update() {
                                 <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"
                                     value={values.website}
                                     placeholder="Nom facebook profil"
-                                    onChange={handleChange} name="facebook"
+                                    onChange={handleChange} name="website"
                                 />
                                 <button type="submit" class="py-2.5 rounded-lg text-white font-bold uppercase bg-red-500 hover:bg-black text-[13px] w-full mt-3">
                                     {isLoading && <i class="fa fa-spinner fa-spin mr-3"></i>}

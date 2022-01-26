@@ -8,6 +8,7 @@ const flash    = require('connect-flash');
 
 const keys = require('./config/keys');
 require('./models/userModel');
+require('./models/createModel');
 require('./services/passport-setup');
 
 // initialize the app.........
@@ -30,13 +31,6 @@ app.use(flash());
 app.use(
     express.urlencoded({ extended: true })
 );
-app.use(express.json());
-app.use((err, req, res, next) => {
-    res.locals.error = err;
-    const status = err.status || 500;
-    res.status(status);
-    res.render('error');
-});
 
 Grid.mongo = mongoose.mongo;
 let gfs;
@@ -49,19 +43,7 @@ conn.once('open', () => {
 // Routes...
 require('./routes/auth')(app);
 require('./routes/stuff')(app);
-
-app.get('/userProfil/:filename', async (req, res) => {
-    try {
-        const file = await gfs.files.findOne({ filename: req.params.filename });
-        const readStream = gfs.createReadStream(file.filename);
-        readStream.pipe(res);
-    } catch (error) {
-        console.log("Not found");
-        console.log(error);
-    }
-});
-
-const Job = require('./models/createModel');
+require('./routes/imageGfsStream')(app, gfs);
 
 if(process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
@@ -76,12 +58,6 @@ if(process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
-
-app.get('/job', async (req, res) => {
-    Job.find().then((result) => {
-        res.send(result);
-    })
-});
 
 const PORT = process.env.PORT || 8000; 
 app.listen(PORT, () => console.log("Server runing up"));

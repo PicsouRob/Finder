@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -18,16 +18,35 @@ const validationSchema = Yup.object().shape({
 
 function UpdateJob() {
     const locationData = useLocation();
+    const navigate = useNavigate();
     const user = locationData.state;
-    console.log(user);
-    const { phone, nameCreator, creatorId, email, location,
-        facebookProfil, instagramProfil, job, description
+    const [images, setImages] = useState([]);
+    const { phone, nameCreator, location, userId,
+        facebookProfil, instagramProfil, job, description, _id
     } = user;
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
         setIsLoading(true);
-        console.log('add', values);
+        let formData = new FormData();
+        await Object.keys(values).forEach((item) => {
+            formData.append(`${item}`, values[item]);
+        });
+        for (let i = 0; i < images.length; i++) {
+            formData.append(`images`, images[i]);
+        }
+
+        axios.put(`/api/user/update-stuff/${_id}`, formData)
+            .then(async (res) => {
+                setIsLoading(false);
+                console.log('data: ', res.data);
+                await navigate(`/api/user/${userId}`, { state: userId });
+                await window.location.reload();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
     }
 
     return (
@@ -39,7 +58,7 @@ function UpdateJob() {
                     <h2 class="font-bold text-xl pb-2">Modification de competence</h2>
                     <span class="">Veillez changer les champs necessaires pour modifier vos informations personnelles concernant cette carrière.</span>
                     <Formik
-                        initialValues={{ phone, nameCreator, creatorId, images: '', email, job, description, location, facebookProfil, instagramProfil }}
+                        initialValues={{ phone, nameCreator, images, job, description, location, facebookProfil, instagramProfil }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => handleSubmit(values)}
                     >
@@ -96,9 +115,9 @@ function UpdateJob() {
                                     <p class="text-red-700 -mt-4 mb-2">{errors.description}</p>
                                 )}
                                 <label class="">Choisir des images</label>
-                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="file" name="images"
+                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2 mb-4" type="file" name="images"
                                     multiple title="Ajouter des images(plusieurs)"
-                                    onChange={handleChange}
+                                    onChange={(e) => setImages(e.target.files)}
                                 />
                                 <label class="">Nom d'instagram profil</label>
                                 <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"

@@ -1,22 +1,15 @@
-const express = require("express");
-
-const { searchThings, getAllStuff, getOneStuff, getOneUserStuff } = require('../controllers/stuffController')
+const { searchThings, getAllStuff, getOneStuff, getOneUserStuff,
+    updateThing, deleteThing, addStuff
+} = require('../controllers/stuffController')
 const upload = require('../middleware/upload');
 const requestLogin = require('../middlewares/requestLogin');
 
 module.exports = (app) => {
+    app.post('/api/user/add-stuff', requestLogin, upload.array('images'), addStuff);
     app.get('/api/stuff', getAllStuff);
     app.get('/api/search-stuff/:value/:location', searchThings);
-    app.get('/api/stuff/:id', getOneStuff);
-    app.get('/api/user/stuff/:creatorId', getOneUserStuff);
+    // app.get('/api/stuff/:id', getOneStuff);
+    app.get('/api/stuff/:id', getOneUserStuff);
+    app.put('/api/user/update-stuff/:id', requestLogin, upload.array('images'), updateThing);
+    app.delete('/api/user/delete-stuff/:id', requestLogin, deleteThing);
 };
-
-// router.post('/add-job', upload.array('images'), (req, res) => postJobs(req, res));
-
-// router.get('/user/:creatorId', (req, res) => getThingsByUserName(req, res));
-
-// router.put('/:id', upload.array('images'), (req, res) =>  updateThings(req, res));
-
-// router.delete('/:id', (req, res) => deleteThings(req, res));
-
-// module.exports = router;

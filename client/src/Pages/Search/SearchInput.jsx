@@ -5,22 +5,8 @@ import { city, getStuff } from '../../Utils/helpers';
 
 function SearchInput(props) {
     const { value, setValue, location, setLocation,
-        setData
+        setData, data, handleSearch
     } = props;
-
-    const handleSearch = () => {
-        if (!value) {
-            window.alert('Le titre est obligatoire');
-        } else {
-            // getStuff(formData, setData);
-            axios.get(`/api/search-stuff/${value}/${location}`)
-                .then(res => {
-                    setData(res.data);
-                    console.log(res.data);
-                })
-                .catch(err => console.log(err));
-        }
-    }
 
     return (
         <div class="mx-auto w-full md:w-4/5">

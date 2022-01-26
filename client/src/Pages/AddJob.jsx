@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -9,7 +9,8 @@ import Header from '../Components/Header';
 import { city } from '../Utils/helpers';
 
 const validationSchema = Yup.object().shape({
-    phone: Yup.string().required("Le numero de telephone est obligatoire"),
+    phone: Yup.string().required("Le numero de telephone est obligatoire")
+        .min(8, 'Le numéro de téléphone doit comporter au moins 8 caractères'),
     email: Yup.string().email('Addresse email incorrect')
         .required("L'email est obligatoire"),
     nameCreator: Yup.string().required("Le Nom et Prenom est obligatoire"),
@@ -19,19 +20,42 @@ const validationSchema = Yup.object().shape({
 });
 
 function AddJob() {
+    const navigate = useNavigate();
     const locationData = useLocation();
     const user = locationData.state;
-    console.log(user);
-    const { phone, name, _id, email, location,
-        facebook, instagram
+    const { phone, name, email, location,
+        facebook, instagram, _id
     } = user;
     const [isLoading, setIsLoading] = useState(false);
+    const [images, setImages] = useState([]);
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
         setIsLoading(true);
-        console.log('add', values);
+        let formData = new FormData();
+        await Object.keys(values).forEach((item) => {
+            formData.append(`${item}`, values[item]);
+        });
+        for (let i = 0; i < images.length; i++) {
+            formData.append(`images`, images[i]);
+        }
+
+        axios.post('/api/user/add-stuff', formData)
+            .then(async (res) => {
+                setIsLoading(false);
+                if (res.data.error) {
+                    setIsLoading(false);
+                    window.alert(res.data.error);
+                } else {
+                    await navigate(`/api/user/${_id}`, { state: _id });
+                    await window.location.reload();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    console.log(res.data);
+                }
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
     }
-    // Veillez modifier vos données personnelles nécessaire pour modifier votre profil
 
     return (
         <div style={{ background: "rgba(0, 0, 0, 0.2)" }}>
@@ -42,12 +66,14 @@ function AddJob() {
                     <h2 class="font-bold text-xl pb-2">Remplissez le formulaire</h2>
                     <span class="">Veillez entrer vos données personnelles pour commencer à recevoir des offres des clients autour de vous dans tout le pays.</span>
                     <Formik
-                        initialValues={{ phone, nameCreator: name, creatorId: _id, images: '', email, job: '', description: '', location, facebookProfil: facebook, instagramProfil: instagram }}
+                        initialValues={{ phone, nameCreator: name, images, email, job: '', description: '', location, facebookProfil: facebook, instagramProfil: instagram }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => handleSubmit(values)}
                     >
                         {({ values, errors, handleSubmit, handleChange, touched }) => (
-                            <form class="py-8" onSubmit={handleSubmit}>
+                            <form enctype="multipart/form-data"
+                                class="py-8" onSubmit={handleSubmit}
+                            >
                                 <label>Nom et Prenom</label>
                                 <input
                                     type="text" name="nameCreator"
@@ -107,9 +133,9 @@ function AddJob() {
                                     <p class="text-red-700 -mt-3 mb-2">{errors.description}</p>
                                 )}
                                 <label class="">Choisir des images</label>
-                                <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="file" name="images"
-                                    multiple title="Ajouter des images(plusieurs)"
-                                    onChange={handleChange}
+                                <input type="file" multiple name="images"
+                                    onChange={(e) => setImages(e.target.files)}
+                                    class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4"
                                 />
                                 <label class="">Nom d'instagram profil</label>
                                 <input class="shadow-sm bg-white rounded-lg p-2 border w-full my-2  mb-4" type="text"

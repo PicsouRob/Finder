@@ -14,7 +14,7 @@ function Search() {
     // console.log(data);
     const locationData = useLocation();
     // const { jobValue, cityValue } = locationData.state;
-    console.log(locationData)
+    // console.log(locationData)
     const [value, setValue] = useState('');
     const [location, setLocation] = useState('Ville');
     const [modalData, setModalData] = useState({});
@@ -42,6 +42,37 @@ function Search() {
 
     const selectFilter = () => { }
 
+    const handleSearch = async () => {
+        await setData([]);
+        if (!value) {
+            window.alert('Le titre est obligatoire');
+        } else {
+            const arrayData = [];
+            const val = await value.toLowerCase();
+            const result = await data.filter((item) => {
+                if (item.job.toLowerCase().includes(val)) {
+                    return item;
+                }
+            });
+
+            console.log(result);
+
+            // {
+            //     const jobValue = item.job.toLowerCase();
+            //     if (jobValue.indexOf(val) > -1 && location === 'Ville') {
+            //         // console.log(item)
+            //         return item;
+            //     } 
+            //     // else if (jobValue.indexOf(val) > -1 && item.location.indexOf(location) > -1) {
+            //     //     return item;
+            //     // }
+            // });
+
+            // console.log(result)
+            // return setData(result);
+        }
+    }
+
     return (
         <div>
             <Header />
@@ -50,7 +81,8 @@ function Search() {
                 <p class="text-center font-medium text-lg">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
                 <SearchInput location={location} value={value}
                     setValue={setValue} setLocation={setLocation}
-                    setData={setData}
+                    setData={setData} data={data}
+                    handleSearch={() => handleSearch()}
                 />
             </div>
             <div class="py-8 px-6 md:px-28 bg-green-50">

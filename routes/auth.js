@@ -1,9 +1,10 @@
 const passport = require('passport');
-const mongoose = require("mongoose");
-const User = mongoose.model('User');
 
 const upload = require('../middleware/upload');
 const requestLogin = require('../middlewares/requestLogin');
+const { getUserById, updateUser, updateProfilPhoto,
+    deleteAccount
+} = require('../controllers/userController');
 
 module.exports = (app) => {
     app.get('/auth/google', passport.authenticate('google', 
@@ -47,28 +48,14 @@ module.exports = (app) => {
         res.redirect('/');
     });
 
-    app.get('/api/user/:id', (req, res) => {
-        User.findById(req.params.id)
-        .then((response) => {
-            if(!response) return res.send({ 
-                    error: "Oups ! désolé, aucun résultat trouvé"
-                });
-
-            return res.status(200).send(response);
-        })
-    });
+    app.get('/api/user-data/:id', getUserById);
+    app.put('/api/update-data/:id', requestLogin, updateUser);
+    app.put('/api/user/update-profil/:id', requestLogin, upload.single('image'), updateProfilPhoto);
+    app.delete('/api/user/delete-account/:id', requestLogin, deleteAccount);
 };
-
-// router.post("/register", upload.single('image'), (req, res, next) => registerValidation(req, res, next));
-
-// router.get('/:id', (req, res) => getProfil(req, res));
-
-// router.put('/update-user/:id', upload.single('image'), (req, res) => updateUser(req, res));
 
 // router.post("/login", (req, res, next) => loginValidation(req, res, next));
 
 // router.put('/forgot-password', (req, res, next) => forgetPassword(req, res, next));
 
 // router.put('/reset-password', (req, res, next) => resetPassword(req, res, next));
-
-// router.delete('/delete-account/:id', (req, res) => deleteAccount(req, res));
