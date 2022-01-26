@@ -38,7 +38,7 @@ module.exports = (app) => {
         res.send({ error: req.flash('message')[0] });
     });
 
-    app.get('/api/current_user', requestLogin, (req, res) => {
+    app.get('/api/current_user', (req, res) => {
         res.send(req.user);
     });
 

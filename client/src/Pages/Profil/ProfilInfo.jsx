@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,9 +7,8 @@ import CreateNew from './CreateNew';
 import { getDate } from '../../Utils/helpers';
 
 function ProfilInfo(props) {
-    const { data, stuff, userId } = props;
+    const { data, stuff, userId, setDeleteShow } = props;
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
     const { image, name, email, date, _id, facebook, instagram,
         description, phone, website, location
     } = data;
@@ -32,23 +31,10 @@ function ProfilInfo(props) {
     const updateProfilPhoto = async (e) => {
         let formData = new FormData();
         formData.append('image', e.target.files[0]);
-        console.log(Object.fromEntries(formData));
         axios.put(`/api/user/update-profil/${_id}`, formData)
             .then(async (res) => {
                 console.log(res.data);
             }).catch((err) => console.log(err));
-    }
-
-    const deleteAccount = async () => {
-        setIsLoading(true);
-        axios.delete(`/api/user/delete-account/${_id}`)
-            .then(async (res) => {
-                setIsLoading(false);
-                console.log(res.data);
-                // await navigate('/');
-                // await window.location.reload();
-                // window.scrollTo({ top: 0, behavior: 'smooth' });
-            }).catch(err => console.log(err));
     }
 
     return (
@@ -140,10 +126,9 @@ function ProfilInfo(props) {
                         class="p-2 hover:bg-black group rounded-lg"
                     ><p class="font-medium group-hover:text-white">Se déconnecter</p></button>
                     <p>|</p>
-                    <button class="p-2 hover:bg-red-700 group rounded-lg flex gap-x-3 items-center"
-                        onClick={() => deleteAccount()}
+                    <button class="p-2 hover:bg-red-700 group rounded-lg"
+                        onClick={() => setDeleteShow(true)}
                     >
-                        {isLoading && <i class="fa fa-spinner fa-spin"></i>}
                         <p class="font-medium group-hover:text-white">
                             Supprimer mon compte
                         </p>

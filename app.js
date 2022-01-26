@@ -18,19 +18,20 @@ const app = express();
 const conn = mongoose.createConnection(keys.MONGOdb_ACCESS, 
     { useNewUrlParser: true, useUnifiedTopology: true 
 });
-  
+
 // Middleware.........
 app.use(cors());
 app.use(cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.SESSION_SECRET]
+    keys: [keys.SESSION_SECRET],
+    name: 'user-id',
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(
-    express.urlencoded({ extended: true })
-);
+app.use(express.json());
 
 Grid.mongo = mongoose.mongo;
 let gfs;

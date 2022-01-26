@@ -12,21 +12,24 @@ import ProfilInfo from './ProfilInfo';
 import CreateNew from './CreateNew';
 import StuffEmpty from './StuffEmpty';
 import Stuff from './Stuff';
+import DeleteAlert from './DeleteAlert';
 
 function Profil({ user }) {
     const locationData = useLocation();
     const userData = locationData.state;
     const [data, setData] = useState({});
     const [stuff, setStuff] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
+    const [deleteShow, setDeleteShow] = useState(false);
 
     useEffect(() => {
         document.title = 'Finder | Porfile';
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/stuff/${userData}`)
+        axios.get(`/api/user/stuff/${userData}`)
             .then(res => {
                 setStuff(res.data);
             }).catch(err => console.log(err));
@@ -35,17 +38,19 @@ function Profil({ user }) {
             .then((res) => {
                 setData(res.data);
             }).catch(err => console.log(err));
-    }, [userData, data, stuff]);
+    }, [userData]);
 
     return (
-        <div class="bg-[#e7ebee]">
+        <div class="relative bg-[#e7ebee]">
             <Header />
             <div class="w-full h-52 bg-cover bg-no-repeat bg-center"
-                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 50%), rgba(0, 0, 0, 0.8)),url(${data ? data.image : signImages})` }}
+                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 50%), rgba(0, 0, 0, 0.8)),url(${data.image ? data.image : signImages})` }}
             />
             <div class="min-w-7xl mx-auto px-6 md:px-8 bg-green-50 pb-16 pt-10">
                 <div class="flex flex-col md:flex-row gap-y-8 gap-x-16 -mt-40 z-10">
-                    <ProfilInfo data={data} userId={user._id} stuff={stuff} />
+                    <ProfilInfo data={data} userId={user._id} stuff={stuff}
+                        setDeleteShow={setDeleteShow}
+                    />
                     <div class="bg-white p-3 md:p-4 rounded-lg shadow-sm w-full md:w-3/5 self-start">
                         <div class="flex items-center justify-between">
                             <div>{stuff.length > 1 ? "Compétences" : "Compétence"}</div>
@@ -70,6 +75,12 @@ function Profil({ user }) {
                 modalData={modalData}
                 userProfil={data.image}
             />
+            {deleteShow && (
+                <DeleteAlert setDeleteShow={setDeleteShow}
+                    deleteShow={deleteShow} setIsLoading={setIsLoading}
+                    id={user._id} isLoading={isLoading}
+                />
+            )}
             <Footer />
         </div>
     )

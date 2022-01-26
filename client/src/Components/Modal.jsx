@@ -71,7 +71,7 @@ function Modal(props) {
             {showModal ? (
                 <div ref={modalRef} onClick={(e) => handleCloseModal(e)}
                     class="fixed top-0 right-0 left-0 bottom-0 z-20 overflow-scroll px-6 py-8 lg:px-6 min-w-7xl mx-auto"
-                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.7' }}
+                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
                 >
                     <animated.div style={animation}>
                         <div class="flex items-center justify-between">

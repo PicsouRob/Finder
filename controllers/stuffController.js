@@ -21,7 +21,7 @@ module.exports = {
         
         req.files === undefined ? imagesArray = [] :
         req.files.forEach((ele) => {
-            imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
+            imagesArray.push(`https://finder-ht.herokuapp.com/userProfil/${ele.filename}`);
         });
     
         try {
@@ -72,15 +72,15 @@ module.exports = {
         .catch(error => res.json({ error }));
     },
     getOneUserStuff: (req, res) => {
-        const { id } = req.params;
-        Job.find({ userId: id }).then(response => {
+        const id = mongoose.Types.ObjectId(`${req.params.id}`);
+        Job.find({ userId: req.params.id }).then(response => {
             if(!response) {
                 return res.send({ 
                     error: "Oups ! désolé, aucun résultat trouvé"
                 });
             }
 
-            return res.status(200).json(response)
+            return res.send(response)
         }).catch(error => res.json({ error }));
     },
     updateThing: async (req, res) => {
@@ -94,7 +94,7 @@ module.exports = {
                 await req.files === undefined ? null :
                 req.files.forEach((ele) => {
                     imagesArray.push(`
-                        https://finderht.herokuapp.com/userProfil/${ele.filename}
+                        https://finder-ht.herokuapp.com/userProfil/${ele.filename}
                     `);
                 });
                 const jobUpdate = { ...req.body, images: imagesArray };
@@ -110,19 +110,3 @@ module.exports = {
     },
     deleteThing: (req, res) => {}
 }
-
-// const getThingsByName = async (req, res) => {
-//     const job = req.params.name;
-//     Job.find({ job }).then(response => {
-//         if(!response) return res.json({ error: `Oups ! désolé, aucun résultat trouvé pour ${job}, Il semble que nous ne puissions trouver aucun résultat basé sur votre recherche. ` });
-//         res.status(200).json(response)
-//     }).catch(error => res.json({ error }));
-// }
-
-// const findByZone = async (req, res) => {
-//     const { name, location } = req.params;
-//     Job.find({ job: name, location }).then(response => {
-//         if(!response) return res.json({ error: "Oups ! désolé, aucun résultat trouvé" });
-//         res.status(200).json(response)
-//     }).catch(error => res.json({ error }));
-// }

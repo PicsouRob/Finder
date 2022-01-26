@@ -26,12 +26,10 @@ module.exports = {
         })).catch(error => res.json({ error }));
     },
     deleteAccount: async (req, res) => {
-        User.findById(req.params.id).then((res) => {
-            if(!res) return res.send({ error: "Cette utilisateur n'existe pas"});
-
-            // User.deleteOne({ _id: req.params.id }).exec().then(() => {
-                res.send({ message: "utilisateur Supprimer" });
-            // }).catch(error => res.json({ error }));
+        const id = mongoose.Types.ObjectId(`${req.params.id}`);
+        await User.deleteOne({ _id: id })
+        .exec().then(() => {
+            res.send({ message: "Utilisateur supprimer avec succèss"})
         }).catch(error => res.json({ error }));
     }
 }
