@@ -20,7 +20,7 @@ const SearchCategories = () => {
                     </svg>
                 </div>
             </div>
-            <div class="py-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div class="py-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mx-auto">
                 {categories.map(({ title, icon }, index) => (
                     <div class="flex items-center justify-center shadow-sm bg-[#0e1e25] rounded-lg px-8 h-52 text-center group hover:bg-[#000]" key={index}>
                         <div class="grid place-items-center space-y-3">

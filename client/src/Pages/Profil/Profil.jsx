@@ -41,7 +41,7 @@ function Profil({ user }) {
     }, [userData]);
 
     return (
-        <div class="relative bg-[#e7ebee]">
+        <div class="relative bg-[#e7ebee] w-full">
             <Header />
             <div class="w-full h-52 bg-cover bg-no-repeat bg-center"
                 style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 50%), rgba(0, 0, 0, 0.8)),url(${data.image ? data.image : signImages})` }}

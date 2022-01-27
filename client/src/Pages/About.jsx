@@ -23,7 +23,7 @@ function About() {
     return (
         <div class="">
             <Header />
-            <div class="relative flex flex-col md:flex-row items-center justify-between min-h-screen min-w-7xl px-6 lg:px-8 py-16 gap-x-8 gap-y-16"
+            <div class="relative flex flex-col md:flex-row items-center justify-between min-h-screen px-6 lg:px-8 py-16 gap-x-8 gap-y-16 min-w-7xl mx-auto"
                 style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 85%), rgba(0, 0, 0, 0.8)), url(${fond})` }}
             >
                 <div class="w-full md:w-1/2 grid grid-cols-1">
@@ -37,7 +37,7 @@ function About() {
                 </div>
                 <img src={img} class="w-full md:w-1/2" alt="logo" />
             </div>
-            <div class="relative min-w-7xl px-6 lg:px-8 py-16 h-auto"
+            <div class="relative min-w-7xl px-6 lg:px-8 py-16 h-auto mx-auto"
                 style={{ backgroundColor: '#0e1e25' }}
             >
                 <h2 class="text-3xl md:text-3xl font-bold text-white pb-12 text-center">Comment ça marche?</h2>
@@ -53,7 +53,7 @@ function About() {
                     </div>
                 </div>
             </div>
-            <div class="relative min-w-7xl px-6 lg:px-8 py-16">
+            <div class="relative min-w-7xl px-6 lg:px-8 py-16 mx-auto">
                 <div class="w-full flex flex-col md:flex-row md:justify-between items-center">
                     <div class="pb-4 w-full md:w-1/2">
                         <h2 class="text-3xl md:text-3xl font-bold text-black pb-2 md:pb-0">Alors qu'est-ce que tu attends?</h2>
@@ -73,7 +73,7 @@ function About() {
                     </div>
                 </div>
             </div>
-            <div class="relative min-w-7xl px-6 lg:px-8 py-16"
+            <div class="relative min-w-7xl px-6 lg:px-8 py-16 mx-auto"
                 style={{ backgroundColor: '#0e1e25' }}
             >
                 <div class="flex-col space-y-3 leading-6">
