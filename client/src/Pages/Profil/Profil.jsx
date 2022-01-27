@@ -38,7 +38,7 @@ function Profil({ user }) {
             .then((res) => {
                 setData(res.data);
             }).catch(err => console.log(err));
-    }, [userData, data, stuff]);
+    }, [userData]);
 
     return (
         <div class="relative bg-[#e7ebee]">
