@@ -89,7 +89,7 @@ function ProfilInfo(props) {
                 <div class="font-medium pb-3">
                     Réseaux sociaux
                 </div>
-                {instagram && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent space-between mb-2"
+                {instagram && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent flex items-center justify-between mb-2"
                     href={`https://instagram.com/${instagram}`}
                 >
                     <p class="text-md group-hover:text-white">Instagram</p>
@@ -97,7 +97,7 @@ function ProfilInfo(props) {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
                 </a>}
-                {facebook && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent space-between"
+                {facebook && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent flex items-center justify-between"
                     href={`https://facebook.com/${facebook}`}
                 >
                     <p class="text-md group-hover:text-white">Facebook</p>
@@ -122,7 +122,7 @@ function ProfilInfo(props) {
                             Modifier mon profil
                         </button>
                     </Link>
-                    <div class="flex items-center justify-between gap-x-1 md:gap-x-4">
+                    <div class="flex items-center justify-between gap-x-1 md:gap-x-4 text-[13px]">
                         <button onClick={() => userDeconnected()}
                             class="p-2 hover:bg-black group rounded-lg"
                         ><p class="font-medium group-hover:text-white">Se déconnecter</p></button>

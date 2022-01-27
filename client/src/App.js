@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import Home from './Pages/Home/Home';
@@ -18,11 +17,9 @@ import AddJob from './Pages/AddJob';
 import Update from './Pages/Update/Update';
 import UpdateJob from './Pages/Update/UpdateJob';
 import * as actions from './actions';
-import './Styles/Global.css';
 
 function App(props) {
     const [isLoad, setIsLoad] = useState(true);
-    // axios.defaults.baseURL = 'https://finderht.herokuapp.com'
     
     useEffect(() => {
         props.getUser();

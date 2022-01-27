@@ -1,8 +1,6 @@
 import React from 'react';
 import { SocialIcon } from 'react-social-icons';
 
-import '../Styles/Global.css';
-
 function SocialMedia(props) {
     const { color } = props;
 

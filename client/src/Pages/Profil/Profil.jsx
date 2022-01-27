@@ -13,6 +13,7 @@ import CreateNew from './CreateNew';
 import StuffEmpty from './StuffEmpty';
 import Stuff from './Stuff';
 import DeleteAlert from './DeleteAlert';
+import ImagesView from '../../Components/ImagesView';
 
 function Profil({ user }) {
     const locationData = useLocation();
@@ -23,6 +24,9 @@ function Profil({ user }) {
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [deleteShow, setDeleteShow] = useState(false);
+    const [showImages, setShowImages] = useState(false);
+    const [imagesIndex, setImagesIndex] = useState(0);
+    const [imagesData, setImagesData] = useState([]);
 
     useEffect(() => {
         document.title = 'Finder | Porfile';
@@ -73,12 +77,18 @@ function Profil({ user }) {
             </div>
             <Modal showModal={showModal} setShowModal={setShowModal}
                 modalData={modalData}
-                userProfil={data.image}
+                setImagesData={setImagesData} setImagesIndex={setImagesIndex}
+                setShowImages={setShowImages}
             />
             {deleteShow && (
                 <DeleteAlert setDeleteShow={setDeleteShow}
                     deleteShow={deleteShow} setIsLoading={setIsLoading}
                     id={user._id} isLoading={isLoading}
+                />
+            )}
+            {showImages && (
+                <ImagesView showImages={showImages} setShowImages={setShowImages} setImagesIndex={setImagesIndex}
+                    imagesIndex={imagesIndex} imagesData={imagesData}
                 />
             )}
             <Footer />

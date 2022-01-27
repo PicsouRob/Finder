@@ -3,7 +3,7 @@ const passport = require('passport');
 const upload = require('../middleware/upload');
 const requestLogin = require('../middlewares/requestLogin');
 const { getUserById, updateUser, updateProfilPhoto,
-    deleteAccount
+    deleteAccount, getUserPhoto
 } = require('../controllers/userController');
 
 module.exports = (app) => {
@@ -49,12 +49,11 @@ module.exports = (app) => {
     });
 
     app.get('/api/user-data/:id', getUserById);
+    app.get('/api/user/:email/photo', getUserPhoto)
     app.put('/api/update-data/:id', requestLogin, updateUser);
     app.put('/api/user/update-profil/:id', requestLogin, upload.single('image'), updateProfilPhoto);
     app.delete('/api/user/delete-account/:id', requestLogin, deleteAccount);
 };
-
-// router.post("/login", (req, res, next) => loginValidation(req, res, next));
 
 // router.put('/forgot-password', (req, res, next) => forgetPassword(req, res, next));
 

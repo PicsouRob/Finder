@@ -10,13 +10,16 @@ import { getDate } from '../Utils/helpers';
 
 function Modal(props) {
     const { showModal, setShowModal, modalData,
-        userProfil, user
+        user, setImagesData,
+        setImagesIndex, setShowImages
     } = props;
     const modalRef = useRef();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const { nameCreator, _id, userId, images, email, job, description,
-        location, facebookProfil, instagramProfil, date, phone } = modalData;
+        location, facebookProfil, instagramProfil, date, phone
+    } = modalData;
+    const [userData, setuserData] = useState({});
 
     const handleCloseModal = (e) => {
         if (modalRef.current === e.target) {
@@ -38,6 +41,13 @@ function Modal(props) {
         return () => document.removeEventListener('keydown', keyPress);
     }, [keyPress]);
 
+    useEffect(() => {
+        axios.get(`/api/user/${email}/photo`)
+            .then((res) => {
+                setuserData(res.data);
+            }).catch(err => console.log(err));
+    }, [email]);
+
     const animation = useSpring({
         config: {
             duration: 250
@@ -58,6 +68,13 @@ function Modal(props) {
             }).catch(err => console.log(err));
     }
 
+    const handleViewImages = async (index) => {
+        await setShowModal(false);
+        setShowImages(true);
+        setImagesIndex(index);
+        setImagesData(images);
+    }
+
     return (
         <div class="" >
             {showModal ? (
@@ -72,7 +89,7 @@ function Modal(props) {
                                 class="flex items-center gap-x-3 cursor-pointer"
                                 onClick={() => setShowModal(false)}
                             >
-                                <img src={userProfil ? userProfil : img} alt="img"
+                                <img src={userData.image ? userData.image : img} alt="img"
                                     class="w-10 h-10 rounded-full"
                                 />
                                 <div class="">
@@ -121,7 +138,7 @@ function Modal(props) {
                                 </div>)}
                             </div>
                             {(instagramProfil || facebookProfil) && <div class="">
-                                {instagramProfil && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent space-between mb-2"
+                                {instagramProfil && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent flex items-center justify-between mb-2"
                                     href={`https://instagram.com/${instagramProfil}`}
                                 >
                                     <p class="text-md group-hover:text-white">Instagram</p>
@@ -129,7 +146,7 @@ function Modal(props) {
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                                     </svg>
                                 </a>}
-                                {facebookProfil && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent space-between"
+                                {facebookProfil && <a class="px-2 border-2 group py-2 rounded-md hover:bg-black hover:border-transparent flex items-center justify-between"
                                     href={`https://facebook.com/${facebookProfil}`}
                                 >
                                     <p class="text-md group-hover:text-white">Facebook</p>
@@ -141,7 +158,9 @@ function Modal(props) {
                             <div class="font-medium">Galeries</div>
                             {images.length > 0 && (<div class="grid gap-4 grid-cols-1 md:grid-cols-3">
                                 {images.map((item, index) => (
-                                    <div class="w-100 h-70" key={index}>
+                                    <div class="w-100 h-70 cursor-pointer hover:opacity-80" key={index}
+                                        onClick={() => handleViewImages(index)}
+                                    >
                                         <img class="my-1 rounded-md h-full" src={item} alt="item" />
                                     </div>
                                 ))}

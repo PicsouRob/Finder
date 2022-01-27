@@ -32,16 +32,16 @@ function SearchResult(props) {
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                                     </svg>
                                 </div>
-                                <p class="font-medium">{item.nameCreator}</p>
+                                <p class="font-medium group-hover:text-gray-500">{item.nameCreator}</p>
                             </div>
                             <h4 class="font-medium group-hover:text-white text-[19px]">{item.job}</h4>
-                            <p class="">{substringDesc(item.description)}</p>
+                            <p class="group-hover:text-gray-500">{substringDesc(item.description)}</p>
                         </div>
                         <hr class="my-3" />
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="">{getDate(item.date)}</p>
-                                <div class="flex items-center space-x-2">
+                            <div class="space-y-2">
+                                <p class="group-hover:text-gray-500">{getDate(item.date)}</p>
+                                <div class="flex items-center gap-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-6" fill="none" viewBox="0 0 24 24" stroke="#22c55e">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />

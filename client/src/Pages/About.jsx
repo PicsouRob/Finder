@@ -37,12 +37,11 @@ function About() {
                 </div>
                 <img src={img} class="w-full md:w-1/2" alt="logo" />
             </div>
-            <div class="relative min-w-7xl px-6 lg:px-8 py-16 h-auto mx-auto"
-                style={{ backgroundColor: '#0e1e25' }}
+            <div class="relative min-w-7xl px-6 lg:px-8 py-16 h-auto mx-auto bg-[#0e1e25]"
             >
                 <h2 class="text-3xl md:text-3xl font-bold text-white pb-12 text-center">Comment ça marche?</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 mt-3 h-[400px]">
-                    <img src={image} alt="img" class="h-full" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 mt-3 h-auto place-items-center">
+                    <img src={image} alt="img" class="w-full h-auto lg:h-3/4" />
                     <div class="flex flex-col gap-y-6">
                         {aboutData.map((item, index) => (
                             <div key={index} class="">
@@ -59,7 +58,7 @@ function About() {
                         <h2 class="text-3xl md:text-3xl font-bold text-black pb-2 md:pb-0">Alors qu'est-ce que tu attends?</h2>
                         <span class="mt-4 md:mt-0 w-full md:w-2/3">Publiez un projet aujourd'hui et obtenez des offres des clients partout dans le pays ou recherchez un freelancer pour votre boulot.</span>
                     </div>
-                    <div class="flex flex-col md:flex-row gap-x-10">
+                    <div class="flex items-center flex-col md:flex-row gap-x-10">
                         <div class="border-2 border-red-500 px-3 py-2.5 rounded-full hover:bg-red-500 hover:text-white font-medium my-3 md:my-0 cursor-pointer"
                             onClick={() => navigate(addPath)}
                         >
@@ -73,8 +72,7 @@ function About() {
                     </div>
                 </div>
             </div>
-            <div class="relative min-w-7xl px-6 lg:px-8 py-16 mx-auto"
-                style={{ backgroundColor: '#0e1e25' }}
+            <div class="relative min-w-7xl px-6 lg:px-8 py-16 mx-auto bg-[#0e1e25]"
             >
                 <div class="flex-col space-y-3 leading-6">
                     <h2 class="text-3xl md:text-3xl font-bold text-white pb-2 md:pb-0">Aide supplémentaire</h2>
@@ -82,14 +80,14 @@ function About() {
                         Vous ne savez pas par où commencer ? Consultez les liens ci-dessous:
                     </span>
                 </div>
-                <div class="flex flex-col md:flex-row md:justify-between pt-6 space-y-8 items-center">
-                    <Link to={{ pathname: "/help_search" }}
-                        class="text-white text-xl underline  hover:opacity-80 cursor-pointer"
+                <div class="flex flex-col md:flex-row md:justify-between pt-6 gap-y-8 items-center w-full">
+                    <Link to="/help_search"
+                        class="text-white text-xl underline  hover:opacity-80 cursor-pointer w-full md:w-1/2"
                     >
                         Comment embaucher avec finderht.com
                     </Link>
                     <Link to="/help_post"
-                        class="text-white text-xl underline  hover:opacity-80 cursor-pointer"
+                        class="text-white text-xl underline  hover:opacity-80 cursor-pointer w-full md:w-1/2"
                     >
                         Conseils pour publier des projets
                     </Link>

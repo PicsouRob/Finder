@@ -8,6 +8,7 @@ import Modal from '../../Components/Modal';
 import SearchResult from './SearchResult';
 import SearchInput from './SearchInput';
 import filter from '../../Images/filter.png';
+import ImagesView from '../../Components/ImagesView';
 
 function Search() {
     const [data, setData] = useState([]);
@@ -19,6 +20,9 @@ function Search() {
     const [location, setLocation] = useState('Ville');
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
+    const [showImages, setShowImages] = useState(false);
+    const [imagesIndex, setImagesIndex] = useState(0);
+    const [imagesData, setImagesData] = useState([]);
 
     useEffect(() => {
         axios.get(`/api/stuff`).then((res) => {
@@ -78,7 +82,7 @@ function Search() {
             <Header />
             <div class="py-20 px-6 md:px-28 bg-[#0e1e25]">
                 <h2 class="text-3xl md:text-5xl font-bold text-white pb-2 md:pb-0 text-center">Trouver un professionnel</h2>
-                <p class="text-center font-medium text-lg">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
+                <p class="text-center font-medium text-lg text-gray-400">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
                 <SearchInput location={location} value={value}
                     setValue={setValue} setLocation={setLocation}
                     setData={setData} data={data}
@@ -106,7 +110,15 @@ function Search() {
             </div>
             <Modal showModal={showModal} setShowModal={setShowModal}
                 modalData={modalData}
+                setImagesData={setImagesData} setImagesIndex={setImagesIndex}
+                setShowImages={setShowImages}
             />
+            {showImages && (
+                <ImagesView showImages={showImages} setShowImages={setShowImages}
+                    setImagesIndex={setImagesIndex}
+                    imagesIndex={imagesIndex} imagesData={imagesData}
+                />
+            )}
             <Footer />
         </div>
     )

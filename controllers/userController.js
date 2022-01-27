@@ -3,11 +3,24 @@ const User = mongoose.model('User');
 
 module.exports = {
     getUserById: async (req, res) => {
-        User.findById(req.params.id)
+        const id = mongoose.Types.ObjectId(`${req.params.id}`);
+        User.findOne({ _id: id })
         .then((response) => {
             if(!response) return res.send({ 
                     error: "Oups ! désolé, aucun résultat trouvé"
                 });
+
+            return res.status(200).send(response);
+        })
+    },
+    getUserPhoto: (req, res) => {
+        console.log(req.params.email)
+        User.findOne({ email: req.params.email })
+        .select({ image: true })
+        .then((response) => {
+            if(!response) return res.send({ 
+                    error: "Oups ! désolé, aucun utilateur trouvé"
+            });
 
             return res.status(200).send(response);
         })
