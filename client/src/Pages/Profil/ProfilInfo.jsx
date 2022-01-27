@@ -106,35 +106,37 @@ function ProfilInfo(props) {
                     </svg>
                 </a>}
             </div>}
-            <div class="grid place-items-center w-full gap-y-3">
-                {_id === userId && <div class="text-center space-y-2 grid place-items-center py-3 px-6 border-2 border-dashed rounded-lg my-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-8" fill="none" viewBox="0 0 24 24" stroke="#31C6AE">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                    </svg>
-                    Nouveau Project
-                    <CreateNew user={data} />
-                </div>}
-                {_id === userId && <Link to={`/api/user/${userId}/update-profil`}
-                    state={data} class="w-full"
-                >
-                    <button class="bg-red-500 rounded-lg shadow-lg text-white cursor-pointer font-medium py-2 my-2 w-full hover:bg-black">
-                        Modifier mon profil
-                    </button>
-                </Link>}
-                {_id === userId && <div class="flex items-center justify-between gap-x-1 md:gap-x-4">
-                    <button onClick={() => userDeconnected()}
-                        class="p-2 hover:bg-black group rounded-lg"
-                    ><p class="font-medium group-hover:text-white">Se déconnecter</p></button>
-                    <p>|</p>
-                    <button class="p-2 hover:bg-red-700 group rounded-lg"
-                        onClick={() => setDeleteShow(true)}
+            {_id === userId && (
+                <div class="grid place-items-center w-full gap-y-3">
+                    <div class="text-center space-y-2 grid place-items-center py-3 px-6 border-2 border-dashed rounded-lg my-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-8" fill="none" viewBox="0 0 24 24" stroke="#31C6AE">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                        </svg>
+                        Nouveau Project
+                        <CreateNew user={data} />
+                    </div>
+                    <Link to={`/api/user/${userId}/update-profil`}
+                        state={data} class="w-full"
                     >
-                        <p class="font-medium group-hover:text-white">
-                            Supprimer mon compte
-                        </p>
-                    </button>
-                </div>}
-            </div>
+                        <button class="bg-red-500 rounded-lg shadow-lg text-white cursor-pointer font-medium py-2 my-2 w-full hover:bg-black">
+                            Modifier mon profil
+                        </button>
+                    </Link>
+                    <div class="flex items-center justify-between gap-x-1 md:gap-x-4">
+                        <button onClick={() => userDeconnected()}
+                            class="p-2 hover:bg-black group rounded-lg"
+                        ><p class="font-medium group-hover:text-white">Se déconnecter</p></button>
+                        <p>|</p>
+                        <button class="p-2 hover:bg-red-700 group rounded-lg"
+                            onClick={() => setDeleteShow(true)}
+                        >
+                            <p class="font-medium group-hover:text-white">
+                                Supprimer mon compte
+                            </p>
+                        </button>
+                    </div>
+                </div>
+            )}
             <p class="text-center">MEMBRE DEPUIS LE : {getDate(date)}</p>
         </div>
     )

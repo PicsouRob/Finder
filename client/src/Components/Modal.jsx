@@ -6,16 +6,15 @@ import { connect } from 'react-redux';
 
 import img from '../Images/profil.svg';
 import empty from '../Images/stuffimage.svg';
-import { getDate, useLocalStorage } from '../Utils/helpers';
+import { getDate } from '../Utils/helpers';
 
 function Modal(props) {
     const { showModal, setShowModal, modalData,
-        setShowUpdate, userProfil, user
+        userProfil, user
     } = props;
     const modalRef = useRef();
-    const history = useNavigate();
-    const [userData, setUserData] = useState({});
-    const [store] = useLocalStorage('user', 'user');
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const { nameCreator, _id, userId, images, email, job, description,
         location, facebookProfil, instagramProfil, date, phone } = modalData;
 
@@ -39,13 +38,6 @@ function Modal(props) {
         return () => document.removeEventListener('keydown', keyPress);
     }, [keyPress]);
 
-    useEffect(() => {
-        axios.get(`/api/get-user/${userId}`)
-            .then(res => {
-                setUserData(res.data);
-            }).catch(err => console.log(err));
-    }, [userId]);
-
     const animation = useSpring({
         config: {
             duration: 250
@@ -54,15 +46,15 @@ function Modal(props) {
         transform: showModal ? 'translateY(0%)' : 'translateY(-100%)',
     });
 
-    const updateJob = async () => {
-        await setShowModal(false);
-        setShowUpdate(true);
-    }
-
     const deleteJob = async () => {
-        await axios.delete(`/api/user/${_id}`)
-            .then(res => {
-                setShowModal(false);
+        setIsLoading(true);
+        await axios.delete(`/api/user/delete-stuff/${_id}`)
+            .then(async (res) => {
+                setIsLoading(false);
+                console.log(res.data);
+                await navigate(`/api/user/${userId}`, { state: userId });
+                await window.location.reload();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }).catch(err => console.log(err));
     }
 
@@ -165,13 +157,14 @@ function Modal(props) {
                                     <Link to={`/api/user/${userId}/update-job`}
                                         state={modalData}
                                     >
-                                        <button class="bg-green-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-500" onClick={() => updateJob()}>
+                                        <button class="bg-green-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-500" onClick={() => setShowModal(false)}>
                                             Modifier
                                         </button>
                                     </Link>
-                                    <button class="bg-red-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-green-500"
+                                    <button class="flex items-center bg-red-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-400"
                                         onClick={() => deleteJob()}
                                     >
+                                        {isLoading && <i class="fa fa-spinner fa-spin mr-3"></i>}
                                         Supprimer
                                     </button>
                                 </div>

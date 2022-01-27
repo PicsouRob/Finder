@@ -52,7 +52,7 @@ function App(props) {
                 <Route path="/api/job/add" element={<AddJob  />} />
                 <Route path="/api/user/:id/update-profil" element={<Update  />} />
                 <Route path="/api/user/:id/update-job" element={<UpdateJob  />} />
-                {/* <Route path="*" element={<NotFound />} /> */}
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </Router>
           </div>

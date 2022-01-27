@@ -21,7 +21,7 @@ module.exports = {
         
         req.files === undefined ? imagesArray = [] :
         req.files.forEach((ele) => {
-            imagesArray.push(`https://finder-ht.herokuapp.com/userProfil/${ele.filename}`);
+            imagesArray.push(`https://finderht.herokuapp.com/userProfil/${ele.filename}`);
         });
     
         try {
@@ -94,7 +94,7 @@ module.exports = {
                 await req.files === undefined ? null :
                 req.files.forEach((ele) => {
                     imagesArray.push(`
-                        https://finder-ht.herokuapp.com/userProfil/${ele.filename}
+                        https://finderht.herokuapp.com/userProfil/${ele.filename}
                     `);
                 });
                 const jobUpdate = { ...req.body, images: imagesArray };
@@ -108,5 +108,11 @@ module.exports = {
             }
         });
     },
-    deleteThing: (req, res) => {}
+    deleteThing: (req, res) => {
+        const id = mongoose.Types.ObjectId(`${req.params.id}`);
+        Job.deleteOne({ _id: id })
+        .exec().then(() => {
+            res.send({ message: "Carrier supprimer avec succèss"})
+        }).catch(error => res.json({ error }));
+    }
 }
