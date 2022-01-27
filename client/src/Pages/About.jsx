@@ -24,7 +24,7 @@ function About() {
         <div class="">
             <Header />
             <div class="relative flex flex-col md:flex-row items-center justify-between min-h-screen min-w-7xl px-6 lg:px-8 py-16 gap-x-8 gap-y-16"
-                style={{ backgroundImage: 'url(' + fond + ')' }}
+                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 85%), rgba(0, 0, 0, 0.8)), url(${fond})` }}
             >
                 <div class="w-full md:w-1/2 grid grid-cols-1">
                     <h1 class="text-3xl md:text-3xl font-bold text-white">À propos de Finder</h1>
