@@ -55,29 +55,31 @@ function ImagesView(props) {
             </svg>
         </div>
         <animated.div style={animation}
-            class="relative min-w-7xl h-full bg-white rounded-lg shadow-lg mt-3"
+            class="relative min-w-7xl h-full bg-white rounded-lg shadow-lg mt-3 mx-0 md:mx-4"
         >
-            <div class="bg-contain bg-no-repeat bg-top rounded-md shadow-md w-full h-full"
-                style={{ backgroundImage: `url(${imagesData[imagesIndex]})` }}
-            ></div>
-            {imagesData.length > 1 && (
-                <div class="absolute top-1/2 w-full flex items-center justify-between px-4 text-white">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[#0e1e25] rounded-full grid place-items-center shadow-sm cursor-pointer hover:opacity-80"
-                        onClick={() => seekPreview()}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 md:h-6 w-5 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </div>
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[#0e1e25] rounded-full grid place-items-center shadow-sm cursor-pointer hover:opacity-80"
-                        onClick={() => seekNext()}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 md:h-6 w-5 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
+            <div class="grid place-items-center w-full h-full">
+                {imagesData.length > 1 && (
+                    <div class="bg-contain bg-no-repeat bg-top rounded-md shadow-md w-full h-full"
+                        style={{ backgroundImage: `url(${imagesData[imagesIndex]})` }}
+                    />
+                )}
+            </div>
+            <div class="absolute top-1/2 w-full flex items-center justify-between px-4 text-white">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-[#0e1e25] rounded-full grid place-items-center shadow-sm cursor-pointer hover:opacity-80"
+                    onClick={() => seekPreview()}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 md:h-6 w-5 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
                 </div>
-            )}
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-[#0e1e25] rounded-full grid place-items-center shadow-sm cursor-pointer hover:opacity-80"
+                    onClick={() => seekNext()}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 md:h-6 w-5 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </div>
         </animated.div>
     </div>;
 }
