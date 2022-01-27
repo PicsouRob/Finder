@@ -44,7 +44,7 @@ function ImagesView(props) {
         }
     }
 
-    return <div class="fixed top-0 right-0 left-0 bottom-0 z-20 px-2 py-10 lg:px-6 min-w-7xl mx-auto"
+    return <div class="fixed top-0 right-0 left-0 bottom-0 z-20 px-2 py-10 md:px-8 min-w-7xl mx-auto"
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
     >
         <div class="h-6 w-6 cursor-pointer absolute top-3 right-5 text-white"
