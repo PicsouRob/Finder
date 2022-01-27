@@ -50,7 +50,7 @@ function Profil({ user }) {
             <div class="w-full h-52 bg-cover bg-no-repeat bg-center"
                 style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 50%), rgba(0, 0, 0, 0.8)),url(${data.image ? data.image : signImages})` }}
             />
-            <div class="min-w-7xl mx-auto px-6 md:px-8 bg-green-50 pb-16 pt-10">
+            <div class="min-w-7xl mx-auto px-3 md:px-8 bg-green-50 pb-16 pt-10">
                 <div class="flex flex-col md:flex-row gap-y-8 gap-x-16 -mt-40 z-10">
                     <ProfilInfo data={data} userId={user._id} stuff={stuff}
                         setDeleteShow={setDeleteShow}
