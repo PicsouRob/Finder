@@ -14,7 +14,6 @@ module.exports = {
         })
     },
     getUserPhoto: (req, res) => {
-        console.log(req.params.email)
         User.findOne({ email: req.params.email })
         .select({ image: true })
         .then((response) => {

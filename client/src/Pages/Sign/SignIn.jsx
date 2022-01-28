@@ -66,7 +66,7 @@ function SignIn() {
         <div class="relative grid grid-cols-1 lg:grid-cols-2">
             <SignLeft />
             <div class="flex-1 mx-auto w-full lg:w-1/2">
-                <div class="flex flex-col px-8 pt-10 lg:px-14 xl:px-24">
+                <div class="w-full flex flex-col px-8 pt-10 lg:px-14 xl:px-24">
                     <LogoLink />
                     <div class="pt-6 pb-4">
                         <SignTop title="Hi, Bienvenue!"
@@ -79,7 +79,7 @@ function SignIn() {
                             innerRef={formRef}
                         >
                             {({ values, errors, handleSubmit, handleChange, touched }) => (
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit} class="w-full">
                                     <div class="pt-4">
                                         <label for="email" class="font-light">Adresse e-mail</label>
                                         <div class="flex overflow-hidden items-center py-0 mt-2 w-full rounded-lg border border-grayy-400 transition-all focus-within:border-orange-500 h-12 px-2 md:px-3">
