@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import img from '../Images/profil.svg';
 import empty from '../Images/stuffimage.svg';
 import { getDate } from '../Utils/helpers';
+import DeleteJobAlert from '../Pages/Profil/DeleteJobAlert';
 
 function Modal(props) {
     const { showModal, setShowModal, modalData,
@@ -20,6 +21,7 @@ function Modal(props) {
         location, facebookProfil, instagramProfil, date, phone
     } = modalData;
     const [userData, setuserData] = useState({});
+    const [deleteShow, setDeleteShow] = useState(false);
 
     const handleCloseModal = (e) => {
         if (modalRef.current === e.target) {
@@ -56,18 +58,6 @@ function Modal(props) {
         transform: showModal ? 'translateY(0%)' : 'translateY(-100%)',
     });
 
-    const deleteJob = async () => {
-        setIsLoading(true);
-        await axios.delete(`/api/user/delete-stuff/${_id}`)
-            .then(async (res) => {
-                setIsLoading(false);
-                console.log(res.data);
-                await navigate(`/api/user/${userId}`, { state: userId });
-                await window.location.reload();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }).catch(err => console.log(err));
-    }
-
     const handleViewImages = async (index) => {
         await setShowModal(false);
         setShowImages(true);
@@ -76,7 +66,15 @@ function Modal(props) {
     }
 
     return (
-        <div class="" >
+        <div class="relative" >
+            {deleteShow && (
+                <DeleteJobAlert
+                    setDeleteShow={setDeleteShow} job={job}
+                    userId={userId} id={_id} isLoading={isLoading}
+                    setIsLoading={setIsLoading} deleteShow={deleteShow}
+                    setShowModal={setShowModal}
+                />
+            )}
             {showModal ? (
                 <div ref={modalRef} onClick={(e) => handleCloseModal(e)}
                     class="fixed top-0 right-0 left-0 bottom-0 z-20 overflow-scroll px-3 py-8 sm:px-6 min-w-7xl mx-auto"
@@ -180,10 +178,9 @@ function Modal(props) {
                                             Modifier
                                         </button>
                                     </Link>
-                                    <button class="flex items-center bg-red-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-400"
-                                        onClick={() => deleteJob()}
+                                    <button class="bg-red-500 px-4 md:px-5 py-2.5 text-white font-medium rounded-lg hover:bg-red-400"
+                                        onClick={() => setDeleteShow(true)}
                                     >
-                                        {isLoading && <i class="fa fa-spinner fa-spin mr-3"></i>}
                                         Supprimer
                                     </button>
                                 </div>

@@ -42,7 +42,7 @@ function SearchInput(props) {
                 </button>
             </div>
             <button onClick={() => handleSearch()}
-                class="block md:hidden w-full my-3 py-2.5 bg-green-600 rounded-lg text-white font-medium hover:bg-red-500"
+                class="block md:hidden w-full my-3 py-2.5 bg-sky-700 rounded-lg text-white font-medium hover:bg-red-500"
             >
                 Rechercher
             </button>
