@@ -25,8 +25,9 @@ module.exports = {
         });
     
         try {
+            const jobName = job.charAt(0).toUpperCase() + job.slice(1);
             new Job({ nameCreator, email, userId: req.user._id, phone, 
-                job, description, location, facebookProfil, instagramProfil, 
+                job: jobName, description, location, facebookProfil, instagramProfil, 
                 images: imagesArray
             }).save().then((jobSuccess, err) => {
                 res.send({ jobSuccess });
@@ -42,9 +43,10 @@ module.exports = {
     },
     searchThings: (req, res) => {
         const { value, location } = req.params;
+        const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
 
         if(value && location === "Ville") {
-            Job.find({ job: value }).then(response => {
+            Job.find({ job: capitalizeValue }).then(response => {
                 if(!response) {
                     res.send({ error: `Oups ! désolé, aucun résultat trouvé pour ${job}, Il semble que nous ne puissions trouver aucun résultat basé sur votre recherche. ` });
                 } else {
@@ -52,7 +54,7 @@ module.exports = {
                 }
             }).catch(error => res.json({ error }));
         } else if(value && location !== "Ville") {
-            Job.find({ job: value, location }).then(response => {
+            Job.find({ job: capitalizeValue, location }).then(response => {
                 if(!response) {
                     return res.send({ 
                         error: "Oups ! désolé, aucun résultat trouvé"

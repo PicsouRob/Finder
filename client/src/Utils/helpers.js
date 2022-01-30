@@ -81,7 +81,7 @@ export const getStuff = (formData, setData) => {
         method:"GET",
         data: formData
     }).then(res => {
-        // setData(res.data);
+        setData(res.data);
         console.log(res.data);
     })
     .catch(err => console.log(err));

@@ -1,15 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { city } from '../../Utils/helpers';
 
 function InputField(props) {
+    const navigate = useNavigate();
     const { value, setValue, setSelectCity, selectCity } = props;
 
     const handleSearch = () => {
         if (!value) {
             window.alert('Le titre est obligatoire');
         } else {
-
+            navigate('/api/job/find', { state: { value, location: selectCity }});
         }
     }
 

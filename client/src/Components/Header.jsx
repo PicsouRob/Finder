@@ -25,7 +25,7 @@ function Header({ user }) {
                 <div class="flex gap-x-8 md:gap-x-16 items-center">
                     <div class="hidden md:flex md:gap-x-8">
                         {menu.map(({ title, to, state }, index) => (
-                            <Link to={to} state={'hhghgh'}
+                            <Link to={to} state={{ value: '', location: 'Ville' }}
                             // class="cursor-pointer"
                             // activeStyle={{ color: "#ff7a59" }}
                             // key={index}

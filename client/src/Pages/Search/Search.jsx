@@ -15,7 +15,7 @@ function Search() {
     // console.log(data);
     const locationData = useLocation();
     // const { jobValue, cityValue } = locationData.state;
-    // console.log(locationData)
+    console.log(locationData)
     const [value, setValue] = useState('');
     const [location, setLocation] = useState('Ville');
     const [modalData, setModalData] = useState({});
@@ -42,38 +42,31 @@ function Search() {
         document.addEventListener('keydown', keyPressSubmit);
 
         return () => document.removeEventListener('keydown', keyPressSubmit);
-    }, [location, value]);
+    }, []);
 
     const selectFilter = () => { }
 
     const handleSearch = async () => {
-        await setData([]);
         if (!value) {
             window.alert('Le titre est obligatoire');
         } else {
-            const arrayData = [];
-            const val = await value.toLowerCase();
-            const result = await data.filter((item) => {
-                if (item.job.toLowerCase().includes(val)) {
+            const val = value.toLowerCase();
+            const search = data.filter(item => {
+                const job = item.job.toLowerCase();
+
+                if (job.includes(val) && location === 'Ville') {
+                    return item;
+                } else if (location !== 'Ville' && job.includes(val) && item.location.includes(location)) {
                     return item;
                 }
             });
 
-            console.log(result);
-
-            // {
-            //     const jobValue = item.job.toLowerCase();
-            //     if (jobValue.indexOf(val) > -1 && location === 'Ville') {
-            //         // console.log(item)
-            //         return item;
-            //     } 
-            //     // else if (jobValue.indexOf(val) > -1 && item.location.indexOf(location) > -1) {
-            //     //     return item;
-            //     // }
-            // });
-
-            // console.log(result)
-            // return setData(result);
+            setData(search);
+            // axios.get(`/api/search-stuff/${value}/${location}`)
+            //     .then(async (res) => {
+            //         console.log(res.data)
+            //         setData(res.data);
+            //     }).catch((err) => console.log(err));
         }
     }
 
@@ -86,7 +79,7 @@ function Search() {
                 <SearchInput location={location} value={value}
                     setValue={setValue} setLocation={setLocation}
                     setData={setData} data={data}
-                    handleSearch={() => handleSearch()}
+                    handleSearch={handleSearch}
                 />
             </div>
             <div class="py-8 px-6 md:px-28 bg-green-50">
