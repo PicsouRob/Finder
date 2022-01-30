@@ -62,7 +62,7 @@ function ImagesView(props) {
                 <div class="grid place-items-center w-full h-full">
                     {imagesData.length > 1 && (
                         <div class="bg-contain bg-no-repeat bg-center rounded-md shadow-md w-full h-full"
-                            style={{ backgroundImage: `url(${imagesData[imagesIndex]})` }}
+                            style={{ backgroundImage: `url(${imagesData[imagesIndex].trim()})` }}
                         />
                     )}
                 </div>

@@ -24,29 +24,31 @@ function MenuBurger() {
 
     return (
         <div class="block md:hidden overflow-hidden">
-        <Menu right
-            isOpen={isOpen}
-            styles={styles}
-            customBurgerIcon={<div >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </div>}
-            customCrossIcon={<div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </div>}
-        >
-            <NavLink to="/" id="home" className="menu-item" >Accueil</NavLink>
-            <NavLink to="/about" id="about" className="menu-item" >À propos de nous</NavLink>
-            <NavLink to="/api/job/find" id="search" className="menu-item">Parcourir</NavLink>
-            <NavLink to="/contact" id="contact" className="menu-item">Contact</NavLink>
-            <div style={{ marginTop: 80 }}>
-                <SocialMedia color="#000" />
-            </div>
-        </Menu>
-    </div>
+            <Menu right
+                isOpen={isOpen}
+                styles={styles}
+                customBurgerIcon={<div >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </div>}
+                customCrossIcon={<div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>}
+            >
+                <NavLink to="/" id="home" className="menu-item" >Accueil</NavLink>
+                <NavLink to="/about" id="about" className="menu-item" >À propos de nous</NavLink>
+                <NavLink to="/api/job/find" id="search" className="menu-item"
+                    state={{ jobValue: '', cityValue: 'Ville' }}
+                >Parcourir</NavLink>
+                <NavLink to="/contact" id="contact" className="menu-item">Contact</NavLink>
+                <div style={{ marginTop: 80 }}>
+                    <SocialMedia color="#000" />
+                </div>
+            </Menu>
+        </div>
     );
 }
 

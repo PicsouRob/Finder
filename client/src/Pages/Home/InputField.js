@@ -6,10 +6,6 @@ import { city } from '../../Utils/helpers';
 function InputField(props) {
     const { value, setValue, setSelectCity, selectCity } = props;
 
-    const handleSearch = () => {
-        window.alert('Le titre est obligatoire');
-    }
-
     return (
         <div class="w-full">
             <div class="flex items-center w-full shadow-lg bg-white px-2 h-12 md:h-16 gap-x-1 rounded-lg mt-4">
@@ -37,36 +33,19 @@ function InputField(props) {
                         </option>
                     ))}
                 </select>
-                {value ? (
-                    <Link to="/api/job/find"
-                        state={{ jobValue: value, cityValue: selectCity }}
-                        class="hidden md:block bg-red-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md"
-                    >
-                        Rechercher
-                    </Link>
-                ) :
-                    <button onClick={() => handleSearch()}
-                        class="hidden md:block bg-red-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md"
-                    >
-                        Rechercher
-                    </button>}
+                <Link to="/api/job/find"
+                    state={{ jobValue: '', cityValue: 'Ville' }}
+                    class="hidden md:block bg-red-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md"
+                >
+                    Rechercher
+                </Link>
             </div>
-            <div class="mt-3">
-                {value ? (
-                        <Link to="/api/job/find"
-                            state={{ jobValue: value, cityValue: selectCity }}
-                            class="block md:hidden bg-sky-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md w-full"
-                        >
-                            Rechercher
-                        </Link>
-                    ) :
-                        <button onClick={() => handleSearch()}
-                            class="block md:hidden bg-sky-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md w-full"
-                        >
-                            Rechercher
-                        </button>
-                }
-            </div>
+            <Link to="/api/job/find"
+                state={{ jobValue: '', cityValue: 'Ville' }}
+                class="mt-3 block md:hidden bg-sky-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md w-full"
+            >
+                Rechercher
+            </Link>
         </div>
     )
 }

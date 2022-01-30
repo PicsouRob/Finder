@@ -64,7 +64,7 @@ function SignUp() {
     return (
         <div class="relative grid grid-cols-1 lg:grid-cols-2">
             <SignLeft />
-            <div class="flex-1 mx-auto w-full lg:w-1/2">
+            <div class="flex-1 mx-auto w-full">
                 <div class="flex flex-col px-8 pt-10 lg:px-14 xl:px-24">
                     <LogoLink />
                     <div class="pt-6 pb-4">

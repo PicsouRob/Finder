@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
-import img from '../Images/about.svg';
 import image from '../Images/list.svg';
-import { aboutData, useLocalStorage } from '../Utils/helpers';
+import { aboutData } from '../Utils/helpers';
 import fond from '../Images/fondd.jpg';
+import signImages from './../Images/sign.jpg';
 
-function About() {
+function About({ user }) {
     const navigate = useNavigate();
-    const user = {
-        user: {}, token: '', isLogged: false
-    };
-    const [store] = useLocalStorage('user', user);
-    const addPath = store.user._id ? "/api/job/add" : "/auth/login";
+    const addPath = user._id ? "/api/job/add" : "/auth/login";
 
     useEffect(() => {
         document.title = "À propos de Nous";
@@ -23,10 +20,10 @@ function About() {
     return (
         <div class="">
             <Header />
-            <div class="relative flex flex-col md:flex-row items-center justify-between min-h-screen px-6 lg:px-8 py-16 gap-x-8 gap-y-16 min-w-7xl mx-auto"
+            <div class="relative flex flex-col lg:flex-row items-center justify-between min-h-screen gap-x-8 gap-y-16 min-w-7xl mx-auto"
                 style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 85%), rgba(0, 0, 0, 0.8)), url(${fond})` }}
             >
-                <div class="w-full md:w-1/2 grid grid-cols-1">
+                <div class="w-full md lg:w-1/2 grid grid-cols-1 px-6 lg:px-8 py-16 md:py-16">
                     <h1 class="text-3xl md:text-3xl font-bold text-white">À propos de Finder</h1>
                     <span class="mt-4 md:mt-0 text-white leading-8">FinderHt est une communauté où vous pouvez trouver des travailleurs indépendants pour tout type de travail, par exemple un designer, un photographe, un développeur, un professionnel du marketing ou autre, vous pouvez aussi ajouter vos compétences en tant que professionnel afin que des clients puissent vous contacter pour un future boulot et nous valorisons votre confiance et votre sécurité comme notre priorité numéro un. <br /><br />Les possibilités sont infinies. Nous avons des pigistes ambaucheurs qui travaillent dans tous les domaines techniques, professionnels et créatifs imaginables.</span>
                     <button class="bg-red-500 text-white px-6 py-2.5 md:py-4 rounded-lg hover:bg-red-600  font-medium my-3 md:my-0 cursor-pointer w-1/3"
@@ -35,7 +32,10 @@ function About() {
                         Parcourir
                     </button>
                 </div>
-                <img src={img} class="w-full md:w-1/2" alt="logo" />
+                <div class="w-full lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+                    <img src={signImages}
+                        class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" alt="logo" />
+                </div>
             </div>
             <div class="relative min-w-7xl px-6 lg:px-8 py-16 h-auto mx-auto bg-[#0e1e25]"
             >
@@ -98,4 +98,8 @@ function About() {
     )
 }
 
-export default About;
+const mapStateToProps = ({ user }) => {
+    return { user };
+}
+
+export default connect(mapStateToProps)(About);

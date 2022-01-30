@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 
 import Header from '../../Components/Header';
 import SocialMedia from '../../Components/SocialMedia';
@@ -9,7 +8,6 @@ import InputField from './InputField';
 import SearchCategories from './SearchCategories';
 
 function Home(props) {
-    const history = useNavigate();
     const [jobValue, setJobValue] = useState('');
     const [cityValue, setCityValue] = useState('Ville');
 

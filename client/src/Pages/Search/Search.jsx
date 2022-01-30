@@ -7,15 +7,13 @@ import Header from '../../Components/Header';
 import Modal from '../../Components/Modal';
 import SearchResult from './SearchResult';
 import SearchInput from './SearchInput';
-import filter from '../../Images/filter.png';
 import ImagesView from '../../Components/ImagesView';
 
 function Search() {
     const [data, setData] = useState([]);
-    // console.log(data);
     const locationData = useLocation();
     const { jobValue, cityValue } = locationData.state;
-    console.log(locationData)
+    console.log(jobValue)
     const [value, setValue] = useState('');
     const [location, setLocation] = useState(cityValue);
     const [modalData, setModalData] = useState({});
@@ -25,56 +23,45 @@ function Search() {
     const [imagesData, setImagesData] = useState([]);
 
     useEffect(() => {
-        if (!value) {
-            axios.get(`/api/stuff`).then((res) => {
-                setData(res.data);
-            });
-        } else {
-            axios.get(`/api/search-stuff/${value}/${location}`).then((res) => {
-                setData(res.data);
-            });
-        }
+        axios.get(`/api/stuff`).then((res) => {
+            setData(res.data);
+        });
 
         document.title = "Finder | Recherche";
-    }, [value, location]);
-
-    useEffect(() => {
-        const keyPressSubmit = (e) => {
-            if (e.key === "Enter") {
-
-            }
-        };
-
-        document.addEventListener('keydown', keyPressSubmit);
-
-        return () => document.removeEventListener('keydown', keyPressSubmit);
     }, []);
 
     const selectFilter = () => { }
 
-    const handleSearch = async () => {
+    const handleSearch = () => {
         if (!value) {
             window.alert('Le titre est obligatoire');
         } else {
             const val = value.toLowerCase();
-            const search = data.filter(item => {
+            let result = [];
+            data.filter((item) => {
                 const job = item.job.toLowerCase();
 
                 if (job.includes(val) && location === 'Ville') {
-                    return item;
+                    result.push(item);
                 } else if (location !== 'Ville' && job.includes(val) && item.location.includes(location)) {
-                    return item;
+                    result.push(item);
                 }
             });
 
-            setData(search);
-            // axios.get(`/api/search-stuff/${value}/${location}`)
-            //     .then(async (res) => {
-            //         console.log(res.data)
-            //         setData(res.data);
-            //     }).catch((err) => console.log(err));
+            setData(result);
         }
-    }
+    };
+
+    useEffect(() => {
+        const keyPressSubmit = (e) => {
+            if (e.key === "Enter") {
+                // handleSearch();
+            }
+        };
+
+        document.addEventListener('keydown', keyPressSubmit);
+        return () => document.removeEventListener('keydown', keyPressSubmit);
+    }, []);
 
     return (
         <div>
@@ -92,7 +79,9 @@ function Search() {
                 <div class="flex justify-between items-center">
                     <span class="text-base text-gray-800">{data.length} Freelance Trouvées</span>
                     <div class="flex justify-between items-center border rounded-lg px-3 py-2">
-                        <img src={filter} alt="" class="h-4 mr-3 w-4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
                         <select id="select-ville" onChange={(e) => selectFilter(e)}
                             class="bg-transparent w-24 md:w-auto"
                         >
