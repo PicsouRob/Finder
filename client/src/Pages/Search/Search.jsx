@@ -14,10 +14,10 @@ function Search() {
     const [data, setData] = useState([]);
     // console.log(data);
     const locationData = useLocation();
-    // const { jobValue, cityValue } = locationData.state;
+    const { jobValue, cityValue } = locationData.state;
     console.log(locationData)
     const [value, setValue] = useState('');
-    const [location, setLocation] = useState('Ville');
+    const [location, setLocation] = useState(cityValue);
     const [modalData, setModalData] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [showImages, setShowImages] = useState(false);
@@ -25,12 +25,18 @@ function Search() {
     const [imagesData, setImagesData] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/stuff`).then((res) => {
-            setData(res.data);
-        });
+        if (!value) {
+            axios.get(`/api/stuff`).then((res) => {
+                setData(res.data);
+            });
+        } else {
+            axios.get(`/api/search-stuff/${value}/${location}`).then((res) => {
+                setData(res.data);
+            });
+        }
 
         document.title = "Finder | Recherche";
-    }, []);
+    }, [value, location]);
 
     useEffect(() => {
         const keyPressSubmit = (e) => {

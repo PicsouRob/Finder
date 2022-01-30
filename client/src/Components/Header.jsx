@@ -26,9 +26,9 @@ function Header({ user }) {
                     <div class="hidden md:flex md:gap-x-8">
                         {menu.map(({ title, to, state }, index) => (
                             <Link to={to} state={{ value: '', location: 'Ville' }}
-                            // class="cursor-pointer"
-                            // activeStyle={{ color: "#ff7a59" }}
-                            // key={index}
+                                // class="cursor-pointer"
+                                // activeStyle={{ color: "#ff7a59" }}
+                                key={index}
                             >
                                 <span class="transition text-black font-sans hover:text-red-900">{title}</span>
                             </Link>

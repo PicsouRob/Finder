@@ -1,9 +1,9 @@
-const data = { value: 'Tout', location: 'Ville' };
+const data = { jobValue: '', cityValue: 'Ville' };
 export const menu = [
     {
         title: "Parcourir",
         to: "/api/job/find",
-        state: data
+        state: {data}
     },
     {
         title: "À propos",

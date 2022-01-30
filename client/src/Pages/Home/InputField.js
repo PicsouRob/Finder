@@ -1,18 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { city } from '../../Utils/helpers';
 
 function InputField(props) {
-    const navigate = useNavigate();
     const { value, setValue, setSelectCity, selectCity } = props;
 
     const handleSearch = () => {
-        if (!value) {
-            window.alert('Le titre est obligatoire');
-        } else {
-            navigate('/api/job/find', { state: { value, location: selectCity }});
-        }
+        window.alert('Le titre est obligatoire');
     }
 
     return (
@@ -42,17 +37,36 @@ function InputField(props) {
                         </option>
                     ))}
                 </select>
-                <button onClick={() => handleSearch()}
-                    class="hidden md:block bg-red-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md"
-                >
-                    Rechercher
-                </button>
+                {value ? (
+                    <Link to="/api/job/find"
+                        state={{ jobValue: value, cityValue: selectCity }}
+                        class="hidden md:block bg-red-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md"
+                    >
+                        Rechercher
+                    </Link>
+                ) :
+                    <button onClick={() => handleSearch()}
+                        class="hidden md:block bg-red-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md"
+                    >
+                        Rechercher
+                    </button>}
             </div>
-            <button onClick={() => handleSearch()}
-                class="block md:hidden w-full my-3 py-2.5 rounded-lg text-white font-medium hover:bg-green-400 bg-red-400"
-            >
-                Rechercher
-            </button>
+            <div class="mt-3">
+                {value ? (
+                        <Link to="/api/job/find"
+                            state={{ jobValue: value, cityValue: selectCity }}
+                            class="block md:hidden bg-sky-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md w-full"
+                        >
+                            Rechercher
+                        </Link>
+                    ) :
+                        <button onClick={() => handleSearch()}
+                            class="block md:hidden bg-sky-500 rounded-lg px-3 py-2 text-white hover:bg-green-500 shadow-md w-full"
+                        >
+                            Rechercher
+                        </button>
+                }
+            </div>
         </div>
     )
 }
