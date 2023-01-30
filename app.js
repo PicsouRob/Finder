@@ -62,6 +62,7 @@ require('./routes/stuff')(app);
 //     });
 // }
 
+const path = require('path');
 app.use(express.static('client/build'));
 app.get("/", (req, res) => res.type('html').send(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
