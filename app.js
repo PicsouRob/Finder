@@ -11,6 +11,7 @@ require('./models/userModel');
 require('./models/createModel');
 require('./services/passport-setup');
 
+const PORT = process.env.PORT || 8000; 
 // initialize the app.........
 const app = express();
 
@@ -36,7 +37,7 @@ app.use(express.json());
 Grid.mongo = mongoose.mongo;
 let gfs;
 conn.once('open', () => {
-    console.log("connected to mongoDb");
+    console.log(`connected to mongoDb on port ${PORT}`);
     gfs = Grid(conn.db);
     gfs.collection("photos");
 });
@@ -46,19 +47,23 @@ require('./routes/auth')(app);
 require('./routes/stuff')(app);
 // require('./routes/imageGfsStream')(app, gfs);
 
-if(process.env.NODE_ENV === 'production') {
-    // Express will serve up production assets
-    // Like our main.js file, or main.css file!
+// if(process.env.NODE_ENV === 'production') {
+//     // Express will serve up production assets
+//     // Like our main.js file, or main.css file!
 
-    app.use(express.static('client/build'));
+//     app.use(express.static('client/build'));
 
-    // Express will serve the index.html file
-    // if it doesn't recognize the route
-    const path = require('path');
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
+//     // Express will serve the index.html file
+//     // if it doesn't recognize the route
+//     const path = require('path');
+//     app.get("/", (req, res) => res.type('html').send(path.resolve(__dirname, 'client', 'build', 'index.html')));
+//     app.get('*', (req, res) => {
+//         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//     });
+// }
+
+app.use(express.static('client/build'));
+app.get("/", (req, res) => res.type('html').send(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
 app.get('/userProfil/:filename', async (req, res) => {
     try {
@@ -71,5 +76,4 @@ app.get('/userProfil/:filename', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 8000; 
 app.listen(PORT, () => console.log("Server runing up"));

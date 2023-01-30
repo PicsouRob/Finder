@@ -36,11 +36,13 @@ module.exports = {
             res.json({ error: err });
         }
     },
+    
     getAllStuff: (req, res) => {
         Job.find()
             .then(things => res.status(200).json(things))
             .catch(error => res.json({ error }));
     },
+    
     searchThings: (req, res) => {
         const { value, location } = req.params;
         const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
@@ -65,6 +67,7 @@ module.exports = {
             }).catch(error => res.json({ error }));
         }
     },
+    
     getOneStuff: (req, res) => {
         Job.findById(req.params.id)
         .then(job => {
@@ -73,6 +76,7 @@ module.exports = {
         })
         .catch(error => res.json({ error }));
     },
+    
     getOneUserStuff: (req, res) => {
         const id = mongoose.Types.ObjectId(`${req.params.id}`);
         Job.find({ userId: req.params.id }).then(response => {
@@ -85,6 +89,7 @@ module.exports = {
             return res.send(response)
         }).catch(error => res.json({ error }));
     },
+    
     updateThing: async (req, res) => {
         let imagesArray = [];
 
@@ -110,6 +115,7 @@ module.exports = {
             }
         });
     },
+    
     deleteThing: (req, res) => {
         const id = mongoose.Types.ObjectId(`${req.params.id}`);
         Job.deleteOne({ _id: id })

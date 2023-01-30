@@ -66,14 +66,16 @@ function Search() {
     return (
         <div>
             <Header />
-            <div class="py-20 px-6 md:px-28 bg-[#0e1e25]">
-                <h2 class="text-3xl md:text-5xl font-bold text-white pb-2 md:pb-0 text-center">Trouver un professionnel</h2>
-                <p class="text-center font-medium text-lg text-gray-400">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
-                <SearchInput location={location} value={value}
-                    setValue={setValue} setLocation={setLocation}
-                    setData={setData} data={data}
-                    handleSearch={handleSearch}
-                />
+            <div class="py-20 lg:py-24 px-6 md:px-28 bg-[#0e1e25] flex items-center justify-center">
+                <div className="w-1/2 space-y-3">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white pb-2 md:pb-0 text-center">Trouver un professionnel</h2>
+                    <p class="text-center font-medium text-lg text-gray-400">Trouvez votre professionnel pour votre travail et obtenez satisfaction</p>
+                    <SearchInput location={location} value={value}
+                        setValue={setValue} setLocation={setLocation}
+                        setData={setData} data={data}
+                        handleSearch={handleSearch}
+                    />
+                </div>
             </div>
             <div class="py-8 px-6 md:px-28 bg-green-50">
                 <div class="flex justify-between items-center">
